@@ -12,7 +12,7 @@ import cors from 'cors'
 dotenv.config()
 
 const app = express();
-app.use(cors({origin:["http://localhost:3000", "https://www.soireepropulsion.pineapplepayscango.online/"]}))
+app.use(cors({origin:["http://localhost:3000", "https://www.soireepropulsion.pineapplepayscango.online"]}))
 
 
 /* Connection à MongoDB */

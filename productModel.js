@@ -15,6 +15,6 @@ const productSchema = new mongoose.Schema({
 {
     timestamps: true,
 });
-const Product = mongoose.model('bddsoireepropulsion', productSchema);
+const Product = mongoose.model('demoproducts', productSchema);
 
 export default Product;

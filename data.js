@@ -10,7 +10,7 @@ const data = {
             image: 'https://i.ibb.co/jGW9VXV/20220519-172040.jpg'
           },
   {
-            name: "Statue pierre",
+            name: "Statue pierre1",
             Code_Barre: '4192200312505',
             price: 45.99,
             CountInStock: 1,
@@ -18,7 +18,7 @@ const data = {
             image: 'https://i.ibb.co/1Lr6xpD/20220519-172043.jpg'
           },
   {
-            name: "Statue pierre",
+            name: "Statue pierre2",
             Code_Barre: '4866098487712',
             price: 65.99,
             CountInStock: 1,
@@ -74,7 +74,7 @@ const data = {
             image: 'https://i.ibb.co/vBYvfzZ/20220519-172816.jpg'
           },
   {
-            name: "Lampe",
+            name: "Lampe1",
             Code_Barre: '7848550719347',
             price: 5.99,
             CountInStock: 1,

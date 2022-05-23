@@ -12,7 +12,7 @@ const data = {
     },
     {
       name: "Hoodie bleu ciel",
-      Code_Barre: "ABC-abc-2345",
+      Code_Barre: "ABC-abc-2456",
       category: "dessert",
       price: 3.99,
       CountInStock: 1,

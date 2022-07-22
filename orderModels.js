@@ -22,5 +22,5 @@ const orderSchema = new mongoose.Schema({
     }
     );
      
-    const Order = mongoose.model('test_orders', orderSchema);
+    const Order = mongoose.model('demo_orders', orderSchema);
     export default Order;

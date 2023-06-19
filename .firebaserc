@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "pikkopay"
+  },
+  "targets": {
+    "pikkopay": {
+      "hosting": {
+        "webapp": [
+          "testenvironment-29c7f"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

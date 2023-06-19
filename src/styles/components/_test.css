@@ -1,0 +1,42 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+.pop-up{
+    position: relative;
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+} 
+.pop-up .content{
+    position: relative;
+    max-width: 800px;
+} 
+.content#blur.active{
+    filter: blur(20px);
+    pointer-events: none;
+    user-select: none;
+}
+#pop{
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 500px;
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
+    background-color: whitesmoke;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+    
+}
+#pop.active{
+    visibility: visible;
+    opacity: 1;
+}

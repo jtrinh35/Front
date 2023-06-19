@@ -1,0 +1,285 @@
+.scandit .scandit-logo {
+  bottom: 180px !important;
+}
+
+.css-grxbm emhn3tr0{
+  display: none;
+}
+
+iframe{
+  border-radius: 50px;
+}
+
+
+html{
+  font-size: 62.5%; /*taille du texte dans tout ce qui est entre des balises html*/
+  box-sizing: border-box; /* responsive, taille de la boite modulable */
+  
+
+  min-width: 100%;
+
+  }
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+*:focus {
+  outline: 0;
+  outline: none;
+}
+
+button, div{
+  -webkit-tap-highlight-color:transparent;
+  -moz-tap-highlight-color:transparent;
+  -o-tap-highlight-color:transparent;
+  tap-highlight-color:transparent;
+}
+
+body{
+box-sizing: border-box;
+margin: 0;
+min-height: 100vh;
+min-width: 100%;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+overflow: hidden;
+/*overflow-y: scroll;*/ 
+font-family: 'intermedium';
+padding-bottom: env(safe-area-inset-bottom);
+
+}
+
+h1{
+  font-family: 'interbold';
+  
+}
+
+h5{
+  font-family: 'intermedium';
+}
+
+
+.home{
+  height: 100%;
+}
+
+#root{
+height: 100vh;
+--toastify-toast-max-height: 64px;
+/* overflow: hidden; */
+
+}
+
+.pikko-btn {
+  background: rgb(225, 255, 38);
+  background: linear-gradient(140deg, rgba(225, 255, 38, 1) 15%, rgba(255, 207, 38, 1) 100%);
+  border: none;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+  font-size: 2rem;
+  font-family: "intersemibold";
+
+}
+
+
+ul{
+  list-style-type: none;
+}
+li{
+  margin-top: 1rem;
+}
+button{
+  background-color: transparent;
+  color: inherit;
+}
+#textgradient{
+  background: linear-gradient(167.51deg, #FFBA88 -14.16%, #FF627F 158.21%);;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+   
+}
+#textgradient2{
+  background: linear-gradient(168.48deg, #FF627F -14.21%, #FFBA88 100%);
+  /* -webkit-background-clip: text; */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+   
+}
+#formScreen{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  background: linear-gradient(345.31deg, #BEF1F2 -29.3%, #FFD9DE 39.01%, #FAF3BF 143.27%);
+  font-family: "poppinsregular";
+
+}
+#bg-gradient{
+  background: linear-gradient(168.48deg, #FF627F -14.21%, #FFBA88 100%);
+}
+
+
+
+/* @media screen and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+} */
+
+input{
+  height: 37px;
+  border: none;
+}
+
+/* POPPINS */
+@font-face {
+  font-family: 'poppinslight';
+  src: url('./font/Poppins300-Regular/poppins-light-webfont.woff2') format('woff2'),
+       url('./font/Poppins300-Regular/poppins-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'poppinsregular';
+  src: url('./font/Poppins400-Regular/poppins-regular-webfont.woff2') format('woff2'),
+       url('./font/Poppins400-Regular/poppins-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'poppinsitalic';
+  src: url('./font/Poppins400-Italic/poppins-italic-webfont.woff2') format('woff2'),
+       url('./font/Poppins400-Italic/poppins-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'poppinsmedium';
+  src: url('./font/Poppins500-Regular/poppins-medium-webfont.woff2') format('woff2'),
+       url('./font/Poppins500-Regular/poppins-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'poppinsmedium_italic';
+  src: url('./font/Poppins500-Italic/poppins-mediumitalic-webfont.woff2') format('woff2'),
+       url('./font/Poppins500-Italic/poppins-mediumitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face { 
+  font-family: 'poppinssemibold';
+  src: url('./font/poppins-600/poppins-semibold-webfont.woff2') format('woff2'),
+       url('./font/poppins-600/poppins-semibold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'poppinsbold';
+  src: url('./font/Poppins700-Regular/poppins-bold-webfont.woff2') format('woff2'),
+       url('./font/Poppins700-Regular/poppins-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'poppinsextrabold';
+  src: url('./font/Poppins800-Regular/poppins-extrabold-webfont.woff2') format('woff2'),
+       url('./font/Poppins800-Regular/poppins-extrabold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+/*  */
+@font-face {
+  font-family: 'poetsen_oneregular';
+  src: url('./font/poetsen one/poetsenone-regular-webfont.woff2') format('woff2'),
+       url('./font/poetsen one/poetsenone-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'source_sans_proregular';
+  src: url('./font/source sans pro/sourcesanspro-regular-webfont.woff2') format('woff2'),
+       url('./font/source sans pro/sourcesanspro-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 600;
+  src: url('./font/nunito-600/Nunito-SemiBold.woff2') format('woff2'),
+      url('./font/nunito-600/Nunito-SemiBold.woff') format('woff');
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'latoregular';
+  src: url('./font/lato/lato-regular-webfont.woff2') format('woff2'),
+       url('./font/lato/lato-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'interlight';
+  src: url('./font/inter300-Light/Inter-Light.woff2') format('woff2'),
+       url('./font/inter300-Light/Inter-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'intermedium';
+  src: url('./font/inter500-Medium/Inter-Medium.woff2') format('woff2'),
+       url('./font/inter500-Medium/Inter-Medium.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'interbold';
+  src: url('./font/inter700-bold/Inter-Bold.woff2') format('woff2'),
+       url('./font/inter700-bold/Inter-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'intersemibold';
+  src: url('./font/inter600-Semibold/Inter-SemiBold.woff2') format('woff2'),
+       url('./font/inter600-Semibold/Inter-SemiBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+@viewport {  
+  orientation: portrait;  
+}  

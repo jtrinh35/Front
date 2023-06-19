@@ -1,0 +1,167 @@
+header{
+    top: 0;
+    left: 0%;
+    width: 100%;
+    /* position: fixed; */
+    z-index: 1;
+}
+#info_scan{
+    opacity: 0;
+}
+#bubble_info{
+    position: absolute;
+    width: 231px;
+    height: 66px;
+    top: 50px;
+    left: 10px;
+
+}
+#bubble_text{
+    position: absolute;
+    top: 65px;
+    left: 30px;
+    width: 200px;
+    color: black;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+
+}
+
+.row{
+    min-height: 100%;
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1fr;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1.5%;
+    position: relative;
+    /* background-color: #110D50; */
+    z-index: 999;
+}
+
+.leftheader{
+    min-height: 100%;
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+    align-items: center;
+}
+.logoheader{
+    min-height: 100%;
+    min-width: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center; 
+} 
+#logoheader{
+    max-width:100%;
+    max-height: 100%;
+    position: absolute;
+} 
+
+.rightheader{
+    min-height: 100%;
+    min-width: 100%;
+    position: relative; 
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 1fr;
+}
+#link_panier{
+    min-height: 100%;
+    min-width: 100%;
+    position: relative;
+    display: flex; 
+    align-items: center; 
+    justify-content: end; 
+
+}
+#badge{     
+    font-family: 'Nunito',sans-serif;
+    font-style: normal;
+
+    background-color: red;
+    color: whitesmoke;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem; /*écrasement en x et y pour faire rond */   
+    position: absolute;
+    top: 12px;
+    /* border: 2px solid whitesmoke; */
+    right: -10px;
+
+}
+
+/* responsive */
+@media screen and (min-width: 410px){
+    #bubble_info{
+        position: absolute;
+        width: 231px;
+        height: 66px;
+        top: 55px;
+        left: 20px;
+    
+    }
+    #bubble_text{
+        position: absolute;
+        top: 70px;
+        left: 40px;
+        width: 200px;
+        color: black;
+        text-align: center;
+    
+    }
+}
+@media screen and (min-width: 600px){
+    #bubble_info{
+        position: absolute;
+        width: 231px;
+        height: 66px;
+        top: 70px;
+        left: 25px;
+    
+    }
+    #bubble_text{
+        position: absolute;
+        top: 85px;
+        left: 47px;
+        width: 200px;
+        color: black;
+        text-align: center;
+    
+    }
+}
+@media screen and (min-width: 750px){
+    #bubble_info{
+        position: absolute;
+        width: 231px;
+        height: 66px;
+        top: 65px;
+        left: 35px;
+    
+    }
+    #bubble_text{
+        position: absolute;
+        top: 82px;
+        left: 50px;
+        width: 200px;
+        color: black;
+        text-align: center;
+    
+    }
+}
+
+@media screen and (height: calc(100vh - 50px)) {
+    #link_panier{
+        top: 20px;
+    }
+}

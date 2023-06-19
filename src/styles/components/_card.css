@@ -1,0 +1,288 @@
+.cartscreen{
+    height: 100%;
+    /* background: linear-gradient(168.48deg, #FF627F -14.21%, #FFBA88 100%);
+    min-width: 100%; */
+    /* background-size: auto; */
+    /* background-size: cover;
+    background-repeat:no-repeat; */
+    background-color:#FFFDF1;
+    overflow: auto;   
+}
+.cart_empty{
+    /* font-size: 18px;
+    position: absolute; */
+    /* top: 180px; */
+    /* min-height: 100%;
+    min-width: 100%; */
+    /* text-align: center;
+    padding: 0 3rem 0 3rem; */
+    /* font-family: 'poppinssemibold';
+    line-height: 25px; */
+}
+.ulcartlist{
+    /* margin-top: 20px; */
+    /* height: 500px; */
+    /* overflow: auto;
+    padding-bottom: 10rem */
+}
+.smallimg{
+     height: 75px;
+    border-radius: 50%; 
+    /* border: 4px solid #303030;*/
+}
+.cart_list{
+    /* display: grid;
+    grid-template-columns: 20% 68% 12%;
+    grid-template-rows: 1fr; */
+    /* margin-right: 5%;
+    margin-left: 5%; */
+    margin-bottom: 10%;
+    border-radius: 10px;
+    /* align-items: center; */
+    box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.06);
+    /* margin-top: 40px; */
+    /* border-left: 20px solid; */
+    background-color: white;
+    /* padding-left: 20px; */
+}
+.productimage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.productdescription{
+    padding-right: 1rem;
+    color: black;
+    font-family: 'poppinsregular';
+    /* font-family: 'Nunito', sans-serif; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    /* line-height: 20px; */
+    /* margin-top: 23px;
+    margin-bottom: 14px; */
+    text-align: center;
+
+}
+.formule{
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.min-30{
+    /* font-size: 18px;
+    margin-top: 5px; */
+    color:#767676
+    
+}
+
+.min-30_price{
+    /* font-family: 'poppinsregular'; */
+    /* font-size: 20px;
+    position: relative;
+    top: -7%;
+    color:#767676 */
+    font-family: "intersemibold";
+    border-width : 0.5px;
+    border-color : #767676;
+
+}
+.productdelete{
+    display: flex;
+    padding: 1rem;
+    background: linear-gradient(96.63deg, #FF627F 13.87%, #FFBA88 87.26%), #FF9494;
+    justify-content: center;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    height: 60%;
+}
+#buttondelete{
+    border: none;
+    font-size: 2rem;
+    padding-left: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#remove{
+    width: 110%;
+}
+.footercart{
+    border-top: 1px dashed rgba(0, 0, 0, .16);
+    /* position: relative; */
+    /* width: 88%; */
+    /* display: grid; */
+    /* background: linear-gradient(96.63deg, #FF627F 13.87%, #FFBA88 87.26%), #FFFFFF; */
+    /* box-shadow: 0px 6px 50px 2px rgb(0 0 0 / 25%); */
+    /* border-radius: 22px; */
+    /* align-items: center;
+    justify-items: center; */
+    /* bottom: 80px; */
+    /* padding-left: 6%;
+   padding-right: 6%;
+    padding-top: 1.5rem; */
+    color: white;
+    /* font-family: 'poppinsregular'; */
+    -webkit-appearance: none;
+    /* padding-bottom: 250px; */
+}
+.add_bag{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Source Sans Pro', Helvetica, serif;
+    font-size: 13px;
+    width: 85%;
+    padding-bottom: 1rem;
+    gap: 10px
+}
+.promotion_button{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 1rem;
+    background-color: white;
+    margin-bottom: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    box-shadow: inset 0px 4px 18px rgba(0, 0, 0, 0.09);
+}
+#promo_input{
+    border: none;
+    outline: none;
+    font-family: 'Source Sans Pro', Helvetica, serif;
+    /* font-family: 'Nunito', sans-serif; */
+    font-style: normal;
+    font-weight: 400;
+    background-color: transparent;
+    width: 100%;
+}
+#promo_button{
+    background: linear-gradient(104.44deg, rgba(0, 99, 164, 0.38) 108.22%, #E1FBF1 124.03%);;
+    color: rgba(0, 52, 86, 0.75);
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-family: 'source_sans_prosemibold';
+    /* font-family: 'Nunito', sans-serif; */
+    font-style: normal;
+    font-weight: 500;
+}
+.subtotal{
+    width: 100%;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    font-family: 'Source Sans Pro', Helvetica, serif;
+    /* font-family: 'Nunito', sans-serif; */
+    font-weight: 300;
+    font-size: 13px;
+    color: black;
+}
+.promotion{
+    width: 100%;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    font-family: 'Source Sans Pro', Helvetica, serif;
+    font-weight: 300;
+    font-size: 13px;
+    color: black;
+}
+.recap_cart{
+    
+    /* font-size: 14px; */
+    /* line-height: 30px; */
+    /* align-items: center;
+    color: #110D50; */
+    /* width: 100%; */
+    /* font-weight: 900; */
+}
+.recap_cart2{
+    /*color: black;*/
+    /* display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center; */
+    /* font-family: 'poppinsmedium'; */
+}
+/* hr{
+    border: 1px solid white;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 86%;
+} */
+.recap_cart2_total{
+    /*line-height: 25px;
+    font-size: 19px;*/
+}
+.recap_cart2_price{
+    /* font-size: 22px; */
+}
+.recap_cart2_price_{
+    display: flex;
+    font-family: "interbold"
+    /* font-size: 19px; */
+    /* text-decoration-line: line-through;
+    text-decoration-thickness: 2px; */
+}
+.recap_cart2_promo{
+    font-weight: 800;
+    font-size: 18px;
+    color: black;
+    text-decoration-line: none;
+}
+.payment_cart{
+    display: flex;  
+    width: 112%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+}
+.payment_button{
+    background-color: black;
+    height: 58px;
+    border-radius: 59px;
+    border: none;
+    padding: 10px;
+    width: 90%;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.3);
+}
+.proceder_paiement{
+    font-family: 'Source Sans Pro', Helvetica, serif;
+    /* font-family: 'Nunito', sans-serif; */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    color: white;
+    
+}
+
+.minusBtn::after {
+    content: '';
+    position: absolute;
+    top: -125%;
+    left: -250%;
+    width: 350%;
+    height: 350%;
+   
+}
+
+.plusBtn::after {
+    content: '';
+    position: absolute;
+    top: -130%;
+    left: 0%;
+    width: 300%;
+    height: 350%;
+    
+}

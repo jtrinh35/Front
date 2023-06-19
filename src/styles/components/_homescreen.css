@@ -1,0 +1,121 @@
+
+/* PRE SCANSCREEN */
+/* .prescanscreen{
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(168.48deg, #FF627F -14.21%, #FFBA88 100%), linear-gradient(345.31deg, #BEF1F2 -29.3%, #FFD9DE 39.01%, #FAF3BF 143.27%);
+    background-attachment: fixed;
+} */
+.scan_popup{
+    position: absolute;
+    /* top: 55%; */
+    top: 43rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 45%;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 32rem;
+    max-height: 37rem;
+}
+.scan_popup_{
+    position: absolute;
+    /* top: 55%; */
+    top: 32rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 45%;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 32rem;
+    max-height: 37rem;
+}
+.scan_popup_text{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    text-align: center;
+    top: 6%;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 20px;
+    font-family: 'poppinsregular';
+    color: #000000;
+    line-height: 25px;
+
+}
+#phone_scan{
+    width: 90px;
+    position: relative;
+}
+.phone_scan{
+    background-color: white;
+    width: 90px;
+    height: 145px;
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 20%;
+}
+#barcode{
+    width: 174px;
+    position: absolute;
+    top: 23%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: -1;
+}
+#touch{
+    width: 70px;
+    position: absolute;
+    bottom: -10%;
+    right:5%;
+}
+.go{
+    width: inherit;
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 1rem 4rem 1rem 4rem;
+    width: 16rem;
+    background-color: white;
+    border-radius: 63px;
+    color: black;
+    font-family: 'poppinssemibold';
+    font-size: 20px;
+    text-align: center;
+    filter: drop-shadow(0px 4px 26px rgba(0, 0, 0, 0.17));
+    border: none;
+
+}
+#payment_method_img{
+    position: absolute;
+    width: 300px;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#input_parrainage{
+    background: rgba(255, 255, 255, 0.55);
+}
+#input_prenom{
+    background: rgba(255, 255, 255, 0.55);
+}
+#input_nom{
+    background: rgba(255, 255, 255, 0.55);
+}
+#input_password{
+    background: rgba(255, 255, 255, 0.55);
+}
+
+@media screen and (max-width: 750px) {
+
+}

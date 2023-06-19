@@ -1,0 +1,59 @@
+@import './_settings.css';
+@import './components/_gridfooter.css';
+@import './components/_gridheader.css';
+@import './components/headerproduct.css';
+@import './components/headercart.css';
+@import './components/_gridmain.css';
+@import './components/_card.css';
+@import './components/_scan.css';
+@import './components/_homescreen.css';
+@import './components/_productscreen.css';
+@import './components/_test.css';
+@import './components/_orderscreen.css';
+@import './components/css-loader.css';
+@import './components/_successscreen.css';
+@import './components/_checkscreen.css';
+@import './components/css-loader-processing.css';
+
+.slideshow {
+    margin: 0 auto;
+    overflow: hidden;
+    max-width: 500px;
+  }
+  
+  .slideshowSlider {
+    white-space: nowrap;
+    transition: ease 1000ms;
+  }
+  
+  .slide {
+    display: inline-block;
+  
+    /* height: 400px; */
+    width: 100%;
+    /* border-radius: 40px; */
+  }
+  
+  /* Buttons */
+  
+  .slideshowDots {
+    text-align: center;
+  }
+  
+  .slideshowDot {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  
+    cursor: pointer;
+    margin: 15px 7px 0px;
+  
+    background-color: #c4c4c4;
+  }
+  
+  .slideshowDot.active {
+    background-color: #6a0dad;
+  }
+  
+

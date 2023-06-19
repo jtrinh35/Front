@@ -1,0 +1,28 @@
+.rowbackscan{
+    height: 8rem;
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1fr;
+    padding-left: 5%;
+    padding-right: 5%;
+    position: relative;
+}
+#link_scan{
+    min-height: 100%;
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+ 
+}
+#logoback{
+
+    width: 32px;
+    height: 28px;
+    position: absolute;
+    align-items: center;
+    margin-left: 3%;
+    top: 38%;
+
+}

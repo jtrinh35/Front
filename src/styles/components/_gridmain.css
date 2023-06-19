@@ -1,0 +1,11 @@
+main{
+    grid-area: main;
+    /* padding: 1rem; */
+    /* background: url(../img/Logo_Pineapple.png) left/cover; */
+    /* background-color: aquamarine; */
+    position: relative;
+    height: 100%
+
+}
+
+    

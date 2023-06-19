@@ -527,5 +527,22 @@ orderRouter.put('/:orderId/commentaire', expressAsyncHandler(async (req, res) =>
   }
 }))
 
+orderRouter.put('/:orderId/verif', expressAsyncHandler(async(req, res) => {
+  const order = await Order.findById(req.params.orderId);
+  if(order){
+    order.verification = true
+    const updatedOrder = await order.save()
+    res.send({
+      message: "Commentaire ajouté",
+      order: updatedOrder
+    });
+  }
+  else{
+    res.status(404).send({
+      message: "ERROR"
+    })
+  }
+}))
+
 
 export default orderRouter;

@@ -233,6 +233,15 @@ button:disabled{
     width: 35px;
 }
 
+.scan-instruction{
+    background-color: #FFFDF1;
+}
+
+
+.successScandit .scandit.scandit-container.scandit .scandit-viewfinder {
+    border-radius: 50px
+}
+
 /* a partir d'une certaine taille réduire font size
 paiement réussi 
 margin-top de commentaire*/

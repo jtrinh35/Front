@@ -237,33 +237,44 @@ async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
       (x) => x.product.Code_Barre === productToAdd.product.Code_Barre
     );
 
-    console.log("existingProductIndex")
-    console.log(existingProductIndex);
+    //console.log("existingProductIndex")
+    //console.log(existingProductIndex);
 
 
     if (existingProductIndex !== -1) {
       deleteProduct["deleteItems"][existingProductIndex].Qty += productToAdd.Qty;
-      console.log("product pendant le premier for if tour " + i)
-      console.log(toDeleteProduct);
+      //console.log("product pendant le premier for if tour " + i)
+      //console.log(toDeleteProduct);
     } else {
       deleteProduct["deleteItems"].push(productToAdd);
-      console.log("product pendant le premier for else tour " + i)
-      console.log(toDeleteProduct);
+      //console.log("product pendant le premier for else tour " + i)
+      //console.log(toDeleteProduct);
     }
 
   }
 
+  console.log("orderProduct !!!!!!!!");
+  console.log(orderProduct)
+
   for (let i = 0; i < toDeleteProduct.length; i++) {
 
-    if (orderProduct.orderItems[i].Qty - toDeleteProduct[i].Qty >= 1) {
+    /*if (orderProduct.orderItems[i].Qty - toDeleteProduct[i].Qty >= 1) {
+      console.log("------------errorrrrr !!!!--------")
+      console.log("orderItems : "+ i)
+      console.log(orderProduct.orderItems[i])
+
+      console.log("deleteproduct : "+ i)
+      console.log(toDeleteProduct[i])
+
   
-    } else {
+    } else {*/
       // suppression dans order
+      console.log("pulling : ")
+      orderProduct.orderItems[i];
       order.orderItems.pull(orderProduct.orderItems[i])
 
-    }
+    //}
     await order.save()
-
 
   }
   order.itemsPrice = Price(order.itemsPrice, toDeleteProduct, "deleteItems")
@@ -357,11 +368,11 @@ orderRouter.put('/:orderId/delete', expressAsyncHandler(async (req, res) => {
     product
   }) => product.Code_Barre);
 
-  console.log("---------body------------");
+  /*console.log("---------body------------");
   console.log(req.body);
 
   console.log("------To delete ");
-  console.log(toDeleteProducts)
+  console.log(toDeleteProducts)*/
 
   /*console.log("product");
   console.log(req.body.product)*/
@@ -396,8 +407,8 @@ orderRouter.put('/:orderId/delete', expressAsyncHandler(async (req, res) => {
   };
 
 
-  console.log("------TEST Products-------");
-  console.log(extractedData)
+  /*console.log("------TEST Products-------");
+  console.log(extractedData)*/
 
 
 
@@ -412,11 +423,11 @@ orderRouter.put('/:orderId/delete', expressAsyncHandler(async (req, res) => {
   })
 
 
-  console.log("-----------------orderProduct---------")
+  /*console.log("-----------------orderProduct---------")
   console.log(orderProduct)
 
   console.log("-------deleteProducts-------");
-  console.log(deleteProducts);
+  console.log(deleteProducts);*/
 
   console.log(codes_barres.length)
   let updatedOrder;

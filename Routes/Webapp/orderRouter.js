@@ -296,7 +296,7 @@ orderRouter.post('/', expressAsyncHandler(async (req, res) => {
     });
     const createdOrder = await order.save();
     res.status(201).send({
-      message: "new order created",
+      message: "new order created hello world",
       order: createdOrder
     })
   } catch (e) {
@@ -529,6 +529,8 @@ orderRouter.put('/:orderId/commentaire', expressAsyncHandler(async (req, res) =>
 
 orderRouter.put('/:orderId/verif', expressAsyncHandler(async(req, res) => {
   const order = await Order.findById(req.params.orderId);
+  console.log("verif ok")
+
   if(order){
     order.verification = true
     const updatedOrder = await order.save()

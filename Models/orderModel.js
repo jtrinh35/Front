@@ -17,7 +17,8 @@ const orderSchema = new mongoose.Schema({
     isPaid: {type: Boolean, default : false},
     cartScreen: {type: Boolean, default: false},
     orderScreen: {type: Boolean, default: false},
-    paidAt: {type: Date}
+    paidAt: {type: Date},
+    verification: {type:Boolean, default : false},
     },
     {
     timestamps: true,

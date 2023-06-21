@@ -16,6 +16,7 @@ const RedirectPage = () => {
     // if get store success alors GO 
 
    const navigate = useNavigate()
+   const [reset, setReset] = useState(false);
     const id = useSelector(state => state.id)
     const {store} = useSelector(state => state.store)
     const {success, loading, order} = useSelector(state => state.orderCreate)
@@ -28,12 +29,15 @@ const RedirectPage = () => {
     const location = (new URLSearchParams(window.location.search)).get('ok')
 
     useEffect(() => {
+        console.log("useEffect du reset")
         window.localStorage.clear()
         dispatch({type: CART_EMPTY})
         dispatch({type: ID_RESET})
         dispatch({type: ORDER_DETAILS_RESET})
         dispatch({type: ORDER_CREATE_RESET})
         dispatch({type: STORE_RESET})
+        setReset(true);
+     
     }, [])
 
     
@@ -42,7 +46,7 @@ const RedirectPage = () => {
         //     dispatch(getClient(order.order.clientId, axiosInstance))
         //     dispatch(listMenus(axiosInstance)) 
         // }   
-        
+        console.log("location useEffect")
         dispatch(getStore(location, axiosInstance))  
         axiosInstance.post('/track/visit', {storeId: location});
 
@@ -51,7 +55,7 @@ const RedirectPage = () => {
 
     useEffect(() => {
         console.log("order useEffect")
-        if(store){
+        if(store && reset){
             const orderCreate = {storeId: store.id, clientId: ""}
             console.log("new order stooore")
             try{
@@ -63,6 +67,8 @@ const RedirectPage = () => {
         }
        
     }, [store])
+
+    console.log("--------order-------")
     console.log(order)
     return (
         <>

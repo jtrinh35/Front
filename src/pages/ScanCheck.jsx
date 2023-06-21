@@ -28,7 +28,7 @@ const ScanCheck = () => {
 
     const getScanSettings = () => {
         return new ScanditSDK.ScanSettings({
-        enabledSymbologies: ["ean8", "ean13", "upca", "code128", "maxicode"],
+        enabledSymbologies: ["ean8", "ean13", "upca", "code128", "maxicode", "qr"],
         codeDuplicateFilter: 2500,
         searchArea: { x: 0, y: 0, width: 1, height: 1 },
         maxNumberOfCodesPerFrame: 1,
@@ -76,9 +76,18 @@ const ScanCheck = () => {
       useEffect(() => {
         console.log("-----------code--------------")
         console.log(Code)
-        if(Code === 'You shall not pass'){
+
+        if(Code){
+
+       
+        const param = /verif=([^&]+)/;
+        const match = Code.match(param);
+        const verif = match ? match[1] : null;
+        
+        if(verif === orderDetails.storeId){
             dispatch(verifOrder(orderDetails._id, axiosInstance))
         }
+      }
       }, [Code])
 
       useEffect(() => {

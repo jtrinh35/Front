@@ -3,7 +3,8 @@ import  {ORDER_CREATE_REQUEST,ORDER_CREATE_SUCCESS,ORDER_CREATE_FAIL, ORDER_DETA
 export const createOrder = (order, axiosInstance) => async(dispatch, getState) =>{
     dispatch({type: ORDER_CREATE_REQUEST, payload: order});
     try{
-        console.log(order)
+        console.log("call create order")
+        //console.log(order)
         const{data} = await axiosInstance.post('/orders', order,{
             promoPrice : order.promoprice})
         dispatch({type: ORDER_CREATE_SUCCESS, payload: data});

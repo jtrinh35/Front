@@ -108,11 +108,11 @@ const Scan = () => {
     }
   };
 
-  function renewOrder(id, visitorId) {
+  /*function renewOrder(id, visitorId) {
     const order = { storeId: id, clientId: visitorId };
     dispatch(createOrder(order, axiosInstance));
     dispatch({ type: ORDER_DETAILS_RESET });
-  }
+  }*/
   function formule_popup() {
     var formule = document.getElementById("formule");
     formule.classList.toggle("active");

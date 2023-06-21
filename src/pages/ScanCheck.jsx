@@ -28,9 +28,9 @@ const ScanCheck = () => {
 
     const getScanSettings = () => {
         return new ScanditSDK.ScanSettings({
-        enabledSymbologies: ["ean8", "ean13", "upca", "code128"],
+        enabledSymbologies: ["ean8", "ean13", "upca", "code128", "maxicode"],
         codeDuplicateFilter: 2500,
-        searchArea: { x: 0, y: 0, width: 1, height: 0.3 },
+        searchArea: { x: 0, y: 0, width: 1, height: 1 },
         maxNumberOfCodesPerFrame: 1,
         });
     };
@@ -74,8 +74,9 @@ const ScanCheck = () => {
       };
 
       useEffect(() => {
+        console.log("-----------code--------------")
         console.log(Code)
-        if(Code === '5000112611861'){
+        if(Code === 'You shall not pass'){
             dispatch(verifOrder(orderDetails._id, axiosInstance))
         }
       }, [Code])
@@ -92,16 +93,16 @@ const ScanCheck = () => {
             {loading ? (
                 <div id="loader" class="loader loader-default is-active" data-text="Vérification en cours"></div>
             ) : (
-                <div className='w-full h-full bg-white flex flex-col '>
+                <div className='w-full h-full bg-white flex flex-col overflow-auto '>
 
-                <div className='h-1/2  flex flex-col  items-center px-8 justify-around py-12'>
+                <div className=' flex flex-col  items-center pt-16 px-8 gap-5'>
                   <div className='flex justify-center items-center gap-5'> <img
                     src="/images/success.png"
                     alt="logo_success"
                     className="w-12 mb-3 h-auto"
                   />
 
-                  <h3 className="text-center text-2xl">Payment Successful</h3> </div>
+                  <h3 className="text-center text-2xl mb-1">Payment Successful</h3> </div>
                    
                     <h2 className='text-4xl '>Dernière étape</h2>
 
@@ -112,7 +113,7 @@ const ScanCheck = () => {
                       <p className="mt-5 text-2xl" style={{ fontFamily: "intermedium" }}>The exit QR code is <strong> in a yellow frame</strong> and <strong>it is located near the payment desks</strong>. Please speak to a member of staff if you require help.</p>
                     </div>
                 </div>
-                <div  className='h-10 px-10'>
+                <div  className='h-1/2 p-8 pt-10'>
 
                     {scan()}
               

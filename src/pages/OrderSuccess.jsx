@@ -76,8 +76,15 @@ const OrderSuccess = () => {
       {order ? (
         <div id="invoice" className="flex flex-col gap-10 p-8 bg-white">
           {/* {Invoice(orderDetails, store)} */}
+          <div className="flex justify-end w-full">           
+                    {Invoice(orderDetails, store)}
+          </div>
           <div className="flex flex-col justify-center gap-14 mt-10">
-            <div className="flex justify-center flex-col items-center gap-10">
+          
+                  
+
+
+            <div className="flex justify-center flex-col items-center">
               <img
                 src="/images/success.png"
                 alt="logo_success"
@@ -87,67 +94,62 @@ const OrderSuccess = () => {
               Payment Successful 
             </div> */}
 
-              <h2 className="text-center text-3xl">Payment Successful</h2>
+              <h2 className="text-center text-3xl my-8">Summary</h2>
 
-              <button
-                onClick={popup}
-                className="rounded-full pt-2 pb-4 px-6 text-2xl border-gray-200 font-semibold"
-                style={{ borderColor: "rgba(1,1,1,0.16)" }}
-              >
-                See Summary{" "}
-                <img className="relative top-2 pl-2" src="/images/arrow.png" />
-              </button>
+              <h2 className="text-4xl my-5">{order.itemsPrice} €</h2>
+                  <img
+                    className="relative top-6"
+                    src="/images/invoice_cart.png"
+                  />
+                  <div
+                    className="flex flex-col justify-center items-center w-full py-8 px-6 pt-10 rounded-2xl mb-10"
+                    style={{ backgroundColor: "#FFFDF1" }}
+                  >
+                    <h3 className="text-3xl font-medium mb-8">
+                      {store.name}
+                    </h3>
+                    <div className="flex justify-between w-full">
+                      <p>ID :</p>
+                      <p className="font-semibold"> &nbsp; {order._id} </p>
+                    </div>
+                    <div className="flex justify-between w-full">
+                      <p>Date :</p>
+                      <p className="font-semibold">
+                        {" "}
+                        &nbsp; {order.updatedAt.substring(8, 10)}/
+                        {order.updatedAt.substring(5, 7)}{" "}
+                      </p>
+                    </div>
 
-              {/* <h2 className="text-4xl">{order.itemsPrice} €</h2>
+                    <div className="flex justify-between w-full">
+                      <p>Hour :</p>
+                      <p className="font-semibold">
+                        {" "}
+                        &nbsp; {parseInt(order.updatedAt.substring(11, 13)) + 1}
+                        :{order.updatedAt.substring(14, 16)}{" "}
+                      </p>
+                    </div>
 
-              <div
-                className="flex flex-col justify-center items-center w-full py-8 px-6 rounded-2xl"
-                style={{ backgroundColor: "#FFFDF1" }}
-              >
-                <div className="flex justify-between w-full">
-                  <p>Order ID :</p>
-                  <p> &nbsp; {order._id} </p>
-                </div>
-                <div className="flex justify-between w-full">
-                  <p>Date :</p>
-                  <p>
-                    {" "}
-                    &nbsp; {order.updatedAt.substring(8, 10)}/
-                    {order.updatedAt.substring(5, 7)}{" "}
-                  </p>
-                </div>
+                    <div className="flex justify-between w-full">
+                      <p>Total amount :</p>
+                      <p className="font-semibold">{order.itemsPrice} €</p>
+                    </div>
+                  </div>
 
-                <div className="flex justify-between w-full">
-                  <p>Hour :</p>
-                  <p>
-                    {" "}
-                    &nbsp; {parseInt(order.updatedAt.substring(11, 13)) + 1}:
-                    {order.updatedAt.substring(14, 16)}{" "}
-                  </p>
-                </div>
-              </div> */}
-
-              <div className="flex flex-col  items-center justify-center p-8 my-8 invoiceScan">
-                <img src={QrCode} alt="qrcode" className="w-80 h-80" />
-              </div>
-
-              <p
-                className="text-center px-20"
-                style={{ fontFamily: "intermedium" }}
-              >
-                To complete you shopping use the QR code near the exit of the
-                store
-              </p>
+                  <button
+                    className="pikko-btn rounded-full mt-8 mb-40 py-6 justify-self-end pikko-btn w-full text-center text-black relative"
+                  >
+                    Save the ticket
+                    <div className="bottom-0 left-0 py-6 absolute w-full opacity-0 saveTicket">
+                      {" "}
+                      {Invoice(orderDetails, store)}{" "}
+                    </div>
+                  </button>
 
               <Rating
                 data={{ orderId: order._id, axiosInstance: axiosInstance }}
               />
 
-              <Link to="/scan" className="w-full">
-                <div className="pikko-btn rounded-full mt-8 mb-40 py-6 justify-self-end pikko-btn w-full text-center text-black">
-                  Back to home
-                </div>
-              </Link>
             </div>
 
             {/******************* */}
@@ -183,7 +185,7 @@ const OrderSuccess = () => {
                     src="/images/invoice_cart.png"
                   />
                   <div
-                    className="flex flex-col justify-center items-center w-full py-8 px-6 pt-10 rounded-2xl"
+                    className="flex flex-col justify-center items-center w-full py-8 px-6 pt-10 rounded-2xl "
                     style={{ backgroundColor: "#FFFDF1" }}
                   >
                     <h3 className="text-3xl font-medium mb-8">

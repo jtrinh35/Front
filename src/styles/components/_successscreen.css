@@ -239,7 +239,54 @@ button:disabled{
 
 
 .successScandit .scandit.scandit-container.scandit .scandit-viewfinder {
-    border-radius: 50px
+    border-radius: 50px;
+    box-shadow : none;
+    border : none;
+    background:none;
+  
+}
+
+.successScandit .scandit.scandit-container.scandit .scandit-viewfinder::before {
+    background:none;
+}
+
+
+.successScandit .scandit .scandit-video{
+    height: 100% !important; 
+}
+
+.successScandit .scandit .scandit-barcode-picker{
+    border-radius : 50px;
+    background-color: white;
+}
+
+.successScandit .scandit.scandit-container{
+    border-radius : 50px;
+   /**to get square***/
+   height: 250px;
+   border: none;
+  
+   
+} 
+
+
+.successScandit .scandit.scandit-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width:100%;
+    height:100%;
+    background: var(--c);
+    padding: var(--b);
+    border-radius: var(--r);
+    margin: -5px;
+    mask:
+        linear-gradient(0deg, #000 calc(2*var(--b)), #0000 0) 50% var(--b)/calc(100% - 2*var(--w)) 100% repeat-y,
+        linear-gradient(-90deg, #000 calc(2*var(--b)), #0000 0) var(--b) 50%/100% calc(100% - 2*var(--w)) repeat-x,
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: destination-out;
+    mask-composite: exclude;
 }
 
 /* a partir d'une certaine taille réduire font size

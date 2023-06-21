@@ -50,10 +50,10 @@ const RedirectPage = () => {
     }, [location])
 
     useEffect(() => {
-
+        console.log("order useEffect")
         if(store){
             const orderCreate = {storeId: store.id, clientId: ""}
-            console.log("new order")
+            console.log("new order stooore")
             try{
                 dispatch(createOrder(orderCreate, axiosInstance))
             }catch(e)

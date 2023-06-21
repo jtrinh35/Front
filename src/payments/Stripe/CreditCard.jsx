@@ -2,7 +2,7 @@ import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useS
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { payOrder } from '../../actions/orderActions';
-import Toast from '../../components/Toast';
+import {Toast} from '../../components/Toast';
 
 const CreditCard = (order, axiosInstance) => {
 

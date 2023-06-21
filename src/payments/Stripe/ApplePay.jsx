@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
-import Toast from '../../components/Toast';
+import {Toast} from '../../components/Toast';
 import { payOrder } from '../../actions/orderActions';
 
 const ApplePay = (order, axiosInstance) => {

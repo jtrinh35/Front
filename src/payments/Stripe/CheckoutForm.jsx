@@ -4,7 +4,7 @@ import useAxiosInterceptors from '../../axios/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { payOrder } from '../../actions/orderActions';
 import { CART_EMPTY } from '../../constants/cartConstants';
-import Toast from '../../components/Toast';
+import {Toast} from '../../components/Toast';
 import HeaderOrder from '../../components/HeaderOrder';
 import {useStripe, useElements, PaymentRequestButtonElement, CardNumberElement, CardCvcElement, CardExpiryElement} from '@stripe/react-stripe-js';
 import {useNavigate} from 'react-router-dom'

@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Toast = (type, text) => {
+export const Toast = (type, text) => {
     console.log(type)
     console.log(text)
     toast.configure({
@@ -34,4 +34,38 @@ const Toast = (type, text) => {
     );
 };
 
-export default Toast;
+
+export const ToastInternet = (type, text) => {
+    console.log(type)
+    console.log(text)
+    toast.configure({
+        position: "top-right",
+        theme: "colored",
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        autoClose: false,
+    })
+
+    const display = () => {
+        switch(type){
+            case "internet":
+                toast.info(text)
+                break
+            case "noInternet":
+                toast.warning(text)
+                break
+            default:
+                return
+            
+        }
+    } 
+    return (
+        <>
+       {display()}
+        </>
+    );
+
+    
+};
+
+

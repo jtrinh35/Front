@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Quagga from "quagga";
 import Config from "../axios/Config";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -24,6 +24,8 @@ import {
 import ScanditBarcodeScanner from "scandit-sdk-react";
 import useAxiosInterceptors from "../axios/useAxios";
 import FooterNavbar from "./FooterNavbar";
+import {ToastInternet} from './Toast';
+
 
 const Scan = () => {
   window.scrollTo(0, 0);
@@ -45,8 +47,57 @@ const Scan = () => {
   const [loading, setLoading] = useState(false);
   const [qty, setQty] = useState(1);
   const [overflowStyle, setOverflowStyle] = useState("overflow-auto h-full");
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const prevOnlineStatus = useRef(isOnline);
+  
 
   let findProduct;
+
+  useEffect(() => {
+    const handleOnline = () => {
+      if (!prevOnlineStatus.current) {
+        toast.dismiss();
+        ToastInternet("internet", "connexion rétablie");
+        setTimeout(() => {
+        toast.dismiss();
+      }, 2000)
+      }
+      setIsOnline(true);
+      prevOnlineStatus.current = true;
+    };
+
+    const handleOffline = () => {
+      setIsOnline(false);
+      prevOnlineStatus.current = false;
+      ToastInternet( "noInternet", "Aucune connexion internet");
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  /*useEffect(()=>{
+
+    if(!isOnline){     
+     ToastInternet( "noInternet", "Aucune connexion internet");
+     
+    }else{
+
+      toast.dismiss();
+      ToastInternet("internet", "connexion rétablie");
+      setTimeout(() => {
+        toast.dismiss();
+      }, 1500)
+
+
+    }
+  
+  }, [isOnline]);*/
 
   const refreshScan = () => {
     // setProduct()
@@ -74,6 +125,8 @@ const Scan = () => {
     setScanner(true);
     setOverflowStyle("overflow-hidden");
   };
+
+  
 
   const scan = () => {
     if (access) {
@@ -160,6 +213,14 @@ const Scan = () => {
     }
   }
 
+  useEffect(()=>{
+    if(!order){
+      
+        navigate('/');  
+      
+    }
+  }, [order])
+
   useEffect(() => {
     getProduct();
   }, [Code]);
@@ -188,9 +249,9 @@ const Scan = () => {
   }, [orderDetails, orderCreate]);
 
   return (
-  
+    <>
+    {order ? <>
     <div className={overflowStyle} id="scan-main" >
-   
       <div className="scan-screen  ">
         {loading ? (
           <>
@@ -369,7 +430,11 @@ const Scan = () => {
         )}
       </div>
     </div>
+                            
+    </> :   <></> }
+    </>
   );
+  
 };
 
 export default Scan;

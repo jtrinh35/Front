@@ -14,7 +14,7 @@ import { STORE_RESET } from '../constants/storeConstants';
 
 const RedirectPage = () => {
     // if get store success alors GO 
-
+    console.log("haaaaaaaa")
    const navigate = useNavigate()
    const [reset, setReset] = useState(false);
     const id = useSelector(state => state.id)
@@ -74,8 +74,14 @@ const RedirectPage = () => {
         <>
         {success ? <div>  {navigate('/scan')} </div> : 
         
-    
+        <> 
          <div id="loader" class="loader loader-default is-active"></div>
+            {location ? <>
+                <div id="loader" class="loader loader-default is-active"></div>
+            </> : 
+            <div id="loader" class="loader loader-default is-active" data-text="Scannez un QR code"></div>
+            }
+         </>
         } 
         </>
         // <>

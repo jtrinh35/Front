@@ -30,7 +30,7 @@
     "react-view-component": "^1.0.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.0",
-    "scandit-sdk": "^5.12.1",
+    "scandit-sdk": "^5.13.2-beta.1",
     "scandit-sdk-react": "^4.0.2",
     "stripe": "^8.198.0",
     "universal-cookie": "^4.0.4",

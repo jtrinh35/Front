@@ -44,9 +44,13 @@ export const ToastInternet = (type, text) => {
         pauseOnFocusLoss: false,
         pauseOnHover: false,
         autoClose: false,
+        closeButton: false,
     })
 
+  
+
     const display = () => {
+        
         switch(type){
             case "internet":
                 toast.info(text)

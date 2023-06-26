@@ -159,7 +159,14 @@ const CartScreen = () => {
             {orderDetails.orderItems.length === 0 ? 
             (
             <>
-            <Link className="cart_empty text-2xl absolute w-full h-full top-52 text-center px-12 " to="/scan">Panier vide, scannez ce que vous désirez pour le remplir !</Link>
+            <div className='w-full h-full flex flex-col p-16 items-center gap-5'>
+
+            <img className="w-40 h-auto " src="/images/logo_order.png" alt="empty_cart"/>
+            <h1>Panier vide</h1>
+            <Link className="cart_empty text-2xl text-center px-12 " to="/scan">
+                Scannez ce que vous désirez pour le remplir !
+            </Link>
+            </div>
             <FooterNavbar props={{cart:true}}/>
             </>
             ):

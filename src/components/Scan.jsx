@@ -112,7 +112,7 @@ const Scan = () => {
   const refreshScan = () => {
     // setProduct()
     setAccess(true);
-    setCode(0);
+  
   };
   const getScanSettings = () => {
     return new ScanditSDK.ScanSettings({
@@ -186,6 +186,7 @@ const Scan = () => {
       dispatch(addToCart(order._id, product, qty, axiosInstance));
       console.log("order items dans addcart")
       console.log(order);
+      setCode(0);
     }
     
     setLoading(false);

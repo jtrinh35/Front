@@ -264,22 +264,21 @@ button:disabled{
     border-radius : 50px;
    /**to get square***/
    height: 250px;
-   border: none;
-  
-   
+   border: none;   
 } 
 
+.successScandit{
+    position:relative;
+    padding: var(--b);
+}
 
-.successScandit .scandit.scandit-container::before {
+.successScandit::before {
     content: "";
     position: absolute;
     inset: 0;
-    width:100%;
-    height:100%;
     background: var(--c);
     padding: var(--b);
     border-radius: var(--r);
-    margin: -5px;
     mask:
         linear-gradient(0deg, #000 calc(2*var(--b)), #0000 0) 50% var(--b)/calc(100% - 2*var(--w)) 100% repeat-y,
         linear-gradient(-90deg, #000 calc(2*var(--b)), #0000 0) var(--b) 50%/100% calc(100% - 2*var(--w)) repeat-x,

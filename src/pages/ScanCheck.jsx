@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useAxiosInterceptors from '../axios/useAxios';
 import { verifOrder } from '../actions/orderActions';
 import { useNavigate } from 'react-router-dom';
+import {Toast} from '../components/Toast';
 
 const ScanCheck = () => {
 
@@ -25,6 +26,7 @@ const ScanCheck = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const axiosInstance = useAxiosInterceptors()
+    const [isLoading, setIsLoading] = useState(true);
 
     const getScanSettings = () => {
         return new ScanditSDK.ScanSettings({
@@ -34,6 +36,18 @@ const ScanCheck = () => {
         maxNumberOfCodesPerFrame: 1,
         });
     };
+
+    
+    useEffect(() => {
+     
+      const loadingDelay = setTimeout(() => {
+         setIsLoading(false);
+       }, 1500);
+    
+       return () => clearTimeout(loadingDelay); 
+    }, []);
+
+
     const scan = () => {
         console.log(access)
         if (access) {
@@ -86,6 +100,9 @@ const ScanCheck = () => {
         
         if(verif === orderDetails.storeId){
             dispatch(verifOrder(orderDetails._id, axiosInstance))
+        }else{
+          Toast("error", "Mauvais code QR")
+          setCode(0);
         }
       }
       }, [Code])
@@ -126,6 +143,14 @@ const ScanCheck = () => {
                     </div>
                 </div>
                 <div  className='h-1/2 p-8 pt-10'>
+
+                    {isLoading ?  
+                    
+                    <div className='flex justify-center absolute right-2/4  translate-x-2/4 w-full pt-4 -mt-10 h-1/2 bg-white z-20'>
+                        <div class="lds-spinner scale-50"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> 
+                    </div>
+                    : <></>
+                    }
 
                     {scan()}
               

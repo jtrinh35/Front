@@ -105,21 +105,24 @@ const ScanCheck = () => {
                 <div className='w-full h-full bg-white flex flex-col overflow-auto '>
 
                 <div className=' flex flex-col  items-center pt-16 px-8 gap-5'>
-                  <div className='flex justify-center items-center gap-5'> <img
-                    src="/images/success.png"
-                    alt="logo_success"
-                    className="w-12 mb-3 h-auto"
-                  />
-
-                  <h3 className="text-center text-2xl mb-1">Payment Successful</h3> </div>
-                   
+                  <div className='flex justify-center items-center gap-5'> 
+                 
+                 <div>
+                  <h3 className="text-center text-2xl mb-1">Payment Réussi</h3> </div>
+                    <img
+                      src="/images/success.png"
+                      alt="logo_success"
+                      className="w-12 mb-3 h-auto"
+                    />
+                 </div>
+           
                     <h2 className='text-4xl '>Dernière étape</h2>
 
                     <div className='scan-instruction p-10 rounded-[22px] ' >
                       <h2 className='text-3xl '> Scannez le code QR de sortie</h2>
                       <p className="text-2xl" style={{ fontFamily: "intermedium" }}>Pour afficher le reçu</p>
 
-                      <p className="mt-5 text-2xl" style={{ fontFamily: "intermedium" }}>The exit QR code is <strong> in a yellow frame</strong> and <strong>it is located near the payment desks</strong>. Please speak to a member of staff if you require help.</p>
+                      {/* <p className="mt-5 text-2xl" style={{ fontFamily: "intermedium" }}>The exit QR code is <strong> in a yellow frame</strong> and <strong>it is located near the payment desks</strong>. Please speak to a member of staff if you require help.</p> */}
                     </div>
                 </div>
                 <div  className='h-1/2 p-8 pt-10'>

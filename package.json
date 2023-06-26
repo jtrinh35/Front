@@ -30,7 +30,7 @@
     "react-view-component": "^1.0.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.0",
-    "scandit-sdk": "^5.13.2-beta.1",
+    "scandit-sdk": "^5.13.1",
     "scandit-sdk-react": "^4.0.2",
     "stripe": "^8.198.0",
     "universal-cookie": "^4.0.4",
@@ -42,8 +42,8 @@
     "@react-pdf/pdfkit": "2.1.0"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

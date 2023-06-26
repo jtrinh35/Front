@@ -45,4 +45,5 @@ function App() {
   );
 }
 // git remote set-url origin https://github.com/lysot/Jilsfront.g
+// npm install --legacy-peer-deps 
 export default App;

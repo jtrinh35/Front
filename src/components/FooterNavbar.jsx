@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 const FooterNavbar = (props) => {
 
     const navigate = useNavigate()
+    const {order} = useSelector(state => state.orderDetails) || null
     const cart = useSelector(state => state.cart)
-    const {loading, cartItems} = cart
     const [isActive, setIsActive] = useState({scan: false, cart: false, account: false, ...props.props});
     
     const cartLength = () => {
         let length;
-
-        cartItems && cartItems.length > 0 ?  length = cartItems.map(product => product.Qty).reduce((a, b) => a + b ) : length = 0
-        
+        console.log(length)
+        order && order.orderItems.length > 0 ?  length = order.orderItems.map(product => product.Qty).reduce((a, b) => a + b ) : 
+        cart && cart.cartItems.length > 0 ?  length = cart.cartItems.map(product => product.Qty).reduce((a, b) => a + b ) : length = 0
+        console.log(cart)
+        console.log(length)
 
         return length
     }
@@ -25,13 +27,13 @@ const FooterNavbar = (props) => {
             <Link to='/cart'>
                 <div id='footer-cart'>
                 <div className={isActive.cart ? 'active p-3': 'p-3'}> 
-                        {cartItems.length >= 0 && (
-                                <span id="" className='px-2 py-1 absolute top-4 ml-8 bg-red-500 rounded-full text-white'>
-                                    {cartLength()}
-                                </span>
-                            )}
+                        {(
+                            <span id="" className='px-2 py-1 absolute top-4 ml-8 bg-red-500 rounded-full text-white'>
+                                {cartLength()}
+                            </span>
+                        )}
 
-                    <img src="/images/panier4.png" alt="scan" className="h-10 w-auto"/>
+                    <img src="/images/panier4.png" alt="panier" className="h-10 w-auto"/>
                 </div>
                 </div>
                 {/* <div className='text-black'>panier</div> */}

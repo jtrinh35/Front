@@ -30,8 +30,8 @@ const Header = () => {
                 <div className='bg-white rounded-xl w-5/6 flex flex-col justify-center text-center items-center gap-12 py-12 mt-40 px-14' 
                 style={{height: "450px", boxShadow: "0 0 0 100vmax rgb(0 0 0 / 65%)", }}
                 >   
-                    <div className='flex flex-col gap-2' id='textgradient'>
-                        <div className='text-5xl' >En cas de</div>
+                    <div className='flex flex-col gap-2 text-black' id=''>
+                        <div className='text-7xl' >En cas de</div>
                         <div className='text-7xl'>Problèmes</div>
                     </div>
                     <ul className='flex flex-col text-start gap-10 text-2xl list-decimal pl-6 pb-4' style={{fontFamily:'poppinsregular', color:'black'}}>

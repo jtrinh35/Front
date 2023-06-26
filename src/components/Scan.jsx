@@ -8,7 +8,7 @@ import { removeFromCart } from "../actions/cartActions";
 import { toast } from "react-toastify";
 import { listProducts } from "../actions/productActions";
 import Header from "./Header";
-import { createOrder } from "../actions/orderActions";
+import { createOrder, detailsOrder } from "../actions/orderActions";
 import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
 import * as ScanditSDK from "scandit-sdk";
 import {
@@ -49,9 +49,17 @@ const Scan = () => {
   const [overflowStyle, setOverflowStyle] = useState("overflow-auto h-full");
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const prevOnlineStatus = useRef(isOnline);
-  
+  const cart = useSelector(state => state.cart)
 
   let findProduct;
+
+  useEffect(() => {
+       
+    if(order){
+        dispatch(detailsOrder(order._id, axiosInstance))   
+        
+    }
+  }, [cart])
 
   useEffect(() => {
     const handleOnline = () => {
@@ -80,6 +88,8 @@ const Scan = () => {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  
 
   /*useEffect(()=>{
 
@@ -174,7 +184,10 @@ const Scan = () => {
   const addToCartHandler = () => {
     if (product) {
       dispatch(addToCart(order._id, product, qty, axiosInstance));
+      console.log("order items dans addcart")
+      console.log(order);
     }
+    
     setLoading(false);
     setProduct(false);
 

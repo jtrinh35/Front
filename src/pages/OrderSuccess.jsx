@@ -26,6 +26,11 @@ const OrderSuccess = () => {
   const [iscom, setIscom] = useState(false);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart); //prendre le state de cart de redux store
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    setLoader(false)
+  }, [])
 
   if (order) {
     if (order.isPaid === false) {
@@ -69,11 +74,14 @@ const OrderSuccess = () => {
 
 
   // const [instance, updateInstance] = usePDF({ document: MyDocument });
-  return loading || !orderDetails || !store ? (
+  return (
+  <>
+  {loading || !orderDetails || !store ? (
+   
     <div class="loader loader-default is-active"></div>
   ) : (
     <>
-      {order ? (
+      {order && !loader ? (
         <div id="invoice" className="flex flex-col gap-10 p-8 bg-white">
           {/* {Invoice(orderDetails, store)} */}
           <div className="flex justify-end w-full">           
@@ -327,10 +335,13 @@ const OrderSuccess = () => {
         </div>
       ) : (
         <>
-          <div class="loader loader-default is-active"></div>
+        {/* <div className="bg-red-200">HAHAAAA</div> */}
+         <div class="loader loader-default is-active"></div>
         </>
       )}
     </>
-  );
+  )};
+  </>
+  )
 };
 export default OrderSuccess;

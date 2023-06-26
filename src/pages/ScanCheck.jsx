@@ -73,13 +73,13 @@ const ScanCheck = () => {
         }
       };
 
+      console.log("je suis dans scan check")
+
       useEffect(() => {
         console.log("-----------code--------------")
         console.log(Code)
 
-        if(Code){
-
-       
+        if(Code){       
         const param = /verif=([^&]+)/;
         const match = Code.match(param);
         const verif = match ? match[1] : null;
@@ -99,9 +99,9 @@ const ScanCheck = () => {
 
     return (
         <>
-            {loading ? (
+            {/* {loading ? (
                 <div id="loader" class="loader loader-default is-active" data-text="Vérification en cours"></div>
-            ) : (
+            ) : ( */}
                 <div className='w-full h-full bg-white flex flex-col overflow-auto '>
 
                 <div className=' flex flex-col  items-center pt-16 px-8 gap-5'>
@@ -131,7 +131,7 @@ const ScanCheck = () => {
               
                 </div>
                 </div>
-            )}          
+            {/* )}           */}
         </>
         
     );

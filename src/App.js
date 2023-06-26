@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
+import AccountScreen from './pages/AccountScreen';
 
 
 const CartScreen = React.lazy(() => import('./pages/CartScreen'));
@@ -36,6 +37,7 @@ function App() {
               <Route path = '/ordersuccess/:orderId' element = {<OrderSuccess/>}></Route>
               <Route path = '/order/:orderId' element = {<OrderScreen/>}></Route>
               <Route path = '/ScanCheck' element = {<ScanCheck/>}></Route>
+              <Route path = '/account' element = {<AccountScreen/>}></Route>
               
             </Routes> 
             </React.Suspense>

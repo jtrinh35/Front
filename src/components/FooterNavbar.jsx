@@ -16,6 +16,7 @@ const FooterNavbar = (props) => {
         order && order.orderItems.length > 0 ?  length = order.orderItems.map(product => product.Qty).reduce((a, b) => a + b ) : 
         cart && cart.cartItems.length > 0 ?  length = cart.cartItems.map(product => product.Qty).reduce((a, b) => a + b ) : length = 0
         console.log(cart)
+
         console.log(length)
 
         return length

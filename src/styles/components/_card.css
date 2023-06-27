@@ -77,16 +77,11 @@
 }
 
 .min-30_price{
-    /* font-family: 'poppinsregular'; */
-    /* font-size: 20px;
-    position: relative;
-    top: -7%;
-    color:#767676 */
     font-family: "intersemibold";
     border-width : 0.5px;
     border-color : #767676;
-
 }
+
 .productdelete{
     display: flex;
     padding: 1rem;

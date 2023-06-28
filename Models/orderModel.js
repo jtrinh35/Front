@@ -19,6 +19,7 @@ const orderSchema = new mongoose.Schema({
     orderScreen: {type: Boolean, default: false},
     paidAt: {type: Date},
     verification: {type:Boolean, default : false},
+    avis_google: {type: String, required: false}
     },
     {
     timestamps: true,

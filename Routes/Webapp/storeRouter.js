@@ -11,7 +11,8 @@ storeRouter.get('/:id', expressAsyncHandler(async(req,res) => {
         if(store){
             res.status(200).send({
                 name: store.name, id: store.id, 
-                    cashback: store.cashback,logo: store.logo, ageRestriction: store.ageRestriction
+                    cashback: store.cashback,logo: store.logo, ageRestriction: store.ageRestriction,
+                    avis_google: store.avis_google
             })
         }
         else{

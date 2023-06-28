@@ -14,7 +14,6 @@ import { STORE_RESET } from '../constants/storeConstants';
 
 const RedirectPage = () => {
     // if get store success alors GO 
-    console.log("haaaaaaaa")
    const navigate = useNavigate()
    const [reset, setReset] = useState(false);
     const id = useSelector(state => state.id)
@@ -29,7 +28,6 @@ const RedirectPage = () => {
     const location = (new URLSearchParams(window.location.search)).get('ok')
 
     useEffect(() => {
-        console.log("useEffect du reset")
         window.localStorage.clear()
         dispatch({type: CART_EMPTY})
         dispatch({type: ID_RESET})

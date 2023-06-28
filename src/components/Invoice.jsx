@@ -117,7 +117,7 @@ const Invoice = (orderDetails, store) => {
       fontSize: 12,
       color: "blue",
       textDecoration: "underline",
-      marginTop : 10,
+      marginTop: 10,
       //   alignSelf: "flex-end",
       //   justifySelf: "flex-end",
     },
@@ -147,8 +147,8 @@ const Invoice = (orderDetails, store) => {
     const url = URL.createObjectURL(blob);
     // window.open(url, "_blank");
     setTimeout(() => {
-      window.open(url, '_blank');
-    })
+      window.open(url, "_blank");
+    });
   };
 
   const MyDocument = () => {
@@ -267,10 +267,16 @@ const Invoice = (orderDetails, store) => {
           loading ? (
             "Loading..."
           ) : (
-
             <div className="">
-              <button className="border-none" onClick={() =>openFileInNewTab(blob)}>
-              <img src="/images/download.png" alt="validé" className="" />
+              <button
+                className="border-none"
+                onClick={() => openFileInNewTab(blob)}
+              >
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Finvoice_download.png?alt=media&token=b7b7a473-228c-4985-a70e-39b7a53012e5"
+                  alt="validé"
+                  className=""
+                />
               </button>
             </div>
           )

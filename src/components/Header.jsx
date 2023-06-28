@@ -65,7 +65,7 @@ const Header = () => {
       </div>
       <header className="absolute flex justify-end py-8 px-8">
         <img
-          src="/images/question.png"
+          src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fheader_question.png?alt=media&token=bbb65d78-928d-4676-a2a9-afe6f030d316"
           alt="help"
           className="relative h-12 w-auto"
           onClick={help}

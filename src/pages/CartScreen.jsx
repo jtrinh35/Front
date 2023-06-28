@@ -48,6 +48,7 @@ const CartScreen = () => {
   const { store } = useSelector((state) => state.store);
 
   const [checkedValues, setCheckedValues] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     if (order) {
@@ -71,6 +72,7 @@ const CartScreen = () => {
       removeFromCart(cbarre_qty, order._id, product_qty, axiosInstance)
     );
     setCheckedValues([]);
+    setSelectAll(false);
   }
 
   const truncate = (str, n) => {
@@ -110,6 +112,22 @@ const CartScreen = () => {
     }
   };
 
+  const handleSelectAllChange = () => {
+    if (selectAll) {
+      // Uncheck select all and remove all values from state
+      setSelectAll(false);
+      setCheckedValues([]);
+    } else {
+      // Check select all and add all items to state
+      setSelectAll(true);
+      const updatedCheckedValues = orderDetails.orderItems.map((item) => ({
+        product: item,
+        qty: item.Qty,
+      }));
+      setCheckedValues(updatedCheckedValues);
+    }
+  };
+
   // useEffect (()=>{
   //     if(promotion)
   //     {
@@ -143,7 +161,7 @@ const CartScreen = () => {
                   <div className="w-full h-full flex flex-col p-16 items-center gap-5">
                     <img
                       className="w-40 h-auto "
-                      src="/images/logo_order.png"
+                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart_empty.png?alt=media&token=3512383f-8687-4d37-aca1-30108ba04fc8"
                       alt="empty_cart"
                     />
                     <h1>Panier vide</h1>
@@ -161,24 +179,33 @@ const CartScreen = () => {
                   {orderDetails ? (
                     <>
                       <div className="min-h-fit px-12 pb-64">
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center">
                           <h3 className="text-3xl">Product</h3>
-                          {checkedValues.length > 0 ? (
-                            <button
-                              className="border-none"
-                              onClick={() =>
-                                removeFromCartHandler(checkedValues)
-                              }
-                            >
-                              <img
-                                className=" h-8 w-auto"
-                                src="/images/delete.png"
-                                alt="delete"
-                              />
-                            </button>
-                          ) : (
-                            <></>
-                          )}
+
+                          <div className="flex items-center">
+                            {checkedValues.length > 0 ? (
+                              <button
+                                className="border-none "
+                                onClick={() =>
+                                  removeFromCartHandler(checkedValues)
+                                }
+                              >
+                                <img
+                                  className=" h-8 w-auto"
+                                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart_delete.png?alt=media&token=8756c8ee-3724-4d6c-bc25-69dea0e04cd0"
+                                  alt="delete"
+                                />
+                              </button>
+                            ) : (
+                              <></>
+                            )}
+                            <input
+                              className="ml-12"
+                              type="checkbox"
+                              checked={selectAll}
+                              onChange={handleSelectAllChange}
+                            />
+                          </div>
                         </div>
                         <ul>
                           {orderDetails.orderItems.map((item) => (

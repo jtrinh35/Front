@@ -263,12 +263,12 @@ const Scan = () => {
                         <div className="bg-black z-20 relative py-8 flex justify-center items-center">
                           <img
                             className="w-10 h-auto"
-                            src="/images/Logo_Pineapple.png"
+                            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Flogo_pikkopay.png?alt=media&token=14350d62-7ef9-45bd-b8ee-5cac376b0a53"
                             alt="logo"
                           />
                           <img
                             className="w-40 h-auto"
-                            src="https://i.ibb.co/LR2v5bR/Pikko-1.png"
+                            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Flogo_pikkopay_font.png?alt=media&token=439c8def-dc0a-4f54-a35a-7d9173f68534"
                             alt="logo"
                           />
                         </div>
@@ -285,7 +285,7 @@ const Scan = () => {
                           <div className="container flex flex-col items-center justify-start px-8 text-center mx-auto">
                             <img
                               className="my-16 w-96"
-                              src="/images/scan_pic.png"
+                              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fscan_overlay_pic.png?alt=media&token=4be790ad-57f2-4891-b33a-25a32452f037"
                               alt=""
                             />
 

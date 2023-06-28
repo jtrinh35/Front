@@ -7,7 +7,7 @@ const AccountScreen = () => {
       <div className="bg-white h-screen w-screen flex flex-col justify-center items-center p-10">
         <img
           className="w-24"
-          src="/images/Logo_Pineapple.png"
+          src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Flogo_pikkopay.png?alt=media&token=14350d62-7ef9-45bd-b8ee-5cac376b0a53"
           alt="logo"
         />
         <h1 className="text-5xl mt-4">En construction</h1>

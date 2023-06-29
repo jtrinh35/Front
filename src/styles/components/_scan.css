@@ -278,8 +278,11 @@ br {
 
 .cart-item {
     position: fixed;
-    bottom: 100px;
-    left: 10%;
+    /*bottom: 100px;
+    left: 10%;*/
+
+    /* left: 42px;
+    top: 571px; */
     z-index: 999;
 }
 
@@ -300,7 +303,7 @@ br {
 
 .cart-item-anim {
     display: block;
-    animation: yAxis 1s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: productAnim 1s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 
@@ -309,17 +312,57 @@ br {
     animation: yAxis 1s alternate forwards cubic-bezier(0.165, 0.84, 0.44, 1);
 }  */
 
-/* @keyframes xAxis {
+@keyframes productAnim {
     0% {
-      transform: translateX()  scale(1);
+        transform: translateX(0px) translateY(0px) scale(1);
     }
+
     50% {
-      transform: translateX(0px) scale(0.8);
+        transform: translateX(var(--translate-x, 0px)) translateY(-120px) scale(1.2);
     }
+
     100% {
-      transform: translateX(0px) scale(0.2);
+        transform: translateX(var(--translate-x, 0px)) translateY(-120px) translateY(170px) scale(0.3);
     }
-  } */
+}
+
+/* @keyframes productAnim {
+    0% {
+        transform: translateX(0px) translateY(0px) scale(1);
+    }
+
+    25% {
+        transform: translateX(0px) translateY(-120px) scale(1.2);
+    }
+
+    50% {
+        transform: translateX(var(--translate-x, 0px)) translateY(-120px) scale(1.2);
+    }
+
+    75% {
+        transform: translateX(var(--translate-x, 0px)) translateY(0px) scale(1.2);
+    }
+
+    100% {
+        transform: translateX(0px) translateY(0px) scale(1);
+    }
+} */
+
+
+
+@keyframes xAxis {
+    0% {
+        transform: translateX(0px) scale(1);
+    }
+
+    50% {
+        transform: translateX(50px) scale(1.2);
+    }
+
+    100% {
+        transform: translateX(0px) scale(0.3);
+    }
+}
 
 @keyframes yAxis {
     0% {

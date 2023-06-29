@@ -1,0 +1,172 @@
+.loader_container {
+
+	background: rgba(210, 254, 198, 0.5);
+	min-height: 100vh;
+
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin-top: -8rem;
+}
+
+.logo {
+	fill: #0B486B;
+}
+
+.logo-back {
+	fill: rgba(11, 72, 107, 0.08);
+	stroke: rgba(11, 72, 107, 0.08);
+}
+
+/* 
+.clip {
+	animation: slide 3s infinite;
+}
+
+@keyframes slide {
+	from {
+		transform: translateY(-280px);
+	}
+
+	45% {
+		transform: translateY(0px);
+	}
+
+	55% {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(-280px);
+	}
+} */
+
+.clip {
+	animation: slide 3s infinite;
+}
+
+@keyframes slide {
+	from {
+		transform: translateY(-200px);
+	}
+
+	45% {
+		transform: translateY(0px);
+	}
+
+	55% {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(-200px);
+	}
+}
+
+.clipLeaf {
+	animation: slideLeaf 3s infinite;
+}
+
+
+@keyframes slideLeaf {
+	from {
+		transform: translateY(-480px);
+	}
+
+	45% {
+		transform: translateY(0px);
+	}
+
+	55% {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(-480px);
+	}
+}
+
+
+
+
+/***dots**/
+
+
+.loader-dots {
+	display: flex;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.loader-dot {
+	margin: 0.8rem;
+	width: 1.8rem;
+	height: 1.8rem;
+	border-radius: 50%;
+	background: #71B261;
+	transform: scale(0.5);
+	-webkit-animation: scale-dot 1.2s ease-out infinite;
+	animation: scale-dot 1.2s ease-out infinite;
+}
+
+.loader-dot:nth-of-type(2) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.loader-dot:nth-of-type(3) {
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+
+.loader-dot:nth-of-type(4) {
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.loader-dot:nth-of-type(5) {
+	-webkit-animation-delay: 0.5s;
+	animation-delay: 0.5s;
+}
+
+@-webkit-keyframes scale-dot {
+	0% {
+		transform: scale(0.5);
+	}
+
+	25% {
+		transform: scale(1);
+	}
+
+	75% {
+		transform: scale(0.5);
+	}
+
+	100% {
+		transform: scale(0.5);
+	}
+}
+
+@keyframes scale-dot {
+	0% {
+		transform: scale(0.5);
+	}
+
+	25% {
+		transform: scale(1);
+	}
+
+	75% {
+		transform: scale(0.5);
+	}
+
+	100% {
+		transform: scale(0.5);
+	}
+}

@@ -52,6 +52,8 @@ const Scan = () => {
 
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
 
+  const animProductRef = useRef(null);
+
   useEffect(() => {
     if (order) {
       dispatch(detailsOrder(order._id, axiosInstance));
@@ -166,19 +168,41 @@ const Scan = () => {
         dispatch(addToCart(order._id, product, qty, axiosInstance));
         setCode(0);
       }
-    }, "700");
+    }, "750");
 
     footerCart.classList.remove("shake");
+    getProductOffset();
 
-    /*const element = document.getElementById('footer-cart');
-    const rect = element.getBoundingClientRect();
-    console.log("offseeeet")
-    console.log(rect);
-
-    const dot = document.getElementById('cart-item');
+    /*const dot = document.getElementById('cart-item');
     const dot_offset = dot.getBoundingClientRect();
     console.log("offset dot")
     console.log(dot_offset)*/
+  };
+
+  const getProductOffset = () => {
+    if (product) {
+      const element = document.getElementById("product_img");
+      const offset = element.getBoundingClientRect();
+      console.log("offseeeet");
+      console.log(offset);
+
+      const animProduct = animProductRef.current;
+      // Set the position of the div based on offset values
+      animProduct.style.top = `${offset.top}px`;
+      animProduct.style.left = `${offset.left}px`;
+      const footerCart = document.getElementById("footer-cart");
+      const cartOffset = footerCart.getBoundingClientRect();
+      console.log(cartOffset);
+
+      console.log("------offset difference----");
+      let translateXValue = 0;
+      offset.left - cartOffset.left > 10
+        ? (translateXValue = -(offset.left - cartOffset.left))
+        : (translateXValue = 0);
+      console.log(offset.left - cartOffset.left);
+
+      animProduct.style.setProperty("--translate-x", `${translateXValue}px`);
+    }
   };
 
   async function getProduct() {
@@ -195,6 +219,7 @@ const Scan = () => {
         setAccess(false);
         setQty(1);
         setTimeout(refreshScan, scanTimer);
+        getProductOffset();
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -332,6 +357,8 @@ const Scan = () => {
                     <>
                       <div className="fixed bottom-0 z-20 w-screen">
                         <div
+                          ref={animProductRef}
+                          style={{ "--translate-x": 0 }}
                           className={`footer-navbar  ${
                             isNavbarHidden
                               ? "cart-item cart-item-anim visible"
@@ -360,6 +387,7 @@ const Scan = () => {
                           <div className="dashed flex justify-center items-center w-full pb-8">
                             <div className="flex justify-center items-center">
                               <img
+                                id="product_img"
                                 src={product.image}
                                 className="w-24 h-auto"
                               ></img>

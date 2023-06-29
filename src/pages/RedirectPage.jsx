@@ -9,6 +9,7 @@ import { CART_EMPTY } from '../constants/cartConstants';
 import { ID_RESET } from '../constants/idConstants';
 import { getStore } from '../actions/storeActions';
 import { STORE_RESET } from '../constants/storeConstants';
+import useAxiosInterceptors from '../axios/useAxios';
 
 
 
@@ -20,7 +21,8 @@ const RedirectPage = () => {
     const {store} = useSelector(state => state.store)
     const {success, loading, order} = useSelector(state => state.orderCreate)
 
-    const axiosInstance = Config()
+    // const axiosInstance = Config()
+    const axiosInstance = useAxiosInterceptors()
     const dispatch = useDispatch()
     console.log(axiosInstance)
 

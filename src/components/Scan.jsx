@@ -50,6 +50,8 @@ const Scan = () => {
   const prevOnlineStatus = useRef(isOnline);
   const cart = useSelector((state) => state.cart);
 
+  const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+
   useEffect(() => {
     if (order) {
       dispatch(detailsOrder(order._id, axiosInstance));
@@ -153,13 +155,20 @@ const Scan = () => {
   }
 
   const addToCartHandler = () => {
-    if (product) {
-      dispatch(addToCart(order._id, product, qty, axiosInstance));
-      setCode(0);
-    }
-
+    const footerCart = document.getElementById("footerCart");
     setLoading(false);
-    setProduct(false);
+
+    setIsNavbarHidden(true);
+    setTimeout(() => {
+      setProduct(false);
+      footerCart.classList.add("shake");
+      if (product) {
+        dispatch(addToCart(order._id, product, qty, axiosInstance));
+        setCode(0);
+      }
+    }, "700");
+
+    footerCart.classList.remove("shake");
 
     /*const element = document.getElementById('footer-cart');
     const rect = element.getBoundingClientRect();
@@ -180,6 +189,7 @@ const Scan = () => {
           `/products/${order.storeId}/${Code}`
         );
         console.log(data);
+        setIsNavbarHidden(false);
         setProduct(data[0]);
         setLoading(false);
         setAccess(false);
@@ -228,6 +238,10 @@ const Scan = () => {
     }
   }, [orderDetails, orderCreate]);
 
+  const navbarOut = () => {
+    setIsNavbarHidden(true);
+  };
+
   return (
     <>
       {order ? (
@@ -254,7 +268,6 @@ const Scan = () => {
                           </p>
                         </div>
                       </div>
-                      <span className="cart-item" id="cart-item"></span>
                       {<FooterNavbar props={{ scan: true }} />}
                     </>
                   ) : (
@@ -318,7 +331,32 @@ const Scan = () => {
                   {product ? (
                     <>
                       <div className="fixed bottom-0 z-20 w-screen">
-                        <div className="bg-white text-black py-4 px-8 flex flex-col justify-evenly items-center rounded-t-[16px] ">
+                        <div
+                          className={`footer-navbar  ${
+                            isNavbarHidden
+                              ? "cart-item cart-item-anim visible"
+                              : "hidden"
+                          }
+                          rounded-full bg-white w-28 h-28 flex items-center justify-center"
+                          }`}
+                        >
+                          <div className="absolute inset-x-2/4 inset-y-2/4   -translate-y-2/4 -translate-x-2/4  flex items-center justify-center w-24 h-24">
+                            <img
+                              src={product.image}
+                              className="max-w-full max-h-full p-2 rounded-full"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+
+                        <div
+                          id="popup_product"
+                          className={`footer-navbar ${
+                            isNavbarHidden
+                              ? "slide-down bg-white py-4 px-8 flex flex-col justify-evenly items-center rounded-t-[16px]"
+                              : "bg-white py-4 px-8 flex flex-col justify-evenly items-center rounded-t-[16px]"
+                          }`}
+                        >
                           <div className="dashed flex justify-center items-center w-full pb-8">
                             <div className="flex justify-center items-center">
                               <img

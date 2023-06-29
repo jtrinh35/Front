@@ -276,6 +276,82 @@ br {
 }
 
 
+.cart-item {
+    position: fixed;
+    bottom: 100px;
+    left: 10%;
+    z-index: 999;
+}
+
+/* .cart-item:before {
+    content: "";
+    display: block;
+    line-height: 24px;
+    height: 24px;
+    width: 24px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #E1FF26;
+    color: black;
+    border-radius: 20px;
+    text-align: center;
+    
+} */
+
+.cart-item-anim {
+    display: block;
+    animation: yAxis 1s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+
+
+/* .cart-item:before {
+    animation: yAxis 1s alternate forwards cubic-bezier(0.165, 0.84, 0.44, 1);
+}  */
+
+/* @keyframes xAxis {
+    0% {
+      transform: translateX()  scale(1);
+    }
+    50% {
+      transform: translateX(0px) scale(0.8);
+    }
+    100% {
+      transform: translateX(0px) scale(0.2);
+    }
+  } */
+
+@keyframes yAxis {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-120px) scale(1.2);
+    }
+
+    100% {
+        transform: translateY(170px) scale(0.3);
+    }
+}
+
+.slide-down {
+    animation: slideOut 0.8s forwards;
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+
+    }
+
+    100% {
+        transform: translateY(100%);
+
+    }
+}
+
+
 .circle {
     position: relative;
     height: 100%;

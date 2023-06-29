@@ -16,15 +16,7 @@ const FooterNavbar = (props) => {
   const cartLength = () => {
     let length;
     console.log(length);
-    order && order.orderItems.length > 0
-      ? (length = order.orderItems
-          .map((product) => product.Qty)
-          .reduce((a, b) => a + b))
-      : cart && cart.cartItems.length > 0
-      ? (length = cart.cartItems
-          .map((product) => product.Qty)
-          .reduce((a, b) => a + b))
-      : (length = 0);
+    order && order.orderItems.length > 0 ? (length = order.orderItems.map((product) => product.Qty).reduce((a, b) => a + b)) : cart && cart.cartItems.length > 0 ? (length = cart.cartItems.map((product) => product.Qty).reduce((a, b) => a + b)): (length = 0);
     console.log(cart);
 
     console.log(length);
@@ -39,7 +31,7 @@ const FooterNavbar = (props) => {
           <div className={isActive.cart ? "active p-3" : "p-3"}>
             {
               <span
-                id=""
+                id="footerCart"
                 className="px-2 py-1 absolute top-4 ml-8 bg-red-500 rounded-full text-white"
               >
                 {cartLength()}

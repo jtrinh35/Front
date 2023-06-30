@@ -1,0 +1,58 @@
+.c-leaf {
+	position: relative;
+	overflow: hidden;
+	/* width: 203px;
+	height: 133px; */
+	margin: 0 auto;
+	background: #eee;
+	/* transform: scale(1); */
+}
+
+.c-leaf__icon {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	z-index: 1;
+	/* width: 180px;
+	height: 170px; */
+	fill: #fffdf1;
+	stroke: none;
+}
+
+.c-leaf__fill {
+	/* width: 177px;
+	height: 162px; */
+	transform: scale(0.35);
+	width: 295px;
+	height: 256px;
+	background: #71B261;
+	-webkit-animation: fillUp 1.2s ease-in-out infinite;
+	animation: fillUp 1.2s ease-in-out infinite;
+}
+
+@-webkit-keyframes fillUp {
+	0% {
+		transform: translate(0, 256ppx);
+	}
+
+	100% {
+		transform: translate(0, -256ppx);
+	}
+}
+
+@keyframes fillUp {
+	0% {
+		transform: translate(0, 256px);
+	}
+
+	100% {
+		transform: translate(0, -256px);
+	}
+}
+
+.x-reset-container {
+	display: flex;
+	align-items: center;
+	transform: scale(0.35);
+
+}

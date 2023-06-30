@@ -19,7 +19,7 @@
 
 .logo-back {
 	fill: rgba(11, 72, 107, 0.08);
-	stroke: rgba(11, 72, 107, 0.08);
+	stroke: rgba(11, 72, 107, 0.0);
 }
 
 /* 
@@ -47,6 +47,7 @@
 
 .clip {
 	animation: slide 3s infinite;
+	animation-delay: 0.1s;
 }
 
 @keyframes slide {
@@ -68,27 +69,33 @@
 }
 
 .clipLeaf {
-	animation: slideLeaf 3s infinite;
+	animation: slideLeaf 3s forwards infinite;
 }
 
 
 @keyframes slideLeaf {
 	from {
-		transform: translateY(-480px);
+		transform: translateY(-250px);
+		opacity: 1;
 	}
 
 	45% {
 		transform: translateY(0px);
+		opacity: 1;
 	}
 
 	55% {
 		transform: translateY(0px);
+		opacity: 1;
 	}
 
 	to {
-		transform: translateY(-480px);
+		transform: translateY(-250px);
+		opacity: 0;
 	}
+
 }
+
 
 
 

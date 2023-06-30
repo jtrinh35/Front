@@ -9,7 +9,7 @@ const HomeLoader = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="193"
-              height="335"
+              height="850"
               viewBox="0 0 193 335"
               fill="none"
               className="scale-50"
@@ -179,7 +179,7 @@ const HomeLoader = () => {
             </svg>
           </div>
 
-          <div className="mt-4">
+          <div className="">
             <div class="loader-dots mt-24">
               <div class="loader-dot"></div>
               <div class="loader-dot"></div>

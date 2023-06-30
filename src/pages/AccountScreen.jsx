@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterNavbar from "../components/FooterNavbar";
 import HomeLoader from "../components/HomeLoader";
+import PageLoader from "../components/PageLoader";
 const AccountScreen = () => {
   return (
     <>
-      <HomeLoader />
+      {<HomeLoader />}
       {/* <div className="bg-white h-screen w-screen flex flex-col justify-center items-center p-10">
         <img
           className="w-24"

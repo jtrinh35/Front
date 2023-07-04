@@ -11,6 +11,7 @@ import Header from "./Header";
 import { createOrder, detailsOrder } from "../actions/orderActions";
 import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
 import * as ScanditSDK from "scandit-sdk";
+import Scanner from "./Scanner"
 import {
   Barcode,
   BarcodePicker,
@@ -117,40 +118,39 @@ const Scan = () => {
     setOverflowStyle("overflow-hidden");
   };
 
+
   const scan = () => {
-    //if (access) {
+    if (access) {
      
       return (
         <div>
-          <ScanditBarcodeScanner
-            licenseKey={process.env.REACT_APP_SCANDIT_KEY}
-            engineLocation="https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build"
-            preloadBlurryRecognition={true}
-            preloadEngine={true}
-            accessCamera={true}
-            guiStyle={BarcodePicker.GuiStyle.VIEWFINDER}
-            viewFinderArea={{ x: 0.2, y: 0.01, width: 0.6, height: 0.1 }}
-            onScan={(scanResult) => {
-            
-              setCode(scanResult.barcodes[0].data);
-              console.log(scanResult.barcodes[0].data);
-            }}
-            paused={isPaused}
-       
-            scanSettings={getScanSettings()}
-            videoFit={BarcodePicker.ObjectFit.COVER}
-            playSoundOnScan={true}
-            enableCameraSwitcher={false}
-            enablePinchToZoom={false}
-            enableTapToFocus={true}
-            enableTorchToggle={false}
-            mirrorImage={true}
-          />
+          <Scanner 
+          preloadBlurryRecognition={true}
+          preloadEngine={true}
+          accessCamera={true}
+          guiStyle={BarcodePicker.GuiStyle.VIEWFINDER}
+          viewFinderArea={{ x: 0.2, y: 0.01, width: 0.6, height: 0.1 }}
+          onScan={(scanResult) => {
+          
+            setCode(scanResult.barcodes[0].data);
+            console.log(scanResult.barcodes[0].data);
+          }}
+          //pause={isPaused}
+     
+          scanSettings={getScanSettings()}
+          videoFit={BarcodePicker.ObjectFit.COVER}
+          playSoundOnScan={true}
+          enableCameraSwitcher={false}
+          enablePinchToZoom={false}
+          enableTapToFocus={true}
+          enableTorchToggle={false}
+          mirrorImage={true}/>
+          
         </div>
       );
-    /*} else {
+    } else {
       return <div>{console.log("scan off")}</div>;
-    }*/
+    }
   };
 
   /*function renewOrder(id, visitorId) {
@@ -166,9 +166,9 @@ const Scan = () => {
   const addToCartHandler = () => {
     // const footerCart = document.getElementById("footerCart");
     setLoading(false);
-    setIsPaused(true);
+    
     addToCartAnim();
-    setIsPaused(false);
+ 
     // setIsNavbarHidden(true);
     // getProductOffset();
     // setTimeout(() => {
@@ -190,26 +190,34 @@ const Scan = () => {
   };
 
 
-  function addToCartAnim(){
+  async function addToCartAnim(){
+    //setIsPaused(true);
     console.log("debut anim cart")
     const footerCart = document.getElementById("footerCart");
 
     footerCart.classList.remove("shake");
     setIsNavbarHidden(true);
     getProductOffset();
+    /*if (product) {
+      await dispatch(addToCart(order._id, product, qty, axiosInstance));
+      setCode(0);
+      
+    }
+    setProduct(false);*/
 
-    setTimeout(() => {
-      if (product) {
-        dispatch(addToCart(order._id, product, qty, axiosInstance));
-        setCode(0);
+  setTimeout(() => {
+       if (product) {
+         dispatch(addToCart(order._id, product, qty, axiosInstance));
+         setCode(0);
         
-      }
-      setProduct(false);
-      footerCart.classList.add("shake");
-    }, "750");
+       }
+       setProduct(false);
+       footerCart.classList.add("shake");
+     }, "750");
     
-    //footerCart.classList.remove("shake");
+    footerCart.classList.remove("shake");
     console.log("fin anim cart")
+    //setIsPaused(false);
   }
 
   const getProductOffset = () => {
@@ -243,6 +251,7 @@ const Scan = () => {
     if (Code) {
       try {
         //setIsPaused(true)
+        //alert("hello");
         setLoading(true);
         setIsNavbarHidden(false);
         const { data } = await axiosInstance.get(
@@ -320,17 +329,17 @@ const Scan = () => {
         <>
           <div className={overflowStyle} id="scan-main">
             <div className="min-h-full min-w-full bg-black text-white ">
-              {/* {loading ? (
+               {loading ? (
                 <>
                 
                    <div className="loader loader-default is-active"></div>  
                 </>
-              ) : ( */}
+              ) : ( 
                 <>
                   {localStorage.getItem("scanner") ? (
                     <>
                     <Header />
-                      {loading ? (<>
+                      {/*loading ? (<>
                         <div className="absolute z-50 h-screen w-screen " style={{backgroundColor : "rgba(0,0,0,0.5)"}}>
                       <div className="z-50 absolute left-2/4 top-[25%]  -translate-x-2/4 ">
                       
@@ -354,8 +363,9 @@ const Scan = () => {
                       </div>
                       
                       
-                      </>) : (<></>)} 
-                       {scan()}
+                      </>) : (<></>)*/} 
+                       {scan()}       
+
                       <div className="absolute w-full h-fit text-center m-auto top-2/4">
                         <div className="flex justify-center" id="">
                           <p
@@ -513,7 +523,7 @@ const Scan = () => {
 
                           <div className="flex w-full">
                             <button
-                              className="rounded-full mt-5 mb-4 py-6 justify-self-end pikko-btn w-full"
+                              className="rounded-full mt-5 mb-4 py-6 justify-self-end w-full bg-white pikko-btn"
                               onClick={() => addToCartHandler()}
                             >
                               Add to cart
@@ -526,7 +536,7 @@ const Scan = () => {
                     <></>
                   )}
                 </>
-              {/* )} */}
+              )}
             </div>
           </div>
         </>

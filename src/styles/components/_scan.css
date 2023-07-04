@@ -35,6 +35,10 @@ p {
     font-size: 1.5rem;
 }
 
+.pikko-btn:focus{
+    background-color: red;
+}
+
 .scandit.scandit-container {
     position: relative;
     z-index: 0;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
@@ -16,7 +16,7 @@ import { CART_EMPTY } from "../constants/cartConstants";
 import FooterNavbar from "../components/FooterNavbar";
 import PageLoader from "../components/PageLoader";
 
-const CartScreen = () => {
+const CartScreen =() => {
   window.scrollTo(0, 0);
   localStorage.setItem("promoSolde", false);
 
@@ -50,12 +50,60 @@ const CartScreen = () => {
 
   const [checkedValues, setCheckedValues] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [localQty, setLocalQty] = useState([]);
+  const [localTotal, setLocalTotal] = useState();
+
 
   useEffect(() => {
     if (order) {
       axiosInstance.put("/track/cartscreen", { id: order._id });
     }
   }, []);
+
+  useEffect(()=>{
+    
+    let total = 0;
+      orderDetails.orderItems.map((item, index) => {
+
+        total += item.price * (localQty[index] || item.Qty)
+        
+    })
+    console.log("--total--")
+
+    setLocalTotal(total);
+    
+  }, [localQty])
+
+  const addItem =(product, index) =>{
+    console.log("--add")
+    console.log(index)
+
+    let newLocalQty = [...localQty]
+    newLocalQty[index] = (newLocalQty[index] || product.Qty) + 1;
+
+    setLocalQty(newLocalQty);
+    console.log(localQty)
+
+    product.qty =  newLocalQty[index]
+    dispatch(addToCart(order._id, product, 1, axiosInstance));
+  }
+  
+  const deleteItem =(item, index) =>{
+    console.log("--delete")
+    console.log(index)
+
+    let newLocalQty = [...localQty]
+    newLocalQty[index] = (newLocalQty[index] || item.Qty) - 1;
+
+    setLocalQty(newLocalQty);
+    console.log(localQty)
+
+    removeFromCartHandler([
+      { product: item, qty: 1 },
+    ])
+   
+  }
+
 
   const addToCartHandler = (product) => {
     dispatch(addToCart(order._id, product, 1, axiosInstance));
@@ -147,7 +195,7 @@ const CartScreen = () => {
 
   return (
     <>
-      {loading || !orderDetails ? (
+      {loading ? (
         <PageLoader/>
         // <div className="loader loader-default is-active"></div>
       ) : (
@@ -171,7 +219,7 @@ const CartScreen = () => {
                       className="cart_empty text-2xl text-center px-12 "
                       to="/scan"
                     >
-                      Scannez ce que vous désirez pour le remplir !
+                      Scannez ce que vous dÃ©sirez pour le remplir !
                     </Link>
                   </div>
                   <FooterNavbar props={{ cart: true }} />
@@ -213,7 +261,11 @@ const CartScreen = () => {
                           </div>
                         </div>
                         <ul>
-                          {orderDetails.orderItems.map((item) => (
+                          {orderDetails.orderItems.map((item, index) => {
+                           
+                            return (
+                            
+
                             <li key={item.index}>
                               <div
                                 className="cart_list py-8 flex justify-evenly items-center bg-white rounded-[10px] mb-12"
@@ -251,25 +303,26 @@ const CartScreen = () => {
                                 <div className="min-30_price rounded-full border-solid px-6 py-1 flex items-center text-2xl relative">
                                   <button
                                     className="border-none pr-4 minusBtn relative"
-                                    onClick={() =>
+                                    onClick={() => deleteItem(item,index)}
+                                    /*onClick={() =>
                                       removeFromCartHandler([
                                         { product: item, qty: 1 },
                                       ])
-                                    }
+                                    }*/
                                   >
                                     -
                                   </button>
-                                  {item.Qty}
+                                  {localQty[index] ? localQty[index] : item.Qty}
                                   <button
                                     className=" top-1 border-none pl-4 relative top-px relative plusBtn "
-                                    onClick={() => addToCartHandler(item)}
+                                    onClick={() => addItem(item, index)}
                                   >
                                     +
                                   </button>
                                 </div>
                               </div>
                             </li>
-                          ))}
+                          )})}
                         </ul>
                         <div
                           className="dashed-top text-white mt-20 pt-6 px-8"
@@ -280,11 +333,12 @@ const CartScreen = () => {
                               <div className="text-xl">Bag Total:&nbsp;</div>
 
                               <div className="font-bold flex text-3xl">
-                                {toPrice(orderDetails.itemsPrice).replace(
+                                {/* {toPrice(orderDetails.itemsPrice).replace(
                                   ".",
                                   ","
-                                )}
-                                €
+                                )} */}
+                                {localTotal}
+                               €
                               </div>
                             </div>
                           </div>
@@ -295,11 +349,11 @@ const CartScreen = () => {
                     </>
                   ) : (
                     <>
-                      <div
+                      {/* <div
                         id="loader"
                         class="loader loader-default is-active"
-                        data-text="Chargement des données"
-                      ></div>
+                        data-text="Chargement des donnÃ©es"
+                      ></div> */}
                     </>
                   )}
                 </>
@@ -310,6 +364,7 @@ const CartScreen = () => {
       )}
     </>
   );
-};
+}
+
 
 export default CartScreen;

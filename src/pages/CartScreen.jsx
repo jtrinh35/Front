@@ -195,7 +195,7 @@ const CartScreen =() => {
 
   return (
     <>
-      {loading ? (
+      {loading  || !orderDetails ?(
         <PageLoader/>
         // <div className="loader loader-default is-active"></div>
       ) : (

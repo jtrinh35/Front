@@ -25,6 +25,7 @@ import ScanditBarcodeScanner from "scandit-sdk-react";
 import useAxiosInterceptors from "../axios/useAxios";
 import FooterNavbar from "./FooterNavbar";
 import { ToastInternet } from "./Toast";
+import PageLoader from "../components/PageLoader";
 
 const Scan = () => {
   window.scrollTo(0, 0);
@@ -49,8 +50,10 @@ const Scan = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const prevOnlineStatus = useRef(isOnline);
   const cart = useSelector((state) => state.cart);
+  const [isPaused, setIsPaused] = useState(false);
 
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
+  const [isProductAnimOver, setisProductAnimOver] = useState(false);
 
   const animProductRef = useRef(null);
 
@@ -115,7 +118,8 @@ const Scan = () => {
   };
 
   const scan = () => {
-    if (access) {
+    //if (access) {
+     
       return (
         <div>
           <ScanditBarcodeScanner
@@ -127,9 +131,12 @@ const Scan = () => {
             guiStyle={BarcodePicker.GuiStyle.VIEWFINDER}
             viewFinderArea={{ x: 0.2, y: 0.01, width: 0.6, height: 0.1 }}
             onScan={(scanResult) => {
+            
               setCode(scanResult.barcodes[0].data);
               console.log(scanResult.barcodes[0].data);
             }}
+            paused={isPaused}
+       
             scanSettings={getScanSettings()}
             videoFit={BarcodePicker.ObjectFit.COVER}
             playSoundOnScan={true}
@@ -141,9 +148,9 @@ const Scan = () => {
           />
         </div>
       );
-    } else {
+    /*} else {
       return <div>{console.log("scan off")}</div>;
-    }
+    }*/
   };
 
   /*function renewOrder(id, visitorId) {
@@ -157,27 +164,53 @@ const Scan = () => {
   }
 
   const addToCartHandler = () => {
-    const footerCart = document.getElementById("footerCart");
+    // const footerCart = document.getElementById("footerCart");
     setLoading(false);
-
-    setIsNavbarHidden(true);
-    setTimeout(() => {
-      setProduct(false);
-      footerCart.classList.add("shake");
-      if (product) {
-        dispatch(addToCart(order._id, product, qty, axiosInstance));
-        setCode(0);
-      }
-    }, "750");
-
-    footerCart.classList.remove("shake");
-    getProductOffset();
+    setIsPaused(true);
+    addToCartAnim();
+    setIsPaused(false);
+    // setIsNavbarHidden(true);
+    // getProductOffset();
+    // setTimeout(() => {
+    // setProduct(false);
+    // footerCart.classList.add("shake");
+    // if (product) {
+    //     dispatch(addToCart(order._id, product, qty, axiosInstance));
+    //     setCode(0);
+        
+    //   }
+    // }, "750");
+    // footerCart.classList.remove("shake");
+   
 
     /*const dot = document.getElementById('cart-item');
     const dot_offset = dot.getBoundingClientRect();
     console.log("offset dot")
     console.log(dot_offset)*/
   };
+
+
+  function addToCartAnim(){
+    console.log("debut anim cart")
+    const footerCart = document.getElementById("footerCart");
+
+    footerCart.classList.remove("shake");
+    setIsNavbarHidden(true);
+    getProductOffset();
+
+    setTimeout(() => {
+      if (product) {
+        dispatch(addToCart(order._id, product, qty, axiosInstance));
+        setCode(0);
+        
+      }
+      setProduct(false);
+      footerCart.classList.add("shake");
+    }, "750");
+    
+    //footerCart.classList.remove("shake");
+    console.log("fin anim cart")
+  }
 
   const getProductOffset = () => {
     if (product) {
@@ -205,18 +238,21 @@ const Scan = () => {
     }
   };
 
+
   async function getProduct() {
     if (Code) {
       try {
+        //setIsPaused(true)
         setLoading(true);
+        setIsNavbarHidden(false);
         const { data } = await axiosInstance.get(
           `/products/${order.storeId}/${Code}`
         );
         console.log(data);
-        setIsNavbarHidden(false);
         setProduct(data[0]);
         setLoading(false);
-        setAccess(false);
+        //setIsPaused(false)
+        // setAccess(false);
         setQty(1);
         setTimeout(refreshScan, scanTimer);
         getProductOffset();
@@ -229,6 +265,16 @@ const Scan = () => {
       }
     }
   }
+
+ 
+
+  useEffect(() => {
+    if (loading) {
+      setIsPaused(true)
+    }else{
+      setIsPaused(false)
+    }
+  }, [loading]);
 
   useEffect(() => {
     if (!order) {
@@ -250,6 +296,7 @@ const Scan = () => {
   const productPopup = () => {
     if (product) {
       setProduct(false);
+      setCode(0);
     }
   };
 
@@ -273,16 +320,42 @@ const Scan = () => {
         <>
           <div className={overflowStyle} id="scan-main">
             <div className="min-h-full min-w-full bg-black text-white ">
-              {loading ? (
+              {/* {loading ? (
                 <>
-                  <div className="loader loader-default is-active"></div>
+                
+                   <div className="loader loader-default is-active"></div>  
                 </>
-              ) : (
+              ) : ( */}
                 <>
                   {localStorage.getItem("scanner") ? (
                     <>
-                      {" "}
-                      <Header /> {scan()}
+                    <Header />
+                      {loading ? (<>
+                        <div className="absolute z-50 h-screen w-screen " style={{backgroundColor : "rgba(0,0,0,0.5)"}}>
+                      <div className="z-50 absolute left-2/4 top-[25%]  -translate-x-2/4 ">
+                      
+                      
+                     <div class="lds-spinner white">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>  
+                     
+                      </div>
+                      </div>
+                      
+                      
+                      </>) : (<></>)} 
+                       {scan()}
                       <div className="absolute w-full h-fit text-center m-auto top-2/4">
                         <div className="flex justify-center" id="">
                           <p
@@ -323,7 +396,7 @@ const Scan = () => {
                           <div className="container flex flex-col items-center justify-start px-8 text-center mx-auto">
                             <img
                               className="my-16 w-96"
-                              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fscan_overlay_pic.png?alt=media&token=4be790ad-57f2-4891-b33a-25a32452f037"
+                              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fscan%2Fscan_overlay_pic.png?alt=media&token=485d7bc9-eded-481d-afb3-991817453327"
                               alt=""
                             />
 
@@ -357,6 +430,7 @@ const Scan = () => {
                     <>
                       <div className="fixed bottom-0 z-20 w-screen">
                         <div
+                          
                           ref={animProductRef}
                           style={{ "--translate-x": 0 }}
                           className={`footer-navbar  ${
@@ -366,6 +440,7 @@ const Scan = () => {
                           }
                           rounded-full bg-white w-28 h-28 flex items-center justify-center"
                           }`}
+                          
                         >
                           <div className="absolute inset-x-2/4 inset-y-2/4   -translate-y-2/4 -translate-x-2/4  flex items-center justify-center w-24 h-24">
                             <img
@@ -377,12 +452,15 @@ const Scan = () => {
                         </div>
 
                         <div
+                          
                           id="popup_product"
                           className={`footer-navbar ${
                             isNavbarHidden
                               ? "slide-down bg-white py-4 px-8 flex flex-col justify-evenly items-center rounded-t-[16px]"
                               : "bg-white py-4 px-8 flex flex-col justify-evenly items-center rounded-t-[16px]"
+                            
                           }`}
+                        
                         >
                           <div className="dashed flex justify-center items-center w-full pb-8">
                             <div className="flex justify-center items-center">
@@ -448,7 +526,7 @@ const Scan = () => {
                     <></>
                   )}
                 </>
-              )}
+              {/* )} */}
             </div>
           </div>
         </>

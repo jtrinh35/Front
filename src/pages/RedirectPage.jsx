@@ -34,7 +34,7 @@ const RedirectPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 4000);
+    }, 2500);
 
     return () => {
       clearTimeout(timer);
@@ -77,7 +77,7 @@ const RedirectPage = () => {
   console.log("--------order-------");
   console.log(order);
   return (
-    /*<>
+    <>
       {isLoading ? (
         <HomeLoader />
       ) : (
@@ -91,20 +91,27 @@ const RedirectPage = () => {
               {location ? (
                 <></>
               ) : (
-                <div
+                <>
+               
+                <HomeLoader />
+                <div className="absolute z-50 mt-52 left-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4">
+                  <p className="text-2xl font-bold">Scannez un QR code</p>
+                </div>
+                {/* <div
                   id="loader"
                   class="loader loader-default is-active"
                   data-text="Scannez un QR code"
-                ></div>
+                ></div>  */}
+                </>
               )}
             </>
           )}
         </>
       )}
-    </>*/
+    </>
 
     /////
-    <>
+    /*<>
       {success ? (
         <div> {navigate("/scan")} </div>
       ) : (
@@ -124,7 +131,7 @@ const RedirectPage = () => {
           )}
         </>
       )}
-    </>
+    </>*/
 
     //////////////////////////
 

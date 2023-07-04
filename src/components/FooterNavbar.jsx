@@ -39,7 +39,7 @@ const FooterNavbar = (props) => {
             }
 
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter_cart.png?alt=media&token=0de5a235-b4ba-46cb-9951-fd6788feb289"
+              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter%2Ffooter_cart.png?alt=media&token=f39655c9-ad7c-4df5-830e-b7e4871d068e"
               alt="panier"
               className="h-10 w-auto"
             />
@@ -54,7 +54,7 @@ const FooterNavbar = (props) => {
       >
         <div className={isActive.scan ? "active p-6" : "p-6"}>
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter_scan.png?alt=media&token=b4c7ebbe-8909-4c79-8aaf-c2d91b880548"
+            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter%2Ffooter_scan.png?alt=media&token=bed667f4-c922-4a44-8edb-c736d397a2eb"
             alt="scan"
             className="h-16 w-auto relative"
           />
@@ -65,7 +65,7 @@ const FooterNavbar = (props) => {
       <Link to="/account">
         <div className={isActive.account ? "active p-3" : "p-3"}>
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter_account.png?alt=media&token=70d5b3a3-2a6b-4950-a00b-483cfcc29beb"
+            src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Ffooter%2Ffooter_account.png?alt=media&token=d178796b-2a6c-4e6f-b726-98aafce3c7b0"
             alt="cagnotte"
             className="h-10 w-auto"
           />

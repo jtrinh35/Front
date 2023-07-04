@@ -14,6 +14,7 @@ import Stripe from "../payments/Stripe/StripePayment";
 import RestrictedProducts from "../components/AgeRestriction/RestrictedProducts";
 import { CART_EMPTY } from "../constants/cartConstants";
 import FooterNavbar from "../components/FooterNavbar";
+import PageLoader from "../components/PageLoader";
 
 const CartScreen = () => {
   window.scrollTo(0, 0);
@@ -147,7 +148,8 @@ const CartScreen = () => {
   return (
     <>
       {loading || !orderDetails ? (
-        <div className="loader loader-default is-active"></div>
+        <PageLoader/>
+        // <div className="loader loader-default is-active"></div>
       ) : (
         <>
           {order === undefined ? (
@@ -161,7 +163,7 @@ const CartScreen = () => {
                   <div className="w-full h-full flex flex-col p-16 items-center gap-5">
                     <img
                       className="w-40 h-auto "
-                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart_empty.png?alt=media&token=3512383f-8687-4d37-aca1-30108ba04fc8"
+                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2Fcart_empty.png?alt=media&token=89a08347-edfa-4994-b01b-c45b65836427"
                       alt="empty_cart"
                     />
                     <h1>Panier vide</h1>
@@ -178,7 +180,7 @@ const CartScreen = () => {
                 <>
                   {orderDetails ? (
                     <>
-                      <div className="min-h-fit px-12 pb-64">
+                      <div className="min-h-fit px-12 pb-80">
                         <div className="flex justify-between items-center">
                           <h3 className="text-3xl">Product</h3>
 
@@ -192,15 +194,18 @@ const CartScreen = () => {
                               >
                                 <img
                                   className=" h-8 w-auto"
-                                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart_delete.png?alt=media&token=8756c8ee-3724-4d6c-bc25-69dea0e04cd0"
+                                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2Fcart_delete.png?alt=media&token=e416fc1a-35c3-44d7-868d-8cced82b717e"
                                   alt="delete"
                                 />
                               </button>
                             ) : (
                               <></>
                             )}
+                            <p className="ml-8 mr-2">
+                            Select all : 
+                            </p>
                             <input
-                              className="ml-12"
+                            
                               type="checkbox"
                               checked={selectAll}
                               onChange={handleSelectAllChange}

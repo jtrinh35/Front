@@ -110,7 +110,7 @@ const Rating = (data) => {
                     style={{ borderWidth: "0.5px" }}
                   >
                     <img
-                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Frating_google_logo.png?alt=media&token=a6225fd4-ec9f-454c-95ca-430f2157b0b1"
+                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2Frating_google_logo.png?alt=media&token=5494e51b-6a99-4e00-9fcd-a45a39d7e207"
                       className="w-24 h-auto p-4"
                     ></img>
                     <div className=" bg-blue-500 p-4 rounded-r-[10px] self-stretch flex items-center">

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import AccountScreen from './pages/AccountScreen';
+import  PageLoader from './components/PageLoader';
 
 
 const CartScreen = React.lazy(() => import('./pages/CartScreen'));
@@ -13,7 +14,7 @@ const OrderSuccess = React.lazy(() => import('./pages/OrderSuccess'));
 const PreScanScreen = React.lazy(() => import('./pages/PreScanScren'));
 const RedirectPage = React.lazy(() => import('./pages/RedirectPage'))
 const ScanCheck = React.lazy(() => import('./pages/ScanCheck'))
-
+// const HomeLoader = React.lazy(() => import('./components/HomeLoader'))
 
 
 function App() {
@@ -26,7 +27,9 @@ function App() {
     <BrowserRouter>
       <div className = "home">
           <main>
-            <React.Suspense fallback={<div className="loader loader-default is-active"></div>}>
+            {/* <React.Suspense fallback={<div className="loader loader-default is-active"></div>}>  */}
+            
+            <React.Suspense fallback={<PageLoader/>}> 
             <Routes>
               <Route path = '/' element ={<RedirectPage/>}></Route>
               <Route path = '/pre' element ={<PreScanScreen/>}></Route>

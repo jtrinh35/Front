@@ -180,7 +180,7 @@ const HomeLoader = () => {
           </div>
 
           <div className="">
-            <div class="loader-dots mt-24">
+            <div class="loader-dots mt-32">
               <div class="loader-dot"></div>
               <div class="loader-dot"></div>
               <div class="loader-dot"></div>

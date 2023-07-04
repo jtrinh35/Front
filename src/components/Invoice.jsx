@@ -273,7 +273,7 @@ const Invoice = (orderDetails, store) => {
                 onClick={() => openFileInNewTab(blob)}
               >
                 <img
-                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Finvoice_download.png?alt=media&token=b7b7a473-228c-4985-a70e-39b7a53012e5"
+                  src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2Finvoice_download.png?alt=media&token=418b1cfb-ab74-41f8-b72f-a72de72a78a2"
                   alt="validé"
                   className=""
                 />

@@ -124,7 +124,7 @@ const ScanCheck = () => {
               <h3 className="text-center text-2xl mb-1">Payment Réussi</h3>{" "}
             </div>
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2FscanCheck_successOrder_success.png?alt=media&token=8a24c344-6382-4b29-b25e-f901519d8512"
+              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2FscanCheck%2FscanCheck_success.png?alt=media&token=9b1b1ab8-9b86-44a5-a280-dcbef0834382"
               alt="logo_success"
               className="w-12 mb-3 h-auto"
             />

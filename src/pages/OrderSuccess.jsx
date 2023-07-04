@@ -10,6 +10,7 @@ import useAxiosInterceptors from "../axios/useAxios";
 import Invoice from "../components/Invoice";
 import Rating from "../components/Rating";
 import axios from "axios";
+import PageLoader from "../components/PageLoader";
 
 const OrderSuccess = () => {
   const toPrice = (num) => parseFloat(num).toFixed(2);
@@ -27,6 +28,7 @@ const OrderSuccess = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart); //prendre le state de cart de redux store
   const [loader, setLoader] = useState(true);
+
 
   useEffect(() => {
     setLoader(false);
@@ -75,7 +77,8 @@ const OrderSuccess = () => {
   return (
     <>
       {loading || !orderDetails || !store ? (
-        <div class="loader loader-default is-active"></div>
+        <PageLoader/>
+        // <div class="loader loader-default is-active"></div>
       ) : (
         <>
           {order && !loader ? (
@@ -87,7 +90,7 @@ const OrderSuccess = () => {
               <div className="flex flex-col justify-center gap-14 mt-10">
                 <div className="flex justify-center flex-col items-center">
                   <img
-                    src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2FscanCheck_successOrder_success.png?alt=media&token=8a24c344-6382-4b29-b25e-f901519d8512"
+                    src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2ForderSuccess_success.png?alt=media&token=310d59d8-83e8-4cca-805e-890a4afaa3b4"
                     alt="logo_success"
                     className="w-20 h-auto"
                   />
@@ -100,7 +103,7 @@ const OrderSuccess = () => {
                   <h2 className="text-4xl my-5">{order.itemsPrice} €</h2>
                   <img
                     className="relative top-6"
-                    src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess_invoice_cart.png?alt=media&token=a82681bd-4be5-4fee-b108-f393e605582b"
+                    src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2ForderSuccess_invoice_cart.png?alt=media&token=f8b392c6-c2f8-4e45-93e8-53eed176819b"
                   />
                   <div
                     className="flex flex-col justify-center items-center w-full py-8 px-6 pt-10 rounded-2xl mb-10"
@@ -180,7 +183,7 @@ const OrderSuccess = () => {
                       <h2 className="text-4xl mt-5">{order.itemsPrice} €</h2>
                       <img
                         className="relative top-6"
-                        src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess_invoice_cart.png?alt=media&token=a82681bd-4be5-4fee-b108-f393e605582b"
+                        src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2ForderSuccess_invoice_cart.png?alt=media&token=f8b392c6-c2f8-4e45-93e8-53eed176819b"
                       />
                       <div
                         className="flex flex-col justify-center items-center w-full py-8 px-6 pt-10 rounded-2xl "
@@ -325,7 +328,8 @@ const OrderSuccess = () => {
           ) : (
             <>
               {/* <div className="bg-red-200">HAHAAAA</div> */}
-              <div class="loader loader-default is-active"></div>
+              {/* <div class="loader loader-default is-active"></div> */}
+              <PageLoader/>
             </>
           )}
         </>

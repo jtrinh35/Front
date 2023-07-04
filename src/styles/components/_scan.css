@@ -751,7 +751,7 @@ br {
 
 @media screen and (max-width: 600px) {
     .scan-overlay .container {
-        padding-bottom: 105px;
+        padding-bottom: 130px;
         /*TODO adjust value for safari & firefox navbar height*/
     }
 }

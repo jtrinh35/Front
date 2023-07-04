@@ -10,15 +10,12 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	margin-top: -8rem;
+	margin-top: -4rem;
 }
 
-.logo {
-	fill: #0B486B;
-}
 
 .logo-back {
-	fill: rgba(11, 72, 107, 0.08);
+	fill: rgba(11, 72, 107, 0.05);
 	stroke: rgba(11, 72, 107, 0.0);
 }
 

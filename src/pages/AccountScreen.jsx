@@ -6,7 +6,8 @@ import PageLoader from "../components/PageLoader";
 const AccountScreen = () => {
   return (
     <>
-      {<HomeLoader />}
+      {/* {<HomeLoader />}  */}
+       <PageLoader /> 
       {/* <div className="bg-white h-screen w-screen flex flex-col justify-center items-center p-10">
         <img
           className="w-24"

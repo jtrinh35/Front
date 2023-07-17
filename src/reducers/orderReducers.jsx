@@ -1,6 +1,6 @@
 import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_RESET, ORDER_CREATE_SUCCESS,ORDER_DETAILS_REQUEST,ORDER_DETAILS_FAIL, ORDER_DETAILS_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RESET, ORDER_COM_REQUEST, ORDER_COM_SUCCESS, ORDER_COM_FAIL, ORDER_DETAILS_RESET, ORDER_VERIF_REQUEST, ORDER_VERIF_SUCCESS, ORDER_VERIF_FAIL } from "../constants/orderConstants";
 
-export const orderCreateReducer = (state = {}, action) =>{
+export const orderCreateReducer = (state = {cartItems : {}}, action) =>{
     switch(action.type){
         case ORDER_CREATE_REQUEST:
             return {loading: true};
@@ -16,11 +16,12 @@ export const orderCreateReducer = (state = {}, action) =>{
 }
 
 export const orderDetailsReducer = (state = {loading: true}, action) =>{
+    console.log(state.cartItems)
     switch (action.type){
         case ORDER_DETAILS_REQUEST:
             return{loading: true};
         case ORDER_DETAILS_SUCCESS:
-            console.log(action.payload)
+            console.log(action.payload.orderItems)
             return{loading: false, order: action.payload, success: true};
         case ORDER_DETAILS_FAIL:
             return{loading: false, error: action.payload};

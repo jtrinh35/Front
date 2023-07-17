@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Quagga from "quagga";
 import Config from "../axios/Config";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, getCartInfo } from "../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../actions/cartActions";
 import { toast } from "react-toastify";
@@ -33,7 +33,6 @@ const Scan = () => {
 
   const navigate = useNavigate();
   const { order } = useSelector((state) => state.orderCreate.order) || {};
-  const orderDetails = useSelector((state) => state.orderDetails.order);
   const orderCreate = useSelector((state) => state.orderCreate);
   const { store } = useSelector((state) => state.store);
   const scanTimer = 1000;
@@ -60,9 +59,10 @@ const Scan = () => {
 
   useEffect(() => {
     if (order) {
-      dispatch(detailsOrder(order._id, axiosInstance));
+      console.log('-----cart change')
+      dispatch(getCartInfo(order._id, axiosInstance))
     }
-  }, [cart]);
+  }, []);
 
   useEffect(() => {
     const handleOnline = () => {
@@ -136,7 +136,7 @@ const Scan = () => {
             console.log(scanResult.barcodes[0].data);
           }}
           //pause={isPaused}
-     
+          onProcessFramze
           scanSettings={getScanSettings()}
           videoFit={BarcodePicker.ObjectFit.COVER}
           playSoundOnScan={true}
@@ -310,14 +310,14 @@ const Scan = () => {
   };
 
   useEffect(() => {
-    if (orderDetails && orderDetails.isPaid) {
+    if (cart && cart.cartItems.isPaid) {   
       if (store && store.id) {
         navigate(`/?ok=${store.id}`);
       } else {
         navigate("/");
       }
     }
-  }, [orderDetails, orderCreate]);
+  }, [cart, orderCreate]);
 
   const navbarOut = () => {
     setIsNavbarHidden(true);

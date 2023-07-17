@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM_FAIL, CART_REMOVE_ITEM_REQUEST, CART_REMOVE_ITEM_SUCCESS } from '../constants/cartConstants'
+import { CART_ADD_ITEM, CART_INFO_FAIL, CART_INFO_REQUEST, CART_INFO_SUCCESS, CART_REMOVE_ITEM_FAIL, CART_REMOVE_ITEM_REQUEST, CART_REMOVE_ITEM_SUCCESS } from '../constants/cartConstants'
 
 export const addToCart = (orderId, product, qty, axiosInstance) => async(dispatch, getState) => {
     
@@ -52,5 +52,19 @@ export const removeFromCart = (Code_Barres_Qty, orderId, Products_Qty, axiosInst
     }
     
     // dispatch({type: CART_REMOVE_ITEM, payload:index});
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+}
+
+export const getCartInfo = (orderId, axiosInstance) => async(dispatch, getState) => {  
+    dispatch({type: CART_INFO_REQUEST, payload: orderId})
+    try{
+        const {data} = await axiosInstance.get(`/orders/${orderId}`)
+        dispatch({type: CART_INFO_SUCCESS, payload: data})
+    }catch(error){
+        const message =
+        error.response && error.response.data.message?
+        error.response.data.message : error.message;
+        dispatch({type: CART_INFO_FAIL, payload: message})
+    }
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 }

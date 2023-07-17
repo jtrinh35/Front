@@ -1,6 +1,8 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import CartLength from "./cartLength";
+import CartLength from "./CartLength";
 
 const FooterNavbar = (props) => {
   const navigate = useNavigate();
@@ -12,17 +14,7 @@ const FooterNavbar = (props) => {
     account: false,
     ...props.props,
   });
-
-  const cartLength = () => {
-    let length;
-    console.log(length);
-    order && order.orderItems.length > 0 ? (length = order.orderItems.map((product) => product.Qty).reduce((a, b) => a + b)) : cart && cart.cartItems.length > 0 ? (length = cart.cartItems.map((product) => product.Qty).reduce((a, b) => a + b)): (length = 0);
-    console.log(cart);
-
-    console.log(length);
-
-    return length;
-  };
+  const countItems = CartLength()
 
   return (
     <footer className="bottom-0 rounded-t-[25px] bg-white flex justify-around items-center px-8 text-center text-black">
@@ -34,7 +26,7 @@ const FooterNavbar = (props) => {
                 id="footerCart"
                 className="px-2 py-1 absolute top-4 ml-8 bg-red-500 rounded-full text-white"
               >
-                {cartLength()}
+                {countItems}
               </span>
             }
 

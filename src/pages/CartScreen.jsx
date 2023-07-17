@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import { addToCart, getCartInfo, removeFromCart } from "../actions/cartActions";
 import { createOrder, detailsOrder } from "../actions/orderActions";
 import HeaderCart from "../components/HeaderCart";
 import {
@@ -15,6 +15,7 @@ import RestrictedProducts from "../components/AgeRestriction/RestrictedProducts"
 import { CART_EMPTY } from "../constants/cartConstants";
 import FooterNavbar from "../components/FooterNavbar";
 import PageLoader from "../components/PageLoader";
+import { cartInfoReducer } from "../reducers/cartReducers";
 
 const CartScreen =() => {
   window.scrollTo(0, 0);
@@ -27,11 +28,6 @@ const CartScreen =() => {
   const navigate = useNavigate();
   const toPrice = (num) => parseFloat(num).toFixed(2);
 
-  const [promotion, setPromotion] = useState();
-  const [promoprice, setPromoprice] = useState(0);
-  const [promoPizz, setPromoPizz] = useState(false);
-  const [pricePizz, setPricePizz] = useState(0);
-  const [promoBoisson, setPromoBoisson] = useState(false);
   // const orderCreate = useSelector(state => state.orderCreate)
   const { order } = useSelector((state) => state.orderCreate.order) || {};
 
@@ -39,8 +35,8 @@ const CartScreen =() => {
   const { cartItems } = cart;
   // cart.itemsPrice = toPrice(cartItems.reduce((a,c) => a+c.price, 0))
   // cart.promoprice = promoprice
-
-  const { success, loading } = useSelector((state) => state.orderDetails);
+  const loading = false
+  const { success } = useSelector((state) => state.orderDetails);
   const orderDetails = useSelector((state) => state.orderDetails.order);
   const orderPay = useSelector((state) => state.orderPay);
   const dispatch = useDispatch();
@@ -56,6 +52,7 @@ const CartScreen =() => {
 
   useEffect(() => {
     if (order) {
+      dispatch(getCartInfo(order._id, axiosInstance))
       axiosInstance.put("/track/cartscreen", { id: order._id });
     }
   }, []);
@@ -63,19 +60,17 @@ const CartScreen =() => {
   useEffect(()=>{
     
     let total = 0;
-      orderDetails.orderItems.map((item, index) => {
+      cartItems.orderItems.map((item, index) => {
 
         total += item.price * (localQty[index] || item.Qty)
         
     })
-    console.log("--total--")
 
     setLocalTotal(total);
     
   }, [localQty])
 
   const addItem =(product, index) =>{
-    console.log("--add")
     console.log(index)
 
     let newLocalQty = [...localQty]
@@ -86,11 +81,11 @@ const CartScreen =() => {
 
     product.qty =  newLocalQty[index]
     dispatch(addToCart(order._id, product, 1, axiosInstance));
+    // addToCart(order._id, product, 1, axiosInstance)
   }
   
   const deleteItem =(item, index) =>{
-    console.log("--delete")
-    console.log(index)
+
 
     let newLocalQty = [...localQty]
     newLocalQty[index] = (newLocalQty[index] || item.Qty) - 1;
@@ -115,9 +110,7 @@ const CartScreen =() => {
       qty: qty,
     }));
 
-    console.log("---product_qty---");
-    console.log(product_qty);
-    const data = await dispatch(
+    dispatch(
       removeFromCart(cbarre_qty, order._id, product_qty, axiosInstance)
     );
     setCheckedValues([]);
@@ -125,28 +118,26 @@ const CartScreen =() => {
   }
 
   const truncate = (str, n) => {
+    console.log(str)
     return str.length > n ? str.slice(0, n - 3) + "..." : str;
   };
 
-  const applyPromotion = () => {
-    setPromotion(true);
-  };
 
   useEffect(() => {
-    if (orderDetails) {
-      if (!cartItems || orderDetails.orderItems.length !== cartItems.length) {
-        cart.cartItems = orderDetails.orderItems;
-      }
+    if (cartItems) {
+      // if (!cartItems || orderDetails.orderItems.length !== cartItems.length) {
+      //   cart.cartItems = orderDetails.orderItems;
+      // }
       // orderDetails.isPaid ? navigate(`/ordersuccess/${orderDetails._id}`) : <></>
-      orderDetails.isPaid ? navigate(`/ScanCheck`) : <></>;
+      cartItems.isPaid ? navigate(`/ScanCheck`) : <></>;
     }
   }, [orderPay]);
 
   useEffect(() => {
     if (order) {
-      dispatch(detailsOrder(order._id, axiosInstance));
+      dispatch(getCartInfo(order._id, axiosInstance));
     }
-  }, [cart, orderPay]);
+  }, [])
 
   const handleCheckboxChange = (item) => {
     const isChecked = checkedValues.some((val) => val.product === item);
@@ -169,7 +160,7 @@ const CartScreen =() => {
     } else {
       // Check select all and add all items to state
       setSelectAll(true);
-      const updatedCheckedValues = orderDetails.orderItems.map((item) => ({
+      const updatedCheckedValues = cartItems.orderItems.map((item) => ({
         product: item,
         qty: item.Qty,
       }));
@@ -177,27 +168,11 @@ const CartScreen =() => {
     }
   };
 
-  // useEffect (()=>{
-  //     if(promotion)
-  //     {
-  //         // cart.itemsPrice = toPrice(cartItems.reduce((a,c) => a+c.price, 0))
-  //         // toPrice(cartItems.reduce((a,c) => a+c.price, 0)) - soldeClient < 1 ?
-  //         // setPromoprice(1)
-  //         // : setPromoprice(toPrice(toPrice(cartItems.reduce((a,c) => a+c.price, 0)) - soldeClient))
-  //         // cart.soldePrice = true
-  //     }
-  //     else{
-  //         cart.itemsPrice = toPrice(cartItems.reduce((a,c) => a+c.price, 0))
-  //         cart.soldePrice = false
-  //         setPromoprice(0)
-  //     }
-  // },[promotion, cartItems.length, cart, promoprice, promoPizz, clientInfo, pricePizz])
-
   return (
     <>
-      {loading  || !orderDetails ?(
+    
+      {loading  || !cartItems ?(
         <PageLoader/>
-        // <div className="loader loader-default is-active"></div>
       ) : (
         <>
           {order === undefined ? (
@@ -206,7 +181,7 @@ const CartScreen =() => {
             <div className="h-full overflow-auto cartscreen">
               <HeaderCart />
 
-              {orderDetails.orderItems.length === 0 ? (
+              {cartItems.orderItems.length === 0 ? (
                 <>
                   <div className="w-full h-full flex flex-col p-16 items-center gap-5">
                     <img
@@ -226,8 +201,9 @@ const CartScreen =() => {
                 </>
               ) : (
                 <>
-                  {orderDetails ? (
+                  {cart && cartItems.orderItems ? (
                     <>
+                    {console.log(cartItems.orderItems)}
                       <div className="min-h-fit px-12 pb-80">
                         <div className="flex justify-between items-center">
                           <h3 className="text-3xl">Product</h3>
@@ -261,12 +237,13 @@ const CartScreen =() => {
                           </div>
                         </div>
                         <ul>
-                          {orderDetails.orderItems.map((item, index) => {
+                          {cartItems.orderItems.map((item, index) => {
                            
                             return (
                             
 
                             <li key={item.index}>
+                              {console.log(item.name)}
                               <div
                                 className="cart_list py-8 flex justify-evenly items-center bg-white rounded-[10px] mb-12"
                                 style={{ borderColor: item.CountInStock }}
@@ -290,7 +267,8 @@ const CartScreen =() => {
                                 <div className="font-semibold pr-4 py-4 ml-4">
                                   <div className="min-30 text-left ">
                                     <p className="mb-1 w-40">
-                                      {truncate(item.name, 26)}
+                                      {console.log(item.name)}
+                                      {/* {truncate(item.name, 26)} */}
                                     </p>
                                     <p className="text-black">
                                       <strong>
@@ -326,7 +304,7 @@ const CartScreen =() => {
                         </ul>
                         <div
                           className="dashed-top text-white mt-20 pt-6 px-8"
-                          disabled={orderDetails.orderItems.length === 0}
+                          disabled={cartItems.orderItems.length === 0}
                         >
                           <div className="text-black">
                             <div className="pt-4 flex justify-between items-center flex-nowrap">

@@ -44,7 +44,7 @@ const CheckoutForm = () => {
 
   let paymentIntent, email, promotion, pr;
 
-  const { order } = orderDetails;
+  const order = cart.cartItems;
 
   function getData1(val) {
     setEmail1(val.target.value);
@@ -68,11 +68,11 @@ const CheckoutForm = () => {
   };
 
   useEffect(() => {
-    console.log(orderDetails.order.ageRestriction);
-    orderDetails.order.ageRestriction === "toCheck"
+    console.log(cart.cartItems.ageRestriction);
+    cart.cartItems.ageRestriction === "toCheck"
       ? setRestricted(true)
       : setRestricted(false);
-  }, [orderDetails]);
+  }, [cart.cartItems]);
 
   function payer() {
     return (

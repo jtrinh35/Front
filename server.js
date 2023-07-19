@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", true),
     next()
   })
-app.use(cors({origin:["http://localhost:3000", "https://www.jilswebapp1.pikkopay.fr"]}))
+app.use(cors({origin:["http://localhost:3000", "https://www.jilswebapp1.pikkopay.fr", "https://www.jilswebapp.pikkopay.fr", "https://www.test.pikkopay.fr"]}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(function(req, res, next) {

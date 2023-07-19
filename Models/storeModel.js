@@ -13,6 +13,8 @@ const storeSchema = new mongoose.Schema({
     // Shopify
     storeName: {type: String, required: false},
     accessToken: {type: String, required: false},
+    avis_google: {type: String, required: false},
+    item_limit: {type: Number, required:false}
     // 
     },
 );

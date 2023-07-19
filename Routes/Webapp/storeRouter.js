@@ -12,7 +12,7 @@ storeRouter.get('/:id', expressAsyncHandler(async(req,res) => {
             res.status(200).send({
                 name: store.name, id: store.id, 
                     cashback: store.cashback,logo: store.logo, ageRestriction: store.ageRestriction,
-                    avis_google: store.avis_google
+                    avis_google: store.avis_google, item_limit: store.item_limit
             })
         }
         else{

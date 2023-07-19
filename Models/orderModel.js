@@ -19,12 +19,17 @@ const orderSchema = new mongoose.Schema({
     orderScreen: {type: Boolean, default: false},
     paidAt: {type: Date},
     verification: {type:Boolean, default : false},
-    avis_google: {type: String, required: false}
     },
     {
     timestamps: true,
     }
     );
-     
+    orderSchema.pre('save', function(next) {
+        if (this.isModified('paidAt')) {
+          this.paidAt = new Date(this.paidAt.getTime() + (2 * 60 * 60 * 1000));
+          console.log("hello world")
+        }
+        next();
+      });
     const Order = mongoose.model('ordertests', orderSchema);
     export default Order;

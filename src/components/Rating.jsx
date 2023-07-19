@@ -61,11 +61,10 @@ const Rating = (data) => {
                 </button>
 
                 <div className=" flex flex-col items-center px-8">
-                  <h2 className="text-center mb-4">
-                    How was your experience ?
-                  </h2>
+                  <h2 className="text-center mb-4">Donner nous votre avis</h2>
                   <p className="text-center mb-8">
-                    Please give us your feedback on Google
+                    Comment était votre expérience ?
+                    {/* Please give us your feedback on Google */}
                   </p>
 
                   <div className="flex gap-8">
@@ -105,17 +104,19 @@ const Rating = (data) => {
                   href={store.avis_google}
                   target="_blank"
                 >
-                  <div
-                    className="flex gap-1 items-center justify-between rounded-[10px] border-solid border-slate-300"
-                    style={{ borderWidth: "0.5px" }}
-                  >
-                    <img
+                  <div className="flex gap-1 items-center justify-between rounded-[10px] ">
+                    {/* <img
                       src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2Frating_google_logo.png?alt=media&token=5494e51b-6a99-4e00-9fcd-a45a39d7e207"
                       className="w-24 h-auto p-4"
-                    ></img>
-                    <div className=" bg-blue-500 p-4 rounded-r-[10px] self-stretch flex items-center">
-                      <p className="text-white">
-                        Click here to leave us {"\n \n"} a review on Google!
+                    ></img> */}
+
+                    <div className=" bg-blue-500 p-4 rounded-full self-stretch flex items-center">
+                      <img
+                        src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2ForderSuccess%2Frating_google_logo_white.png?alt=media&token=18996fd0-cb60-4ed3-982c-237408d100ec"
+                        className="w-16 h-auto p-4"
+                      ></img>
+                      <p className="text-white font-bold pr-4">
+                        Laisser un avis Google
                       </p>
                     </div>
                   </div>

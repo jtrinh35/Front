@@ -1,6 +1,6 @@
 import { PaymentRequestButtonElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from '../../components/Toast';
@@ -17,6 +17,10 @@ const ApplePay = (order, axiosInstance) => {
     const [email1, setEmail1] = useState("");
     const [validemail, setValidemail] = useState(false)
     const [link, setLink] = useState(false) 
+
+    const cart = useSelector((state) => state.cart);
+    
+    const { cartItems, loadingCart } = useSelector((state) => state.cart);
 
     let paymentIntent, email, promotion, pr
 
@@ -41,11 +45,14 @@ const ApplePay = (order, axiosInstance) => {
           },
         }
       }
+      console.log("--------order!!")
+    console.log(order);
     useEffect(()=>{
         setLoadingAxios(true)
         let order_amount;
     
         order_amount = toPrice(order.itemsPrice)
+        console.log("order amount1 : " + order_amount)
            
             if(stripe){
                 
@@ -178,35 +185,31 @@ const ApplePay = (order, axiosInstance) => {
                                     }
                 
                                 }
+                           
                             }
                                                 
-                            
                             
                         catch(error){
                             setLoadingAxios(false)
                             Toast("error", "Paiement échoué")
                             // toast.error("Paiement échoué3")
                         }
-    
-                        
-    
-    
+        
                     }
                     // else{
                     //     setLoadingAxios(false)
                     //     toast.error("Email invalide")
                     // }
-                    
-    
-    
+
                     )
+                    
             }
     
-    }, [stripe, elements])
+    }, [stripe, elements, order.itemsPrice])
 
     return (
         <div>
-            {loadingaxios? (
+            {loadingCart? (
                 <div>LOADING...</div>
             ) : (
                 <>

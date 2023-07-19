@@ -1,0 +1,167 @@
+.cls-1 {
+	fill: #E1FF26;
+	stroke: none;
+	stroke-miterlimit: 8;
+	/* stroke-width: 8px; */
+  }
+  
+  .cont{
+	display:flex;
+	height:100vh;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .run-animation {
+	position: absolute;
+	/* top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0; */
+	margin: auto;
+	width: 11rem;
+	height: 11rem;
+	display: block;
+	animation : appear 1.2s ease-in-out forwards;
+	/* animation-delay: 0.1s; */
+  }
+  
+  .large-circle{
+	fill : rgba(226, 255, 38,0.3);
+	width: 17rem;
+	height: 17rem;
+	animation: grow 1.2s ease-in-out forwards;
+	border-radius: 50%; 
+	overflow: hidden; 
+  }
+  
+  
+  .circle {
+	stroke-dasharray: 700;
+	stroke-dashoffset: 700;
+  }
+  
+  .checkmark {
+	stroke-dasharray: 150;
+	stroke-dashoffset: 150;
+	stroke: white;
+	stroke-width: 1rem;
+  }
+  
+  .run-animation .checkmark {
+	animation: 0.5s checkmarkDraw forwards;
+	/* animation-delay: 0.3s; */
+	
+  }
+  
+  .lines {
+	stroke-dasharray: 1000;
+	transform-origin: 50% 50%;
+   	stroke-dashoffset: 1000; 
+	animation: flare 1.5s ease-in-out forwards; 
+	
+  }
+  
+  .lines line{
+	stroke : rgba(225, 255, 38, 0.8);
+  }
+  
+  .icon{
+	position:absolute;
+	width: 26rem;
+	height: 26rem;
+  }
+  
+  /* .success-anim{
+	animation : disappear 2s;
+  }
+
+  @keyframes disappear{
+	0% {
+	 visibility : inherit;
+	
+	}
+	100% {
+	visibility : hidden;
+	  
+	}
+  } */
+
+  @keyframes circleDraw {
+	0% {
+	  stroke-dashoffset: 700;
+	}
+	70% {
+	  stroke-dashoffset: 0;
+	  fill: transparent;
+	}
+	100% {
+	  stroke-dashoffset: 0;
+	  fill: transparent;
+	}
+  }
+
+
+  @keyframes checkmarkDraw {
+	0% {
+	  stroke-dashoffset: 150;
+	
+	}
+	100% {
+	  stroke-dashoffset: 0;
+	  
+	}
+  }
+  
+  @keyframes flare {
+	0%, 10% {
+	  opacity: 0;
+	  transform: scale(0);
+	  stroke-dashoffset: 10;
+	}
+	12% {
+	  opacity: 1;
+	  transform: scale(0.5);
+	}
+	35% {
+	  transform: scale(1);
+	  stroke-dashoffset: 100;
+	  stroke-dasharray: 100;
+	}
+  }
+  
+  @keyframes appear {
+	0%, 23% {
+	  opacity: 0;
+	  transform: scale(0);
+	}
+	30% {
+	  opacity: 1;
+	  transform: scale(1.1);
+	}
+	100% {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+  }
+  
+  @keyframes grow {
+	0% {
+	  transform: scale(0);
+	  opacity: 1;
+	}
+	30% {
+	  transform: scale(1.1);
+	}
+	60% {
+	  transform: scale(1);
+	}
+	80% {
+	  transform: scale(0.95);
+	  opacity: 0;
+	}
+	100% {
+	  transform: scale(1);
+	  opacity: 0;
+	}
+  }

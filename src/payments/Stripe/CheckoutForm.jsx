@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Config from "../../axios/Config";
 import useAxiosInterceptors from "../../axios/useAxios";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,10 +41,19 @@ const CheckoutForm = () => {
   const [restricted, setRestricted] = useState(false);
   const [display, useDisplay] = useState(true);
   const cart = useSelector((state) => state.cart);
+  const popupRef = useRef(null);
+  const [paddingBottom, setPaddingBottom] = useState("20rem");
 
   let paymentIntent, email, promotion, pr;
+  
+  const [order, setOrder] = useState(null)
 
-  const order = cart.cartItems;
+  useEffect(()=>{
+    if(cart){
+      console.log(cart)
+      setOrder(cart.cartItems)
+    }
+  }, [cart])
 
   function getData1(val) {
     setEmail1(val.target.value);
@@ -65,6 +74,28 @@ const CheckoutForm = () => {
     } else {
       setApplepay(true);
     }
+  };
+
+  //console.log(order.itemsPrice + "applepay")
+  useEffect(() => {
+    const cartOrder = document.getElementById("cartOrder");
+    cartOrder.style.paddingBottom = paddingBottom;
+  }, [paddingBottom]);
+
+  
+  useEffect(() => {
+    calculatePadding();
+  }, [applepay]);
+
+  const calculatePadding = () => {
+    console.log(popup);
+    const hauteurPopup = popupRef.current
+      ? popupRef.current.offsetHeight
+      : "20rem";
+    //const hauteurPopup = popup.offsetHeight;
+    const paddingValue = !applepay ? hauteurPopup + 100 + "px" : "20rem";
+    setPaddingBottom(paddingValue);
+    console.log("hauteur popup= " + hauteurPopup);
   };
 
   useEffect(() => {
@@ -101,7 +132,7 @@ const CheckoutForm = () => {
 
   return (
     <>
-      {applepay ? (
+      {applepay && order? (
         <>
           <div>
             <div className="flex flex-col mt-10">
@@ -135,21 +166,22 @@ const CheckoutForm = () => {
                                                                                   
                                 </div>
                         </div>      */}
-              {store.ageRestriction === "password" && restricted ? (
+              {/* {store.ageRestriction === "password" && restricted ? (
                 <>
                   <RestrictionPopup />
                 </>
-              ) : (
+              ) : ( */}
                 <>
+                {console.log(order)}
                   <ApplePay order={order} axiosInstance={axiosInstance} />
                   <div
-                    className="pikko-btn rounded-full mt-14 mb-12 py-5 justify-self-end pikko-btn w-full text-center"
+                    className="pikko-btn rounded-full mt-14 mb-12 py-4 justify-self-end pikko-btn w-full text-center"
                     onClick={popup}
                   >
-                    Pay Now
+                    Payer
                   </div>
                 </>
-              )}
+              {/* )} */}
             </div>
           </div>
         </>
@@ -162,6 +194,7 @@ const CheckoutForm = () => {
                     </div>
                      */}
             <div
+              ref={popupRef}
               id="popup"
               className="fixed bottom-0 left-0 w-screen h-fit bg-white z-50 rounded-t-[16px] p-8 px-8"
             >

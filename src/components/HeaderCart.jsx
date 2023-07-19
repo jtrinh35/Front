@@ -6,8 +6,8 @@ import CartLength from "./CartLength";
 const HeaderCart = () => {
   const cart = useSelector((state) => state.cart);
   const orderDetails = useSelector((state) => state.orderDetails.order);
-  const {store} = useSelector((state) => state.store)
-  const countItems = CartLength()
+  const { store } = useSelector((state) => state.store);
+  const countItems = CartLength();
 
   return (
     <header>
@@ -24,15 +24,9 @@ const HeaderCart = () => {
                         <span className='text-white'>Pikko</span>
                         <span style={{color:'#FFE163'}}>Pay</span>
                     </div> */}
-          <h2 className="text-4xl">My Cart </h2>
+          <h2 className="text-4xl">Mon Panier </h2>
           {countItems > 0 ? (
-            <span className="text-2xl pl-2">
-              (
-              {
-                countItems
-              }
-              ){" "}
-            </span>
+            <span className="text-2xl pl-2">({countItems}) </span>
           ) : (
             <></>
           )}
@@ -40,8 +34,7 @@ const HeaderCart = () => {
           {/* <span className='text-2xl'> (  ) </span> */}
         </div>
 
-        {countItems > 0 &&
-          countItems >= store.item_limit ? (
+        {countItems > 0 && countItems >= store.item_limit ? (
           <p className="text-2xl px-12 py-4 ">
             Vous avez atteint le nombre maximum d'articles (5){" "}
           </p>

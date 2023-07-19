@@ -19,7 +19,8 @@ import { Toast } from "../components/Toast";
 
 const ScanCheck = () => {
   const { success, loading } = useSelector((state) => state.orderVerif);
-  const orderDetails = useSelector((state) => state.orderDetails.order);
+  //const orderDetails = useSelector((state) => state.orderDetails.order);
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const [Code, setCode] = useState();
   const [access, setAccess] = useState(true);
   const dispatch = useDispatch();
@@ -96,8 +97,8 @@ const ScanCheck = () => {
       const match = Code.match(param);
       const verif = match ? match[1] : null;
 
-      if (verif === orderDetails.storeId) {
-        dispatch(verifOrder(orderDetails._id, axiosInstance));
+      if (verif === cartItems.storeId) {
+        dispatch(verifOrder(cartItems._id, axiosInstance));
       } else {
         Toast("error", "Mauvais code QR");
         setCode(0);
@@ -108,7 +109,7 @@ const ScanCheck = () => {
   useEffect(() => {
     if (success) {
       setAccess(false);
-      navigate(`/ordersuccess/${orderDetails._id}`);
+      navigate(`/ordersuccess/${cartItems._id}`);
     }
   }, [success]);
 

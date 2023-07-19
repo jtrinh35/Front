@@ -16,6 +16,7 @@
 @import './components/css-loader-processing.css';
 @import './components/_homeLoader.css';
 @import './components/_pageLoader.css';
+@import './components/_successAnimation.css';
 
 .slideshow {
   margin: 0 auto;

@@ -133,6 +133,7 @@ function Price(orderPrice, product, status) {
 }*/
 
 async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProduct, champs) {
+  
   // const response = await fetch(`https://a9ce-195-154-25-125.ngrok-free.app/general/overallinfo/${order.storeId}`);
   // console.log(response)
   // Incrémenter Scan/Delete Items
@@ -178,15 +179,29 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
       // Incrémenter dans order.orderItems
       if (orderProduct.orderItems.length === 0) {
         order.orderItems.push(toAddDeleteProduct)
-        await order.save()
+        const result_ = await order.save()
+        
       } else {
         orderProduct.orderItems[0].Qty += toAddDeleteProduct.Qty
-        await orderProduct.save()
+        const result_ = await orderProduct.save()
+        console.log("--result")
+        console.log(result_)
+        
+        order.orderItems = order.orderItems.map((item) => {
+          if (item.Code_Barre === orderProduct.orderItems[0].Code_Barre) {
+            return result_.orderItems[0];
+          }
+          return item;
+        });
+        console.log("--order")
+        console.log(order)
+        // console.log(updatedOrderProduct)
       }
       // Changement de prix order.itemsPrice
       order.itemsPrice = Price(order.itemsPrice, toAddDeleteProduct, "scanItems")
       ageRestriction(order) ? order.ageRestriction = "toCheck" : order.ageRestriction = ""
-      return await order.save()
+      const result = await order.save()
+      return result
 
     case "deleteItems":
 
@@ -200,7 +215,13 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
 
           console.log("--------order product--------")
           console.log(orderProduct)
-          await orderProduct.save()
+          const result_ = await orderProduct.save()
+          order.orderItems = order.orderItems.map((item) => {
+            if (item.Code_Barre === orderProduct.orderItems[0].Code_Barre) {
+              return result_.orderItems[0];
+            }
+            return item;
+          });
         } else {
           // suppression dans order
           order.orderItems.pull(orderProduct.orderItems[i])

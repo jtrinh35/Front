@@ -19,17 +19,29 @@ const orderSchema = new mongoose.Schema({
     orderScreen: {type: Boolean, default: false},
     paidAt: {type: Date},
     verification: {type:Boolean, default : false},
+    createdAt: { type: Date, default: new Date(Date.now() + (2 * 60 * 60 * 1000)) },
+    updatedAt: { type: Date, default: new Date(Date.now() + (2 * 60 * 60 * 1000)) },
+  },
+  {
     },
     {
-    timestamps: true,
-    }
+      timestamps: false   }
     );
-    orderSchema.pre('save', function(next) {
-        if (this.isModified('paidAt')) {
-          this.paidAt = new Date(this.paidAt.getTime() + (2 * 60 * 60 * 1000));
-          console.log("hello world")
-        }
-        next();
-      });
-    const Order = mongoose.model('ordertests', orderSchema);
-    export default Order;
+    orderSchema.pre('save', function(next) {    
+        
+      if (this.isModified('paidAt')) {
+        this.paidAt = new Date(this.paidAt.getTime() + (2 * 60 * 60 * 1000));
+        this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
+      }
+      // if(this.isModified('itemsPrice') || this.isModified('scanItems') || this.isModified('orderItems')){
+      //   this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
+      // }
+      if(this.isModified()){
+        this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
+      }
+      next();
+    });
+
+
+const Order = mongoose.model('ordertests', orderSchema);
+export default Order;

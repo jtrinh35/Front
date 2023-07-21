@@ -103,10 +103,11 @@ const CartScreen = () => {
 
   const addToCartHandler = (product) => {
     //loadingCart = true;
-    dispatch(addToCart(order._id, product, 1, axiosInstance)).then(() => {
-      dispatch(getCartInfo(order._id, axiosInstance));
-      axiosInstance.put("/track/cartscreen", { id: order._id });
-    });
+    dispatch(addToCart(order._id, product, 1, axiosInstance))
+    // .then(() => {
+    //   dispatch(getCartInfo(order._id, axiosInstance));
+    //   axiosInstance.put("/track/cartscreen", { id: order._id });
+    // });
   };
 
   async function removeFromCartHandler(product_qty) {
@@ -117,10 +118,11 @@ const CartScreen = () => {
 
     dispatch(
       removeFromCart(cbarre_qty, order._id, product_qty, axiosInstance)
-    ).then(() => {
-      dispatch(getCartInfo(order._id, axiosInstance));
-      axiosInstance.put("/track/cartscreen", { id: order._id });
-    });
+    )
+    // .then(() => {
+    //   dispatch(getCartInfo(order._id, axiosInstance));
+    //   axiosInstance.put("/track/cartscreen", { id: order._id });
+    // });
 
     setCheckedValues([]);
     setSelectAll(false);
@@ -370,7 +372,9 @@ const CartScreen = () => {
                             </div>
                           </div>
                         </div>
+                        {loadingCart ? <></>: 
                         <Stripe />
+                      }
                       </div>
                       <div
                         id="deletePopup"

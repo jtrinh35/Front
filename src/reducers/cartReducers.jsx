@@ -33,7 +33,8 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
         return {
 
             ...state,
-            cartItems: action.payload,
+            cartItems: res,
+            loadingCart: false
             /*cartItems: {
               ...action.payload,
               orderItems: state.cartItems.orderItems.map((orderItem) => {
@@ -74,7 +75,8 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
       } else {
         return {
           ...state,
-          cartItems : res
+          cartItems : res,
+          loadingCart: false
           /*cartItems: {
             ...state.cartItems,
             orderItems: [...state.cartItems.orderItems, res.orderItems[0]],
@@ -90,6 +92,7 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
       };
 
     case CART_REMOVE_ITEM_REQUEST:
+
       return {
         loading: false,
         loadingCart: true,
@@ -97,10 +100,18 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
       };
 
     case CART_REMOVE_ITEM_SUCCESS:
-      const product = state.cartItems.orderItems.filter(
-        (x) => x.Code_Barre === action.payload[0].Code_Barre
-      )[0];
-      if (product.Qty - action.payload[0].qty >= 1) {
+     
+      // const product = state.cartItems.orderItems.filter(
+      //   (x) => x.Code_Barre === action.payload[0].Code_Barre
+      // )[0];
+      console.log("remove item success")
+      console.log(action.payload)
+      return{
+        loading: false,
+        loadingCart : false,
+        cartItems : action.payload,
+      }
+      /*if (product.Qty - action.payload[0].qty >= 1) {
         console.log("here");
         product.Qty = product.Qty - action.payload[0].qty;
         return {
@@ -137,7 +148,7 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
             ),
           },
         };
-      }
+      }*/
     //on filtre la liste de carteItems et on garde tous ceux qui ne sont pas égaux à la remove
 
     case CART_REMOVE_ITEM_FAIL:

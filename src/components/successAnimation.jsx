@@ -1,6 +1,13 @@
 import React from "react";
 
-const SuccessAnimation = () => {
+const SuccessAnimation = ({ onAnimationComplete }) => {
+
+	const handleAnimationEnd = () => {
+		//setAnim(false);
+		localStorage.setItem('animSuccess', true);
+		onAnimationComplete();
+	};
+
   return (
     <>
       <div
@@ -15,7 +22,7 @@ const SuccessAnimation = () => {
 
 		<svg version="1.1" id="icon" className="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml="preserve">
 			
-   		<g id="lines" className="lines">
+   		<g id="lines" className="lines" onAnimationEnd={handleAnimationEnd}>
     	<line fill="none" stroke="#EAEF26" stroke-linecap="round" stroke-miterlimit="10" x1="20" y1="1.4" x2="20" y2="3.6"/>
     	<line fill="none" stroke="#EAEF26" stroke-linecap="round" stroke-miterlimit="10" x1="20" y1="36.4" x2="20" y2="38.6"/>
 		<line fill="none" stroke="#EAEF26" stroke-linecap="round" stroke-miterlimit="10" x1="1.4" y1="20" x2="3.6" y2="20"/>

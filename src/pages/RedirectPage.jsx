@@ -23,6 +23,7 @@ const RedirectPage = () => {
   const { store } = useSelector((state) => state.store);
   const { success, loading, order } = useSelector((state) => state.orderCreate);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   // const axiosInstance = Config()
   const axiosInstance = useAxiosInterceptors();
@@ -35,6 +36,10 @@ const RedirectPage = () => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2500);
+
+    setTimeout(() => {
+      setIsPageLoading(false);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);
@@ -77,19 +82,22 @@ const RedirectPage = () => {
   console.log("--------order-------");
   console.log(order);
   return (
-    <>
+    /*<>
       {isLoading ? (
         <HomeLoader />
-      ) : (
+      ) : (*/
         <>
-          {success ? (
+          {success && !isLoading ? (
+            <>
+            {//isPageLoading ? <><HomeLoader/></> : 
             <div> {navigate("/scan")} </div>
+            }
+            </>
           ) : (
             <>
-              <></>
-
+             
               {location ? (
-                <></>
+                <> <HomeLoader /></>
               ) : (
                 <>
                
@@ -107,8 +115,8 @@ const RedirectPage = () => {
             </>
           )}
         </>
-      )}
-    </>
+      //)}
+    //</>
 
     /////
     /*<>

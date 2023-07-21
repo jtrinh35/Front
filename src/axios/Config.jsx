@@ -9,8 +9,8 @@ const Config = () => {
     // baseURL: “https://store-dimo-backup.azurewebsites.net/api”
     // baseURL: “http://localhost:3000/api”
     // baseURL: “http://localhost:5000”,
-    //baseURL: "https://pikkoback-rabvfmzrtq-od.a.run.app",
-    baseURL: "http://localhost:5000",
+    baseURL: "https://pikkoback-rabvfmzrtq-od.a.run.app",
+    //baseURL: "http://localhost:5000",
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${auth}`,

@@ -17,14 +17,21 @@ const Scanner = (props) => {
   const scannerInstanceRef = useRef(null);
   const [scanSetting, setScanSetting] = useState(props.scanSettings);
   const [visible, setVisible] = useState(props.visible);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     configurationPromise.then(() => {
+      
       ScanditSDKBarcodePicker.create(reference.current, props, {})
         .then((barcodePicker) => {
+      
           scanner = barcodePicker;
           scannerInstanceRef.current = scanner;
-
+          barcodePicker.on("ready", ()=>{
+            setIsLoading(false);
+            
+          });
+          
           if (props.onScan != null) {
             barcodePicker.on("scan", props.onScan);
           }
@@ -46,6 +53,7 @@ const Scanner = (props) => {
           }
         });
     });
+  
   }, []);
 
   useEffect(() => {
@@ -72,15 +80,48 @@ const Scanner = (props) => {
     if (JSON.stringify(scanSetting) !== JSON.stringify(props.scanSettings)) {
       scanner.applyScanSettings(props.scanSettings);
       setScanSetting(props.scanSettings);
+      
     }
 
     if (visible !== props.visible) {
       scanner.setVisible(props.visible);
       setVisible(props.visible);
+      
     }
   }, [scanSetting, visible]);
 
-  return <div ref={reference} />;
+
+  return (
+  <> 
+  {isLoading ? <>
+    <div
+                        className="absolute z-50 h-screen w-screen "
+                        style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+                      >
+                        <div className="z-50 absolute left-2/4 top-[25%]  -translate-x-2/4 ">
+                          <div class="lds-spinner white">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
+                      </div>
+  
+  
+  </> : <></>}
+  <div ref={reference} />
+  
+  </>
+  );
 };
 
 export default Scanner;

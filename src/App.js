@@ -5,6 +5,7 @@ import AccountScreen from './pages/AccountScreen';
 import Scan from "./components/Scan";
 import  PageLoader from './components/PageLoader';
 import CartScreen from './pages/CartScreen';
+import RedirectPage from './pages/RedirectPage';
 import { ToastInternet } from "./components/Toast";
 import { toast } from "react-toastify";
 
@@ -16,7 +17,7 @@ const OrderScreen = React.lazy(() => import('./pages/OrderScreen'));
 const OrderCheck = React.lazy(() => import('./pages/OrderCheck'));
 const OrderSuccess = React.lazy(() => import('./pages/OrderSuccess'));
 const PreScanScreen = React.lazy(() => import('./pages/PreScanScren'));
-const RedirectPage = React.lazy(() => import('./pages/RedirectPage'))
+//const RedirectPage = React.lazy(() => import('./pages/RedirectPage'))
 const ScanCheck = React.lazy(() => import('./pages/ScanCheck'))
 // const HomeLoader = React.lazy(() => import('./components/HomeLoader'))
 

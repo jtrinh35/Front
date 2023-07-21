@@ -61,8 +61,9 @@ export const removeFromCart =
   async (dispatch, getState) => {
     dispatch({ type: CART_REMOVE_ITEM_REQUEST });
     try {
-      await axiosInstance.put(`orders/${orderId}/delete`, Products_Qty);
-      dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: Code_Barres_Qty });
+      const res =  await axiosInstance.put(`orders/${orderId}/delete`, Products_Qty);
+      // dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: Code_Barres_Qty });
+      dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: res.data});
     } catch (err) {
       console.log(err);
       // console.log("product not found in order " + orderId)

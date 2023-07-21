@@ -8,6 +8,7 @@ import { removeFromCart } from "../actions/cartActions";
 import { toast } from "react-toastify";
 import { listProducts } from "../actions/productActions";
 import Header from "./Header";
+import HomeLoader from "./HomeLoader";
 import { createOrder, detailsOrder } from "../actions/orderActions";
 import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
 import * as ScanditSDK from "scandit-sdk";
@@ -46,6 +47,7 @@ const Scan = () => {
   const [Code, setCode] = useState();
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(false);
+ 
   const [qty, setQty] = useState(1);
   const [overflowStyle, setOverflowStyle] = useState("overflow-auto h-full");
   //const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -76,7 +78,6 @@ const Scan = () => {
       setCartFullPopup(false);
     }
   }, [countItems]);
-
 
   const refreshScan = () => {
     // setProduct()
@@ -150,6 +151,10 @@ const Scan = () => {
   const addToCartHandler = () => {
     // const footerCart = document.getElementById("footerCart");
     setLoading(false);
+    if (countItems == 4){
+      console.log("y'en a 4")
+      setIsPaused(true);
+    }
 
     addToCartAnim();
 
@@ -235,8 +240,13 @@ const Scan = () => {
         setLoading(true);
         setIsNavbarHidden(false);
         const { data } = await axiosInstance.get(
-          `/products/${order.storeId}/${Code}`
+          `/products/${order.storeId}/${Code}`, {
+            params: {
+              orderId: order._id
+            } }
         );
+       
+
         console.log(data);
         setProduct(data[0]);
         setLoading(false);
@@ -301,9 +311,11 @@ const Scan = () => {
     setIsNavbarHidden(true);
   };
 
+
+
   return (
     <>
-    {order ? (
+    {order ?(
       <>
         <div className={overflowStyle} id="scan-main">
           <div className="min-h-full min-w-full bg-black text-white ">
@@ -423,7 +435,7 @@ const Scan = () => {
                           alt=""
                         />
 
-                        <h1 className="mt-4 mb-8">Bienvenue sur Pikkopay</h1>
+                        <h1 className="mt-4 mb-8">Bienvenue sur Pikkopay </h1>
 
                         <h5 className="my-6">
                           Scannez, payez et partez !

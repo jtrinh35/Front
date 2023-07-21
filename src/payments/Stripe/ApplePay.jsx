@@ -76,7 +76,7 @@ const ApplePay = (order, axiosInstance) => {
                     }
                 })
                 pr.on('paymentmethod', async(e)=>{
-    
+                        
                         try{   
                             setLoadingAxios(true)
                                 console.log("tryinnggg")
@@ -115,7 +115,7 @@ const ApplePay = (order, axiosInstance) => {
                                 // console.log(paymentIntent.status);
 
                                 if(paymentIntent.status === 'requires_action'){
-                                    
+                                   
                                     const three_d = await stripe.confirmCardPayment(data.clientSecret)
                                     console.log("three_d")
                                     console.log(three_d)  
@@ -153,7 +153,7 @@ const ApplePay = (order, axiosInstance) => {
                                     }
                                 }
                                 if(paymentIntent.status === 'succeeded'){
-                                    console.log("paymeeeent succeeeed")
+                                   
                                     const rep = await axiosInstance.post('/products', {
                                         id: paymentIntent.id
                                     })
@@ -209,7 +209,7 @@ const ApplePay = (order, axiosInstance) => {
 
     return (
         <div>
-            {loadingCart? (
+            {loadingCart || loadingaxios? (
                 <div>LOADING...</div>
             ) : (
                 <>

@@ -34,11 +34,15 @@ const OrderSuccess = () => {
   useEffect(() => {
     setLoader(false);
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       setAnim(true);
       localStorage.setItem("animSuccess", true);
-    }, "1700");
+    }, "7700");*/
   }, []);
+
+  const handleAnimationComplete = () => {
+    setAnim(true);
+  };
 
   if (order) {
     if (order.isPaid === false) {
@@ -90,7 +94,7 @@ const OrderSuccess = () => {
           {order && !loader ? (
             <>
               {!anim ? (
-                <SuccessAnimation />
+                <SuccessAnimation onAnimationComplete={handleAnimationComplete} />
               ) : (
                 <>
                   <div
@@ -134,7 +138,7 @@ const OrderSuccess = () => {
                             </p>
                           </div>
                           <div className="flex justify-between w-full">
-                            <p>Heure :</p>
+                            <p>Date :</p>
                             <p className="font-semibold">
                               {" "}
                               &nbsp; {order.updatedAt.substring(8, 10)}/
@@ -143,7 +147,7 @@ const OrderSuccess = () => {
                           </div>
 
                           <div className="flex justify-between w-full">
-                            <p>Hour :</p>
+                            <p>Heure :</p>
                             <p className="font-semibold">
                               {" "}
                               &nbsp;{" "}
@@ -236,7 +240,7 @@ const OrderSuccess = () => {
                               </div>
 
                               <div className="flex justify-between w-full">
-                                <p>Hour :</p>
+                                <p>Heure :</p>
                                 <p className="font-semibold">
                                   {" "}
                                   &nbsp;{" "}

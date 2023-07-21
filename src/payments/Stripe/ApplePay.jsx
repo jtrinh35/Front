@@ -140,6 +140,7 @@ const ApplePay = (order, axiosInstance) => {
                                         Toast("success", "Paiement réussi")
                                         // toast.success("Paiement réussi")
                                         order.isPaid = true 
+                                        alert('hello')
                                         successPaymentHandler(email1, order_amount)
                                         localStorage.removeItem('cartItems')  
                 
@@ -171,6 +172,7 @@ const ApplePay = (order, axiosInstance) => {
                                     Toast("success", "Paiement réussi")
                                     // toast.success("Paiement réussi")
                                     order.isPaid = true
+                                    alert("hello2")
                                     successPaymentHandler(email1, order_amount)
                                     localStorage.removeItem('cartItems')
                 
@@ -205,7 +207,7 @@ const ApplePay = (order, axiosInstance) => {
                     
             }
     
-    }, [stripe, elements, order.itemsPrice])
+    }, [stripe, elements])
 
     return (
         <div>

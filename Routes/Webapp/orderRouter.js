@@ -142,26 +142,47 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
     // await addDeleteProduct.save()
   }*/
 
+  console.log("toAddDeleteProduct")
+  console.log(toAddDeleteProduct)
 
   for (let i = 0; i < toAddDeleteProduct.length; i++) {
 
-
     const productToAdd = toAddDeleteProduct[i];
+    console.log("--product to add")
+    console.log(productToAdd)
 
-    const existingProductIndex = addDeleteProduct[champs].findIndex(
-      (x) => x.product.Code_Barre === productToAdd.product.Code_Barre
+    console.log("--add delete product")
+    console.log(addDeleteProduct)
+
+    /*const existingProductIndex = addDeleteProduct[champs].findIndex(
+      (x) => {x.Code_Barre === productToAdd.product.Code_Barre}
+    );*/
+
+    const existingProductIndex = order[champs].findIndex(
+      (x) => x.Code_Barre === productToAdd.product.Code_Barre
     );
-
+    console.log("existing product index")
+      console.log(existingProductIndex)
 
     if (existingProductIndex !== -1) {
-      addDeleteProduct[champs][existingProductIndex].Qty += productToAdd.Qty;
+      //addDeleteProduct[champs][existingProductIndex].Qty += productToAdd.Qty;
+      //console.log("-----addDeleteProduct dans if")
+      //console.log(addDeleteProduct)
+      console.log("order dans if")
+      console.log(order)
+      order[champs][existingProductIndex].Qty += productToAdd.Qty;
+      await order.save()
 
     } else {
-      addDeleteProduct[champs].push(productToAdd);
-
-
+      productToAdd.product.Qty = productToAdd.Qty;
+      //addDeleteProduct[champs].push(productToAdd.product);
+      order[champs].push(productToAdd.product)
+      console.log("order dans else")
+      console.log(order)
+      await order.save()
     }
-
+    
+   
   }
 
   switch (champs) {
@@ -228,7 +249,7 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
 async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
 
 
-  for (let i = 0; i < toDeleteProduct.length; i++) {
+  /*for (let i = 0; i < toDeleteProduct.length; i++) {
 
 
     const productToAdd = toDeleteProduct[i];
@@ -251,6 +272,46 @@ async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
       //console.log(toDeleteProduct);
     }
 
+  }*/
+
+  for (let i = 0; i < toDeleteProduct.length; i++) {
+
+    const productToAdd = toDeleteProduct[i];
+    console.log("--many product to add ")
+    console.log(productToAdd)
+
+    console.log("--many add delete product")
+    console.log(deleteProduct)
+
+    /*const existingProductIndex = addDeleteProduct[champs].findIndex(
+      (x) => {x.Code_Barre === productToAdd.product.Code_Barre}
+    );*/
+
+    const existingProductIndex = order["deleteItems"].findIndex(
+      (x) => x.Code_Barre === productToAdd.product.Code_Barre
+    );
+    console.log("many existing product index")
+      console.log(existingProductIndex)
+
+    if (existingProductIndex !== -1) {
+      //addDeleteProduct[champs][existingProductIndex].Qty += productToAdd.Qty;
+      //console.log("-----addDeleteProduct dans if")
+      //console.log(addDeleteProduct)
+      console.log("many order dans if")
+      console.log(order)
+      order["deleteItems"][existingProductIndex].Qty += productToAdd.Qty;
+      await order.save()
+
+    } else {
+      productToAdd.product.Qty = productToAdd.Qty;
+      //addDeleteProduct[champs].push(productToAdd.product);
+      order["deleteItems"].push(productToAdd.product)
+      console.log("many order dans else")
+      console.log(order)
+      await order.save()
+    }
+    
+   
   }
 
 

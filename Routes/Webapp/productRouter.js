@@ -1,5 +1,6 @@
 import expressAsyncHandler from 'express-async-handler';
 import Product from '../../Models/productModel.js'
+import Order from '../../Models/orderModel.js';
 import express from 'express';
 import data from '../../data.js';
 import { shopifyGetProductByBc } from '../API/Shopify/product.js';
@@ -37,11 +38,15 @@ productRouter.get('/:storeId/:Code_Barre', expressAsyncHandler(async(req,res)=>{
     
     let store
     let product
+    let order
+
+
     try{
         store = await Store.findById(req.params.storeId);
         if(!store){
             res.status(404).send({message: "Store not found"})
         }
+        
 
     }catch(e){
         res.status(505).send({message: e})
@@ -60,6 +65,18 @@ productRouter.get('/:storeId/:Code_Barre', expressAsyncHandler(async(req,res)=>{
         res.status(404).send({message: 'Product not Found'})
     }
     if(product && product.length > 0){
+        try{
+            order = await Order.findById(req.query.orderId);
+            if(!order){
+            res.status(404).send({message: "order not found"})
+            }
+            await scanItem(order, product)
+            
+        }catch(err){
+            console.log(err)
+        }
+        
+      
         
         res.send(product)
     }
@@ -67,5 +84,25 @@ productRouter.get('/:storeId/:Code_Barre', expressAsyncHandler(async(req,res)=>{
         res.status(404).send({message: 'Product not Found'})
     }
 }));
+
+async function scanItem(order, product){
+    const existingProductIndex = order["scanItems"].findIndex(
+        (x) => x.Code_Barre === product[0].Code_Barre
+    );
+
+    
+    if (existingProductIndex !== -1) {
+        order["scanItems"][existingProductIndex].Qty += 1;
+        await order.save()
+  
+    } else {
+        product[0].Qty = 1;
+        order["scanItems"].push(product[0])
+        console.log("order dans else")
+        console.log(order)
+        await order.save()
+    }
+
+}
 
 export default productRouter;

@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import Product from './productModel.js';
-
 var ProductModel = Product.schema
-
+const date = new Date(Date.now() + (2 * 60 * 60 * 1000))
 const orderSchema = new mongoose.Schema({
     storeId: {type: mongoose.Types.ObjectId, required: true},
     orderItems: [ProductModel],
@@ -19,29 +18,27 @@ const orderSchema = new mongoose.Schema({
     orderScreen: {type: Boolean, default: false},
     paidAt: {type: Date},
     verification: {type:Boolean, default : false},
-    createdAt: { type: Date, default: new Date(Date.now() + (2 * 60 * 60 * 1000)) },
-    updatedAt: { type: Date, default: new Date(Date.now() + (2 * 60 * 60 * 1000)) },
+    // createdAt: { type: Date, default: date },
+    // updatedAt: { type: Date, default: new Date(Date.now() + (2 * 60 * 60 * 1000)) },
   },
   {
-    },
-    {
-      timestamps: false   }
-    );
-    orderSchema.pre('save', function(next) {    
-        
-      if (this.isModified('paidAt')) {
-        this.paidAt = new Date(this.paidAt.getTime() + (2 * 60 * 60 * 1000));
-        this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
-      }
-      // if(this.isModified('itemsPrice') || this.isModified('scanItems') || this.isModified('orderItems')){
-      //   this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
-      // }
-      if(this.isModified()){
-        this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
-      }
-      next();
-    });
-
-
+    timestamps: {
+      createdAt: true,
+      updatedAt: true
+    }
+  }
+  );
+  orderSchema.pre('save', function(next) {
+    if (this.isModified('paidAt')) {
+      this.paidAt = new Date(Date.now());
+    }
+    // if(this.isModified('itemsPrice') || this.isModified('scanItems') || this.isModified('orderItems')){
+    //   this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
+    // }
+    // if(this.isModified()){
+    //   this.updatedAt = new Date(Date.now() + (2 * 60 * 60 * 1000));
+    // }
+    next();
+  });
 const Order = mongoose.model('ordertests', orderSchema);
 export default Order;

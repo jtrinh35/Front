@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import 'react-toastify/dist/ReactToastify.css';
 import {Toast} from '../../components/Toast';
 import { payOrder } from '../../actions/orderActions';
+import {  getCartInfo, } from "../../actions/cartActions";
 
 const ApplePay = (order, axiosInstance) => {
 
@@ -26,7 +27,12 @@ const ApplePay = (order, axiosInstance) => {
 
     const toPrice = (num) => (parseFloat(num).toFixed(2))
     const successPaymentHandler = (email1, order_amount) =>{  
-        dispatch(payOrder(order, email1, paymentIntent, axiosInstance, order_amount));
+        console.log("order dans le payment handler")
+        console.log(order)
+        dispatch(payOrder(order, email1, paymentIntent, axiosInstance, order_amount))
+        .then(() => {
+               dispatch(getCartInfo(order._id, axiosInstance));
+               axiosInstance.put("/track/cartscreen", { id: order._id });})
     }
     const options = {
         paymentRequest,
@@ -49,9 +55,9 @@ const ApplePay = (order, axiosInstance) => {
     console.log(order);
     useEffect(()=>{
         setLoadingAxios(true)
-        let order_amount;
+        let order_amount = order.itemsPrice;
     
-        order_amount = toPrice(order.itemsPrice)
+        //order_amount = toPrice(order.itemsPrice)
         console.log("order amount1 : " + order_amount)
            
             if(stripe){
@@ -140,7 +146,11 @@ const ApplePay = (order, axiosInstance) => {
                                         Toast("success", "Paiement réussi")
                                         // toast.success("Paiement réussi")
                                         order.isPaid = true 
-                                        alert('hello')
+                                        console.log("order is paid ? : " + order.isPaid)
+                                        console.log("order amount : " + order_amount)
+                                        console.log("ORDER : ")
+                                        console.log(order)
+                                        //alert('hello')
                                         successPaymentHandler(email1, order_amount)
                                         localStorage.removeItem('cartItems')  
                 
@@ -172,7 +182,12 @@ const ApplePay = (order, axiosInstance) => {
                                     Toast("success", "Paiement réussi")
                                     // toast.success("Paiement réussi")
                                     order.isPaid = true
-                                    alert("hello2")
+                                    console.log("order is paid 2? : " + order.isPaid)
+                                    console.log("ORDER AMOUNT : ")
+                                    console.log("order amount : " + order_amount)
+                                    console.log("ORDER : ")
+                                        console.log(order)
+                                    //alert("hello2")
                                     successPaymentHandler(email1, order_amount)
                                     localStorage.removeItem('cartItems')
                 

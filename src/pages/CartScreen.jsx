@@ -53,8 +53,12 @@ const CartScreen = () => {
   const [localTotal, setLocalTotal] = useState();
   const countItems = CartLength();
 
+  
   useEffect(() => {
+   
     if (order) {
+      console.log("order dans cartScreen")
+      console.log(cartItems)
       dispatch(getCartInfo(order._id, axiosInstance));
       axiosInstance.put("/track/cartscreen", { id: order._id });
     }
@@ -148,6 +152,7 @@ const CartScreen = () => {
       //   cart.cartItems = orderDetails.orderItems;
       // }
       // orderDetails.isPaid ? navigate(`/ordersuccess/${orderDetails._id}`) : <></>
+      console.log("cartScreen cartIems is paid ? :"+ cartItems.isPaid)
       cartItems.isPaid ? navigate(`/ScanCheck`) : <></>;
     }
   }, [orderPay]);

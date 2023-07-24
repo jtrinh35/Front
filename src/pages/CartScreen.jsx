@@ -62,7 +62,8 @@ const CartScreen = () => {
       dispatch(getCartInfo(order._id, axiosInstance));
       axiosInstance.put("/track/cartscreen", { id: order._id });
     }
-  }, []);
+
+  }, [orderPay]);
 
   useEffect(() => {
     let total = 0;
@@ -155,7 +156,7 @@ const CartScreen = () => {
       console.log("cartScreen cartIems is paid ? :"+ cartItems.isPaid)
       cartItems.isPaid ? navigate(`/ScanCheck`) : <></>;
     }
-  }, [orderPay]);
+  }, [orderPay, cart]);
 
   const handleCheckboxChange = (item) => {
     const isChecked = checkedValues.some((val) => val.product === item);

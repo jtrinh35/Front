@@ -30,9 +30,9 @@ const ApplePay = (order, axiosInstance) => {
         console.log("order dans le payment handler")
         console.log(order)
         dispatch(payOrder(order, email1, paymentIntent, axiosInstance, order_amount))
-        .then(() => {
+        /*.then(() => {
                dispatch(getCartInfo(order._id, axiosInstance));
-               axiosInstance.put("/track/cartscreen", { id: order._id });})
+               axiosInstance.put("/track/cartscreen", { id: order._id });})*/
     }
     const options = {
         paymentRequest,

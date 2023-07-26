@@ -53,6 +53,21 @@ const CartScreen = () => {
   const [localTotal, setLocalTotal] = useState();
   const countItems = CartLength();
 
+  useEffect(() => {
+    if(localStorage.getItem('Edenred')){
+      axiosInstance.put('/edenred/balance', {
+        username: JSON.parse(localStorage.getItem('Edenred')).username,
+        access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
+
+      }).then(function(response){
+
+        const newEdenred = JSON.parse(localStorage.getItem('Edenred'))
+        newEdenred.balance = response.data.balance
+        localStorage.setItem('Edenred', JSON.stringify(newEdenred))
+      })
+
+    }
+  }, [])
   
   useEffect(() => {
    
@@ -186,6 +201,7 @@ const CartScreen = () => {
       setCheckedValues(updatedCheckedValues);
     }
   };
+
 
   //console.log("----loadingCart " + loadingCart);
 

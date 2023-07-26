@@ -4,13 +4,12 @@ import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import AccountScreen from './pages/AccountScreen';
 import Scan from "./components/Scan";
 import  PageLoader from './components/PageLoader';
-import CartScreen from './pages/CartScreen';
 import RedirectPage from './pages/RedirectPage';
 import { ToastInternet } from "./components/Toast";
 import { toast } from "react-toastify";
 
 
-//const CartScreen = React.lazy(() => import('./pages/CartScreen'));
+const CartScreen = React.lazy(() => import('./pages/CartScreen'));
 const ProductScreen = React.lazy(() => import('./pages/ProductScreen'));
 //const Scan = React.lazy(() => import('./components/Scan'));
 const OrderScreen = React.lazy(() => import('./pages/OrderScreen'));
@@ -20,6 +19,8 @@ const PreScanScreen = React.lazy(() => import('./pages/PreScanScren'));
 //const RedirectPage = React.lazy(() => import('./pages/RedirectPage'))
 const ScanCheck = React.lazy(() => import('./pages/ScanCheck'))
 // const HomeLoader = React.lazy(() => import('./components/HomeLoader'))
+const TestScreen = React.lazy(() => import('./pages/TestScreen'))
+
 
 
 function App() {
@@ -71,13 +72,13 @@ function App() {
               <Route path = '/pre' element ={<PreScanScreen/>}></Route>
               <Route path = '/scan' element = {<Scan/>}></Route>
               <Route path = '/product/:id' element ={<ProductScreen/>}></Route>
-              <Route path = '/cart' element ={<CartScreen/>}></Route>            
+              <Route path = '/cart' element ={<TestScreen/>}></Route>            
               <Route path = '/check/:orderId' element = {<OrderCheck/>}></Route>
               <Route path = '/ordersuccess/:orderId' element = {<OrderSuccess/>}></Route>
               <Route path = '/order/:orderId' element = {<OrderScreen/>}></Route>
               <Route path = '/ScanCheck' element = {<ScanCheck/>}></Route>
               <Route path = '/account' element = {<AccountScreen/>}></Route>
-              
+              <Route path = '/test' element ={<CartScreen/>}></Route>    
             </Routes> 
             </React.Suspense>
           </main>

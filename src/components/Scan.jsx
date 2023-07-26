@@ -32,7 +32,7 @@ import PageLoader from "../components/PageLoader";
 
 const Scan = () => {
   window.scrollTo(0, 0);
-
+  console.log("hfeizjfizeojfopezof")
   const navigate = useNavigate();
   const { order } = useSelector((state) => state.orderCreate.order) || {};
   const orderCreate = useSelector((state) => state.orderCreate);

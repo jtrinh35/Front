@@ -20,6 +20,7 @@ import Rating from "../../components/Rating";
 import CreditCard from "./CreditCard";
 import ApplePay from "./ApplePay";
 import RestrictionPopup from "../../components/AgeRestriction/RestrictionPopup";
+import Edenred from "../Edenred";
 
 const CheckoutForm = () => {
   const toPrice = (num) => parseFloat(num).toFixed(2);
@@ -180,6 +181,7 @@ const CheckoutForm = () => {
                   >
                     Payer
                   </div>
+                  <Edenred/>
                 </>
               {/* )} */}
             </div>

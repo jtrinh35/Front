@@ -14,6 +14,7 @@
     "axios": "^0.24.0",
     "firebase": "^9.22.1",
     "get-browser-fingerprint": "^2.1.1",
+    "js-cookie": "^3.0.5",
     "jspdf": "^2.4.0",
     "qrcode": "^1.5.0",
     "quagga": "^0.12.1",
@@ -43,8 +44,8 @@
     "@react-pdf/pdfkit": "2.1.0"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

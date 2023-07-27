@@ -82,4 +82,37 @@ edenredRouter.post('/refresh', expressAsyncHandler(async(req, res) => {
 }))
 
 
+
+edenredRouter.post('/delete', expressAsyncHandler(async (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.Edenred) {
+      return res.sendStatus(401);
+    }
+    console.log(req.body)
+    try {
+      res.clearCookie('Edenred', { httpOnly: true, secure: true });
+  
+      const token = req.body.access_token;
+      const username = req.body.username;
+  
+      const revocationEndpoint = 'https://sso.sbx.edenred.io/connect/fullrevocation';
+      const requestBody = `username=${username}`;
+      const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${token}`
+      };
+  
+      const response = await axios.post(revocationEndpoint, requestBody, { headers });
+  
+      console.log(response.data);
+      return res.send('full revocation success');
+  
+    } catch (error) {
+      
+      return res.status(500).send('full revocation failed');
+    }
+  }));
+
+
+
 export default edenredRouter;

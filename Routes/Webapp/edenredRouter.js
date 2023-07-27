@@ -69,7 +69,11 @@ edenredRouter.post('/refresh', expressAsyncHandler(async(req, res) => {
     const refreshToken = cookies.Edenred
     try{
         const data = await useRefreshToken(refreshToken)
-        res.cookie('Edenred', data.refresh_token)
+        res.cookie('Edenred', data.refresh_token, {
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true
+        })
         res.send(data.access_token)
     }
     catch(error){

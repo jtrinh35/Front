@@ -17,7 +17,7 @@ const TestScreen = () => {
     useEffect(async() => {
         if(close === true){
             
-            window.close()
+            // window.close()
 
         }
     }, [close])

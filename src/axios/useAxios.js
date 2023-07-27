@@ -25,7 +25,6 @@ const useAxiosInterceptors = () => {
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
 
                     prevRequest.sent = true;
-                    console.log("hellooo")
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosInstance(prevRequest);

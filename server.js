@@ -13,6 +13,7 @@ import verifyJWT from './JWT/verifyJWT.js';
 import accessToken from './JWT/accessToken.js'; 
 import handleRefreshToken from './JWT/refreshToken.js';
 import cookieParser from 'cookie-parser';
+import edenredRouter from './Routes/Webapp/edenredRouter.js';
 
 
 dotenv.config()
@@ -28,7 +29,7 @@ app.use(cookieParser())
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", true),
     next()
-  })
+})
 
 /* Connection à MongoDB */
 
@@ -57,7 +58,7 @@ app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 app.use('/stripe', stripeRouter);
 app.use('/mail', mailRouter);
-
+app.use('/edenred', edenredRouter)
 
 let port = process.env.PORT
 app.get('/', (req,res) => {

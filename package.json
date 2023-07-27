@@ -33,6 +33,7 @@
     "path": "^0.12.7",
     "pure-css-loader": "^3.3.3",
     "qrcode": "^1.5.0",
+    "qs": "^6.11.2",
     "quagga": "^0.12.1",
     "react-elastic-carousel": "^0.11.5",
     "react-hook-form": "^7.21.0",

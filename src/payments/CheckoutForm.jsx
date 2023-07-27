@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import Config from "../../axios/Config";
-import useAxiosInterceptors from "../../axios/useAxios";
+import Config from "../axios/Config";
+import useAxiosInterceptors from "../axios/useAxios";
 import { useDispatch, useSelector } from "react-redux";
-import { payOrder } from "../../actions/orderActions";
-import { CART_EMPTY } from "../../constants/cartConstants";
-import { Toast } from "../../components/Toast";
-import HeaderOrder from "../../components/HeaderOrder";
+import { payOrder } from "../actions/orderActions";
+import { CART_EMPTY } from "../constants/cartConstants";
+import { Toast } from "../components/Toast";
+import HeaderOrder from "../components/HeaderOrder";
 import {
   useStripe,
   useElements,
@@ -15,12 +15,12 @@ import {
   CardExpiryElement,
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
-import { cartReducer } from "../../reducers/cartReducers";
-import Rating from "../../components/Rating";
-import CreditCard from "./CreditCard";
-import ApplePay from "./ApplePay";
-import RestrictionPopup from "../../components/AgeRestriction/RestrictionPopup";
-import Edenred from "../Edenred";
+import { cartReducer } from "../reducers/cartReducers";
+import Rating from "../components/Rating";
+import CreditCard from "./Stripe/CreditCard";
+import ApplePay from "./Stripe/ApplePay";
+import RestrictionPopup from "../components/AgeRestriction/RestrictionPopup";
+import Edenred from "./Edenred/Edenred";
 
 const CheckoutForm = () => {
   const toPrice = (num) => parseFloat(num).toFixed(2);

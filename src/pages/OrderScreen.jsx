@@ -9,7 +9,7 @@ import {useNavigate} from 'react-router-dom'
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import { Link } from 'react-router-dom';
-import CheckoutForm from '../payments/Stripe/CheckoutForm';
+import CheckoutForm from '../payments/CheckoutForm';
 
 
 const OrderScreen = () => {

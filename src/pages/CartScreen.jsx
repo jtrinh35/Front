@@ -17,6 +17,8 @@ import FooterNavbar from "../components/FooterNavbar";
 import PageLoader from "../components/PageLoader";
 import { cartInfoReducer } from "../reducers/cartReducers";
 import CartLength from "../components/CartLength";
+import Edenred from "../payments/Edenred/Edenred";
+import useEdenredInterceptors from "../axios/edenredAxios/useEdenredAxios";
 
 const CartScreen = () => {
   window.scrollTo(0, 0);
@@ -26,6 +28,7 @@ const CartScreen = () => {
 
   // const axiosInstance = Config()
   const axiosInstance = useAxiosInterceptors();
+  const edenredInstance = useEdenredInterceptors()
   const navigate = useNavigate();
   const toPrice = (num) => parseFloat(num).toFixed(2);
 
@@ -61,10 +64,9 @@ const CartScreen = () => {
         access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
 
       }).then(function(response){
-
-        const newEdenred = JSON.parse(localStorage.getItem('Edenred'))
-        newEdenred.balance = response.data.balance
-        localStorage.setItem('Edenred', JSON.stringify(newEdenred))
+        const Edenred = JSON.parse(localStorage.getItem('Edenred'))
+        Edenred.balance = response.data.balance
+        localStorage.setItem('Edenred', JSON.stringify(Edenred))
       })
 
     }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {loadStripe} from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from './CheckoutForm';
+import CheckoutForm from '../CheckoutForm';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

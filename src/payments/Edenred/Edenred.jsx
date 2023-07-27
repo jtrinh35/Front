@@ -62,7 +62,7 @@ const Edenred = () => {
     <>
       {edenred && edenred.balance && edenred.balance.amount ? (
         <>
-          <button className="edenred-btn flex justify-evenly items-center font-semibold bg-slate-50 text-black py-5 w-auto  rounded-full edenred-btn-active">
+          <button className="edenred-btn flex justify-evenly items-center font-medium bg-slate-50 text-black py-5 w-auto  rounded-full edenred-btn-active">
             Edenred
             <span className=" text-lg font-semibold bg-red-100  p-1 px-2 rounded-[5px] text-red-600 ">
               <span className="font-bold">

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosInterceptors from '../axios/useAxios';
+import HomeLoader from "../components/HomeLoader";
+import { Page } from '@react-pdf/renderer';
 
 const TestScreen = () => {
     const axiosInstance = useAxiosInterceptors()
@@ -23,9 +25,7 @@ const TestScreen = () => {
     }, [close])
     return (
 
-        <div>
-            
-        </div>
+        <HomeLoader />
     );
 };
 

@@ -81,7 +81,7 @@ height: 100vh;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
   font-size: 2rem;
   font-family: "intersemibold";
-  border-bottom: 6px solid rgba(255, 207, 38, 0.5)
+  /* border-bottom: 6px solid rgba(255, 207, 38, 0.5) */
 }
 
 .pikko-btn:active {

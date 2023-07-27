@@ -176,7 +176,7 @@ const CheckoutForm = () => {
                 
                   <ApplePay order={order} axiosInstance={axiosInstance} />
                   <div
-                    className="pikko-btn rounded-full mt-14 mb-12 py-4 justify-self-end pikko-btn w-full text-center"
+                    className="pikko-btn rounded-full mt-14 mb-12 py-4 justify-self-end pikko-btn w-full text-center text-3xl"
                     onClick={popup}
                   >
                     Payer

@@ -2,6 +2,19 @@
     background-color: #FFFDF1;
 }
 
+.edenred-btn{
+   /* border: solid linear-gradient(140deg, rgba(225, 255, 38, 1) 15%, rgba(255, 207, 38, 1) 100%); */
+   font-family : "inter";
+   font-size: 1.875rem;
+   border: none;
+   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12);
+}
+
+.edenred-btn-active{
+    border: solid 0.5px rgb(226 232 240);
+    font-size: 1.65rem;
+   
+}
 
 .smallimg {
     height: 75px;

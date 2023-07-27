@@ -59,7 +59,7 @@ const CartScreen = () => {
   useEffect(() => {
     if(localStorage.getItem('Edenred')){
    
-      axiosInstance.put('/edenred/balance', {
+      edenredInstance.put('/edenred/balance', {
         username: JSON.parse(localStorage.getItem('Edenred')).username,
         access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
 

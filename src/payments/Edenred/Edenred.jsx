@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useEdenredInterceptors from "../../axios/edenredAxios/useEdenredAxios";
 
 const Edenred = () => {
   "lucasismael@yopmail.com";
@@ -11,7 +12,7 @@ const Edenred = () => {
     window.open(url, "_blank");
   };
   const [edenred, setEdenred] = useState();
-  //const [balanceAmount, setbalanceAmount] = useState();
+  const edenredInstance = useEdenredInterceptors()
 
   const handleLocalStorageChange = (event) => {
     if (event.key === "Edenred") {
@@ -52,6 +53,18 @@ const Edenred = () => {
     }
   };
 
+  function removeEdenred(){
+    edenredInstance.post('/edenred/delete', {
+      username: JSON.parse(localStorage.getItem('Edenred')).username,
+      access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
+    })
+
+    localStorage.removeItem("Edenred")
+
+    setEdenred(false)
+  }
+
+
   //console.log("local storage : ")
   //let eden = JSON.parse(localStorage.getItem('Edenred'))
   /*eden.balance.amount*/
@@ -62,7 +75,8 @@ const Edenred = () => {
     <>
       {edenred && edenred.balance && edenred.balance.amount ? (
         <>
-          <button className="edenred-btn flex justify-evenly items-center font-medium bg-slate-50 text-black py-5 w-auto  rounded-full edenred-btn-active">
+          <button className="edenred-btn flex justify-evenly items-center font-medium bg-slate-50 text-black py-5 w-auto  rounded-full edenred-btn-active"
+          onClick={deletePopup}>
             Edenred
             <span className=" text-lg font-semibold bg-red-100  p-1 px-2 rounded-[5px] text-red-600 ">
               <span className="font-bold">
@@ -105,7 +119,10 @@ const Edenred = () => {
                     backgroundColor: "rgba(239, 68, 68, 0.8)",
                   }}
                   className="text-2xl py-2 border-none  px-4 rounded-[5px] text-white  "
-                 
+                  onClick={()=>{
+                    deletePopup()
+                    removeEdenred()
+                  }}
                 >
                   supprimer
                 </button>

@@ -5,6 +5,7 @@ import { getToken } from '../API/Edenred/getToken.js';
 import { getUserInfo } from '../API/Edenred/getUserInfo.js';
 import { getBalance } from '../API/Edenred/getBalance.js';
 import { useRefreshToken } from '../API/Edenred/useRefreshToken.js';
+import { revoke_token } from '../API/Edenred/revokeToken.js';
 
 
 const edenredRouter = express.Router();
@@ -23,7 +24,7 @@ edenredRouter.put('/info',expressAsyncHandler(async (req, res) => {
             balance: {amount: balance.data[0].available_amount, currency: balance.data[0].currency},
             session: session
         }
-        res.cookie('__session', token.refresh_token, {
+        res.cookie('Edenred', token.refresh_token, {
             httpOnly: true,
         })
         res.send(response)
@@ -86,25 +87,14 @@ edenredRouter.post('/delete', expressAsyncHandler(async (req, res) => {
     if (!cookies?.Edenred) {
       return res.sendStatus(401);
     }
-    console.log(req.body)
+    const refreshToken = cookies.Edenred
+    console.log(refreshToken)
     try {
-      res.clearCookie('Edenred', { httpOnly: true, secure: true });
-  
-      const token = req.cookies;
-      const tokenTypeHint = 'access_token'
-      const client_id = '427b16d007b048c5b7416ec28cf69e37'
-      const client_secret = 'iU4E-YsnDogLkKWM3GJIV6x38rVxVoAoRCNyfPru'
-  
-      const revocationEndpoint = 'https://sso.sbx.edenred.io/connect/revocation';
-      const requestBody = `token=${token}&token_type_hint=${tokenTypeHint}&client_id=${client_id}&client_secret=${client_secret}`;
-      const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${req.body.access_token}`
-      };
-  
-      const response = await axios.post(revocationEndpoint, requestBody, { headers });
-      return res.send("revocation success");
-  
+      res.clearCookie('Edenred', { httpOnly: true, secure: true }); 
+      const revoke = await revoke_token(refreshToken)
+      console.log(revoke)
+      res.send(revoke)
+    
     } catch (error) {
         res.status(error.response.status).send({error: error.response.data})
 

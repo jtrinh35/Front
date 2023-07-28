@@ -23,10 +23,8 @@ edenredRouter.put('/info',expressAsyncHandler(async (req, res) => {
             balance: {amount: balance.data[0].available_amount, currency: balance.data[0].currency},
             session: session
         }
-        res.cookie('Edenred', token.refresh_token, {
+        res.cookie('__session', token.refresh_token, {
             httpOnly: true,
-            sameSite: 'none',
-            secure: true
         })
         res.send(response)
     }

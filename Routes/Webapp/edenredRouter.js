@@ -92,24 +92,24 @@ edenredRouter.post('/delete', expressAsyncHandler(async (req, res) => {
     try {
       res.clearCookie('Edenred', { httpOnly: true, secure: true });
   
-      const token = req.body.access_token;
-      const username = req.body.username;
+      const token = req.cookies;
+      const tokenTypeHint = 'access_token'
+      const client_id = '427b16d007b048c5b7416ec28cf69e37'
+      const client_secret = 'iU4E-YsnDogLkKWM3GJIV6x38rVxVoAoRCNyfPru'
   
-      const revocationEndpoint = 'https://sso.sbx.edenred.io/connect/fullrevocation';
-      const requestBody = `username=${username}`;
+      const revocationEndpoint = 'https://sso.sbx.edenred.io/connect/revocation';
+      const requestBody = `token=${token}&token_type_hint=${tokenTypeHint}&client_id=${client_id}&client_secret=${client_secret}`;
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${req.body.access_token}`
       };
   
       const response = await axios.post(revocationEndpoint, requestBody, { headers });
-  
-      console.log(response.data);
-      return res.send('full revocation success');
+      return res.send("revocation success");
   
     } catch (error) {
-      
-      return res.status(500).send('full revocation failed');
+        res.status(error.response.status).send({error: error.response.data})
+
     }
   }));
 

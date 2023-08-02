@@ -54,20 +54,25 @@ function ageRestriction(order) {
 }*/
 
 function Price(orderPrice, product, status) {
-
+  console.log(product)
   if (orderPrice) {
     switch (status) {
       case "scanItems":
         return toPrice(orderPrice + product.Qty * product.price)
       case "deleteItems":
+        console.log("helooo" + product)
         const newPrice = product.reduce((total, {
           product,
           Qty
         }) => {
+          console.log("prodhfhezi")
+          console.log("product" + product.price)
           const productPrice = Qty * product.price;
           return total + productPrice;
-        }, 0);
 
+        }, 0);
+        console.log("orderPrice" + orderPrice)
+        console.log("newPrice" + newPrice)
         return toPrice(orderPrice - newPrice);
       default:
         return null
@@ -77,6 +82,7 @@ function Price(orderPrice, product, status) {
   }
 
 }
+
 
 /*async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProduct, champs){
   // const response = await fetch(`https://a9ce-195-154-25-125.ngrok-free.app/general/overallinfo/${order.storeId}`);
@@ -142,17 +148,10 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
     // await addDeleteProduct.save()
   }*/
 
-  console.log("toAddDeleteProduct")
-  console.log(toAddDeleteProduct)
 
   for (let i = 0; i < toAddDeleteProduct.length; i++) {
 
     const productToAdd = toAddDeleteProduct[i];
-    console.log("--product to add")
-    console.log(productToAdd)
-
-    console.log("--add delete product")
-    console.log(addDeleteProduct)
 
     /*const existingProductIndex = addDeleteProduct[champs].findIndex(
       (x) => {x.Code_Barre === productToAdd.product.Code_Barre}
@@ -161,15 +160,12 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
     const existingProductIndex = order[champs].findIndex(
       (x) => x.Code_Barre === productToAdd.product.Code_Barre
     );
-    console.log("existing product index")
-      console.log(existingProductIndex)
 
     if (existingProductIndex !== -1) {
       //addDeleteProduct[champs][existingProductIndex].Qty += productToAdd.Qty;
       //console.log("-----addDeleteProduct dans if")
       //console.log(addDeleteProduct)
-      console.log("order dans if")
-      console.log(order)
+
       order[champs][existingProductIndex].Qty += productToAdd.Qty;
       await order.save()
 
@@ -177,8 +173,7 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
       productToAdd.product.Qty = productToAdd.Qty;
       //addDeleteProduct[champs].push(productToAdd.product);
       order[champs].push(productToAdd.product)
-      console.log("order dans else")
-      console.log(order)
+
       await order.save()
     }
     
@@ -206,6 +201,9 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
 
       }
       // Changement de prix order.itemsPrice
+      if(toAddDeleteProduct.TR === true){
+        order.itemsPrice_TR = Price(order.itemsPrice_TR, toAddDeleteProduct, "scanItems")
+      }
       order.itemsPrice = Price(order.itemsPrice, toAddDeleteProduct, "scanItems")
       ageRestriction(order) ? order.ageRestriction = "toCheck" : order.ageRestriction = ""
       const result = await order.save()
@@ -235,6 +233,9 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
 
 
       }
+      if(toAddDeleteProduct[0].product.TR === true){
+        order.itemsPrice_TR = Price(order.itemsPrice_TR, toAddDeleteProduct, "deleteItems")
+      }
       order.itemsPrice = Price(order.itemsPrice, toAddDeleteProduct, "deleteItems")
       ageRestriction(order) ? order.ageRestriction = "toCheck" : order.ageRestriction = ""
       return await order.save()
@@ -248,57 +249,15 @@ async function addDelete(order, orderProduct, addDeleteProduct, toAddDeleteProdu
 
 async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
 
-
-  /*for (let i = 0; i < toDeleteProduct.length; i++) {
-
-
-    const productToAdd = toDeleteProduct[i];
-
-    const existingProductIndex = deleteProduct["deleteItems"].findIndex(
-      (x) => x.product.Code_Barre === productToAdd.product.Code_Barre
-    );
-
-    //console.log("existingProductIndex")
-    //console.log(existingProductIndex);
-
-
-    if (existingProductIndex !== -1) {
-      deleteProduct["deleteItems"][existingProductIndex].Qty += productToAdd.Qty;
-      //console.log("product pendant le premier for if tour " + i)
-      //console.log(toDeleteProduct);
-    } else {
-      deleteProduct["deleteItems"].push(productToAdd);
-      //console.log("product pendant le premier for else tour " + i)
-      //console.log(toDeleteProduct);
-    }
-
-  }*/
-
   for (let i = 0; i < toDeleteProduct.length; i++) {
 
     const productToAdd = toDeleteProduct[i];
-    console.log("--many product to add ")
-    console.log(productToAdd)
-
-    console.log("--many add delete product")
-    console.log(deleteProduct)
-
-    /*const existingProductIndex = addDeleteProduct[champs].findIndex(
-      (x) => {x.Code_Barre === productToAdd.product.Code_Barre}
-    );*/
-
     const existingProductIndex = order["deleteItems"].findIndex(
       (x) => x.Code_Barre === productToAdd.product.Code_Barre
     );
-    console.log("many existing product index")
-      console.log(existingProductIndex)
 
     if (existingProductIndex !== -1) {
-      //addDeleteProduct[champs][existingProductIndex].Qty += productToAdd.Qty;
-      //console.log("-----addDeleteProduct dans if")
-      //console.log(addDeleteProduct)
-      console.log("many order dans if")
-      console.log(order)
+
       order["deleteItems"][existingProductIndex].Qty += productToAdd.Qty;
       await order.save()
 
@@ -306,8 +265,6 @@ async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
       productToAdd.product.Qty = productToAdd.Qty;
       //addDeleteProduct[champs].push(productToAdd.product);
       order["deleteItems"].push(productToAdd.product)
-      console.log("many order dans else")
-      console.log(order)
       await order.save()
     }
     
@@ -317,23 +274,15 @@ async function deleteMany(order, orderProduct, deleteProduct, toDeleteProduct) {
 
   for (let i = 0; i < toDeleteProduct.length; i++) {
 
-    /*if (orderProduct.orderItems[i].Qty - toDeleteProduct[i].Qty >= 1) {
-      console.log("------------errorrrrr !!!!--------")
-      console.log("orderItems : "+ i)
-      console.log(orderProduct.orderItems[i])
-
-      console.log("deleteproduct : "+ i)
-      console.log(toDeleteProduct[i])
-
+    orderProduct.orderItems[i];
+    order.orderItems.pull(orderProduct.orderItems[i])
   
-    } else {*/
-      // suppression dans order
-      orderProduct.orderItems[i];
-      order.orderItems.pull(orderProduct.orderItems[i])
-
-    //}
     await order.save()
 
+  }
+  const toDeleteProduct_TR = toDeleteProduct.filter(item => item.product.TR === true)
+  if(toDeleteProduct_TR.length > 0){
+    order.itemsPrice_TR = Price(order.itemsPrice_TR, toDeleteProduct_TR, "deleteItems")
   }
   order.itemsPrice = Price(order.itemsPrice, toDeleteProduct, "deleteItems")
   ageRestriction(order) ? order.ageRestriction = "toCheck" : order.ageRestriction = ""
@@ -347,6 +296,7 @@ orderRouter.post('/', expressAsyncHandler(async (req, res) => {
       storeId: req.body.storeId,
       clientId: req.body.clientId,
       // orderItems: req.body.orderItems,
+      itemsPrice_TR: 0,
       itemsPrice: 0,
       // promoPrice: req.body.promoprice
       promoPrice: 0,

@@ -14,6 +14,7 @@ import accessToken from './JWT/accessToken.js';
 import handleRefreshToken from './JWT/refreshToken.js';
 import cookieParser from 'cookie-parser';
 import edenredRouter from './Routes/Webapp/edenredRouter.js';
+import paygreenRouter from './Routes/Webapp/paygreenRouter.js';
 
 
 dotenv.config()
@@ -53,7 +54,7 @@ app.get('/refresh', (req, res) => {
 })
 
 // app.use(verifyJWT)
-
+app.use('/paygreen', paygreenRouter)
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 app.use('/stripe', stripeRouter);
@@ -63,6 +64,38 @@ app.use('/edenred', edenredRouter)
 let port = process.env.PORT
 app.get('/', (req,res) => {
     res.send(port)
+})
+app.get('/test1', (req,res) =>{
+    const data = [
+        {
+          product: {
+            name: 'Kinder Bueno',
+            image: 'https://i.ibb.co/T4gZbQX/Kinder-Bueno.png',
+            price: 3.59,
+            Code_Barre: '8000500015803',
+            Qty: 1,
+            TR: true,
+            _id: '64c3cbff0ced9ddcf774426d'
+          },
+          Qty: 1
+        },
+        {
+          product: {
+            name: 'PlayStation 5',
+            category: 'video games',
+            image: 'https://i.ibb.co/QH41vnK/image-removebg-preview-5.png',
+            price: 450,
+            Code_Barre: '4192200312505',
+            Qty: 1,
+            TR: false,
+            _id: '64c3cc040ced9ddcf774427e'
+          },
+          Qty: 1
+        }
+      ];
+    const filter = data.filter(item => item.product.TR === true)
+    console.log(filter)
+    res.send(filter)
 })
 app.listen(port || 5000, () => {console.log(`serveur ${port} connecté`)})
 

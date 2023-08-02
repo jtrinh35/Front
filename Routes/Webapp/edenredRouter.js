@@ -6,6 +6,7 @@ import { getUserInfo } from '../API/Edenred/getUserInfo.js';
 import { getBalance } from '../API/Edenred/getBalance.js';
 import { useRefreshToken } from '../API/Edenred/useRefreshToken.js';
 import { revoke_token } from '../API/Edenred/revokeToken.js';
+import { transactionCapture } from '../API/Edenred/transactionCapture.js';
 
 
 const edenredRouter = express.Router();
@@ -24,9 +25,12 @@ edenredRouter.put('/info',expressAsyncHandler(async (req, res) => {
             balance: {amount: balance.data[0].available_amount, currency: balance.data[0].currency},
             session: session
         }
-        res.cookie('Edenred', token.refresh_token, {
-            httpOnly: true,
+        res.cookie('__session', token.refresh_token, {
+            httpOnly: true, secure: true, sameSite: 'none'
         })
+        // res.setHeader('Cache-Control', 'private');
+
+        // res.cookie('__session_okok', "hello world")
         res.send(response)
     }
     catch(error){
@@ -39,14 +43,18 @@ edenredRouter.put('/info',expressAsyncHandler(async (req, res) => {
 
 edenredRouter.put('/balance',expressAsyncHandler(async(req, res) => {
 
-    console.log(req.body)
     // const username = "123"
     const username = req.body.username
     const access_token = req.body.access_token
 
     try{
         const balance = await getBalance(username, access_token)
-        const response = {balance: {amount: balance.data[0].available_amount, currency: balance.data[0].currency}}  
+        const amount = balance.data[0].available_amount
+        const currency = balance.data[0].currency
+        const response = {balance: {amount: amount, currency: currency}}  
+        res.cookie('__session', "testtest", {
+            httpOnly: true, secure: true, sameSite: 'none'
+        })
         res.send(response)  
     }
     catch(error){
@@ -80,6 +88,20 @@ edenredRouter.post('/refresh', expressAsyncHandler(async(req, res) => {
     }
 }))
 
+edenredRouter.post('/capture', expressAsyncHandler(async(req, res) => {
+
+    const order = req.body.order
+    const amount = req.body.amount
+    const edenred = JSON.parse(req.body.edenred)
+    try{
+        const {data} = await transactionCapture(order, amount, edenred)
+        res.send(data)
+    }
+    catch(error){
+        res.status(error.response.status).send({error: error.response.data})
+    }
+
+}))
 
 
 edenredRouter.post('/delete', expressAsyncHandler(async (req, res) => {
@@ -97,9 +119,9 @@ edenredRouter.post('/delete', expressAsyncHandler(async (req, res) => {
     
     } catch (error) {
         res.status(error.response.status).send({error: error.response.data})
-
     }
   }));
+
 
 
 

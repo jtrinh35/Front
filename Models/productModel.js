@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
     Qty: {type: Number, required: false},
     scannedAt: {type: Date, required: false},
     deletedAt: {type: Date, required: false},
+    TR: {type: Boolean, required: false},
     // Shopify
     inventory_idShopify: {type: String, required: false},
     variant_idShopify: {type: String, required: false},

@@ -47,7 +47,7 @@ const RedirectPage = () => {
   }, []);
 
   useEffect(() => {
-    window.localStorage.clear();
+    //window.localStorage.clear();
     dispatch({ type: CART_EMPTY });
     dispatch({ type: ID_RESET });
     dispatch({ type: ORDER_DETAILS_RESET });

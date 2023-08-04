@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from "react";
+import useAxiosInterceptors from "../../axios/useAxios";
 
 const UserForm = ({ formDone, openStatus }) => {
+  const axiosInstance = useAxiosInterceptors();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isFormComplete, setIsFormComplete] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState();
   const [isContentVisible, setIsContentVisible] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  //console.log("ussser")
+  //console.log(user)
+
   useEffect(() => {
+    console.log("ussser")
+    console.log(user)
+    if(user && user.name && user.email){
+      setName(user.name)
+      setEmail(user.email)
+      //console.log("complete !!!")
+      //setIsFormComplete(true)
+      //setIsContentVisible(true)
+    }
+    
+  }, []);
+
+  useEffect(() => {
+    setIsFormComplete(false)
     if (name != "" && emailRegex.test(email)) {
       setTimeout(() => {
         setIsFormComplete(true);
@@ -20,10 +40,14 @@ const UserForm = ({ formDone, openStatus }) => {
 
   useEffect(() => {
     formDone(isFormComplete);
+    if(isFormComplete){
+
+      localStorage.setItem("user", `{"name":"${name}", "email":"${email}"}`);
+    }
     if (isFormComplete) {
-      setTimeout(() => {
+      /*setTimeout(() => {
         setIsContentVisible(false);
-      }, "500");
+      }, "500");*/
       
     }
   }, [isFormComplete]);
@@ -39,6 +63,14 @@ const UserForm = ({ formDone, openStatus }) => {
   const handleToggleSlide = () => {
     setIsContentVisible(!isContentVisible);
   };
+
+  function createCustomers() {
+      axiosInstance.post("/stripe/customer", {
+      name: name,
+      email: email,
+    });
+  }
+
 
   return (
     <>
@@ -72,7 +104,8 @@ const UserForm = ({ formDone, openStatus }) => {
             type="text"
             id="name"
             name="name"
-            value={name}
+            //value={name}
+            value={user && user.name ? user.name : name}
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -89,10 +122,15 @@ const UserForm = ({ formDone, openStatus }) => {
             type="email"
             id="email"
             name="email"
-            value={email}
+            value={user && user.name ? user.email : email}
+            //value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-          />
+          />     
+
+       
+
+        <button className="mt-12" onClick={createCustomers}>valider</button>
         </div>
 
         {isFormComplete ? (
@@ -105,6 +143,8 @@ const UserForm = ({ formDone, openStatus }) => {
           <></>
         )}
       </div>
+
+     
     </>
   );
 };

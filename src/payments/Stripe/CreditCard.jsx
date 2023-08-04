@@ -35,7 +35,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
   const [cardExpComplete, setCardExpComplete] = useState();
   const [cardCVCComplete, setCardCVCComplete] = useState();
   const [isFormComplete, setIsFormComplete] = useState(false);
-
+  const [saveCard, setSaveCard] = useState(false);
 
   let paymentIntent, email, promotion, pr;
 
@@ -83,6 +83,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
     }
   }, [elements]);
 
+  console.log("saveCard ? " +saveCard)
   /*useEffect(() => {
     console.log("formCompletion has changed");
     if (formCompletion.card && formCompletion.cvc && formCompletion.exp) {
@@ -127,12 +128,31 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
       try {
         let response;
         setLoadingAxios(true);
-        if (email1) {
+        if (saveCard && localStorage.getItem("user")) {
+          const user = JSON.parse(localStorage.getItem("user"));
           response = await axiosInstance.post("/stripe/payment", {
             amount: order_amount,
-            receipt_email: email1,
+            name : user.name,
+            email : user.email,
+            //receipt_email: email1,
             storeId: order.storeId,
           });
+          console.log("response payment")
+          console.log(response)
+          localStorage.setItem("customer_id", response.data.customer);
+
+        } else if(localStorage.getItem("customer_id")){
+          const customer = localStorage.getItem("customer_id");
+          const user = JSON.parse(localStorage.getItem("user"));
+          response = await axiosInstance.post("/stripe/payment", {
+            amount: order_amount,
+            email : user.email,
+            customerId : customer,
+            storeId: order.storeId,
+          });
+          console.log("response automatic payment ")
+          console.log(response)
+          order.isPaid = true;
         } else {
           response = await axiosInstance.post("/stripe/payment", {
             amount: order_amount,
@@ -140,6 +160,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
           });
         }
 
+        
         const data = await response.data;
         const cardElement = elements.getElement(CardNumberElement);
         const confirmPayment = await stripe.confirmCardPayment(
@@ -148,6 +169,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
             payment_method: { card: cardElement },
           }
         );
+        console.log(confirmPayment)
         paymentIntent = confirmPayment.paymentIntent;
         console.log(paymentIntent);
         if (paymentIntent.status === "succeeded") {
@@ -193,6 +215,11 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
     setFocusedElement(element); // Set the currently focused element
   };
 
+  const handleSaveCard = (state) => {
+    setSaveCard(!saveCard);
+  };
+
+
   const inputStyle = {
     color: "rgba(0, 0, 0, 1)",
 
@@ -236,7 +263,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
           />
         </div>
       </div>
-
+      <div className="flex items-center"> <input className="mr-4" type="checkbox" checked={saveCard} onChange={handleSaveCard}/>Enregistrer ma carte </div>
       {payBtn ? (
         <></>
       ) : (

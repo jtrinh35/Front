@@ -22,7 +22,7 @@ const PopupPayment = (
   const [cardType, setCardType] = useState("");
   const [cbForm, setCbForm] = useState();
   const [validBtn, setValidBtn] = useState(true);
-  const [userForm, setUserForm] = useState(false);
+  const [userForm, setUserForm] = useState();
   const [popupOpen, setPopupOpen] = useState(openStatus);
 
   console.log("POPUP OPEN " + openStatus);
@@ -46,13 +46,13 @@ const PopupPayment = (
     }
   }, [cbForm]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (userForm) {
       setIsPayOptionsVisible(true);
     } else {
       setIsPayOptionsVisible(false);
     }
-  }, [userForm]);
+  }, [userForm]);*/
 
   const handleCBChange = (id) => {
     console.log("id = " + id);
@@ -100,7 +100,7 @@ const PopupPayment = (
 
   const handleUserForm = (userFormEvent) => {
     console.log("user form !!!");
-    console.log(userForm);
+    console.log(userFormEvent);
     setUserForm(userFormEvent);
   };
 

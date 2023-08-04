@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useEdenredInterceptors from "../../axios/edenredAxios/useEdenredAxios";
 
-const Edenred = () => {
+const Edenred = ({ balance, onChange }) => {
   "lucasismael@yopmail.com";
   "Edenred2021*";
   "5543";
@@ -12,7 +12,7 @@ const Edenred = () => {
     window.open(url, "_blank");
   };
   const [edenred, setEdenred] = useState();
-  const edenredInstance = useEdenredInterceptors()
+  const edenredInstance = useEdenredInterceptors();
 
   const handleLocalStorageChange = (event) => {
     if (event.key === "Edenred") {
@@ -53,16 +53,24 @@ const Edenred = () => {
     }
   };
 
-  function removeEdenred(){
-    edenredInstance.post('/edenred/delete', {
-      access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
-    })
+  function removeEdenred() {
+    edenredInstance.post("/edenred/delete", {
+      access_token: JSON.parse(localStorage.getItem("Edenred")).access_token,
+    });
 
-    localStorage.removeItem("Edenred")
+    localStorage.removeItem("Edenred");
+    onChange("");
 
-    setEdenred(false)
+    setEdenred(false);
+    balance(false);
   }
 
+  useEffect(() => {
+    if (edenred && edenred.balance && edenred.balance.amount) {
+      onChange("edenred");
+      balance(parseBalance(edenred.balance.amount));
+    }
+  }, [edenred]);
 
   //console.log("local storage : ")
   //let eden = JSON.parse(localStorage.getItem('Edenred'))
@@ -70,23 +78,27 @@ const Edenred = () => {
   //console.log(parseBalance(eden.balance.amount))
 
   return (
-  
     <>
       {edenred && edenred.balance && edenred.balance.amount ? (
         <>
-          <button className="edenred-btn flex justify-evenly items-center font-medium bg-slate-50 text-black py-5 w-auto  rounded-full edenred-btn-active"
-          onClick={deletePopup}>
-            Edenred
+          <button
+            className="flex border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-full px-8"
+            onClick={deletePopup}
+          >
+            <label className="custom-checkbox">
+              <input className="w-7" type="checkbox" checked={true} readOnly />
+              <span className="checkmark"></span>
+            </label>
+            <img
+              className="h-10 px-8"
+              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2FEdenred-Logo.png?alt=media&token=48042cb0-3bea-4bb5-948d-4e629a1ae046"
+            />
             <span className=" text-lg font-semibold bg-red-100  p-1 px-2 rounded-[5px] text-red-600 ">
               <span className="font-bold">
                 {parseBalance(edenred.balance.amount)}
-              </span>{" "}
-              € max{" "}
+              </span>
+              € max
             </span>
-            <img
-              className=" h-10"
-              src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2FEdenred-Logo.png?alt=media&token=48042cb0-3bea-4bb5-948d-4e629a1ae046"
-            />
           </button>
 
           <div
@@ -109,7 +121,7 @@ const Edenred = () => {
               <div className="flex items-center justify-around">
                 <button
                   className="text-2xl py-2 px-4 rounded-[5px] border-none bg-[#e5e5e5]"
-                    onClick={deletePopup}
+                  onClick={deletePopup}
                 >
                   Annuler
                 </button>
@@ -118,9 +130,9 @@ const Edenred = () => {
                     backgroundColor: "rgba(239, 68, 68, 0.8)",
                   }}
                   className="text-2xl py-2 border-none  px-4 rounded-[5px] text-white  "
-                  onClick={()=>{
-                    deletePopup()
-                    removeEdenred()
+                  onClick={() => {
+                    deletePopup();
+                    removeEdenred();
                   }}
                 >
                   supprimer
@@ -131,16 +143,20 @@ const Edenred = () => {
         </>
       ) : (
         <>
-          <button
-            className="edenred-btn flex justify-center items-center font-semibold bg-white text-black py-5 w-auto  rounded-full"
+          <div
+            className="flex border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-auto px-8 "
             onClick={open}
           >
-            Edenred
+            <label className="custom-checkbox">
+              <input className="w-7" type="checkbox" />
+              <span className="checkmark"></span>
+            </label>
             <img
-              className="ml-4 h-8"
+              className="h-8 px-8"
               src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2FEdenred-Logo.png?alt=media&token=48042cb0-3bea-4bb5-948d-4e629a1ae046"
             />
-          </button>
+            <span className="text-xl"> Se connecter à Edenred </span>
+          </div>
         </>
       )}
     </>

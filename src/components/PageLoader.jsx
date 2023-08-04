@@ -7,7 +7,7 @@ const PageLoader = () => {
         className=" z-50 flex items-center justify-center min-h-screen"
         style={{ backgroundColor: "#fffdf1" }}
       >
-        <div class="pageLoader"></div>
+        <div className="pageLoader"></div>
       </div>
     </>
   );

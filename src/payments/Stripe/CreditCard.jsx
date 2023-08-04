@@ -5,13 +5,18 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { useDispatch } from "react-redux";
 import { payOrder } from "../../actions/orderActions";
 import { Toast } from "../../components/Toast";
 
-const CreditCard = (order, axiosInstance) => {
-  ({ order, axiosInstance } = order);
+const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
+  // ({ order, axiosInstance } = order);
 
   const dispatch = useDispatch();
   const stripe = useStripe();
@@ -24,10 +29,91 @@ const CreditCard = (order, axiosInstance) => {
   const [focusedElement, setFocusedElement] = useState(null);
 
   const [payBtn, setPayBtn] = useState(true);
+  const [cardType, setCardType] = useState();
+
+  const [cardNbComplete, setCardNbComplete] = useState();
+  const [cardExpComplete, setCardExpComplete] = useState();
+  const [cardCVCComplete, setCardCVCComplete] = useState();
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
 
   let paymentIntent, email, promotion, pr;
 
+  useEffect(() => {
+    if (elements) {
+      elements
+        .getElement(CardNumberElement)
+        .on("networkschange", function (event) {
+          if (event.networks && event.networks.length >= 1) {
+            setCardType(event.networks);
+            card(event.networks);
+            console.log(event.networks);
+          }
+        });
+
+      elements.getElement(CardNumberElement).on("change", function (event) {
+        const { complete } = event;
+        if (complete) {
+          setCardNbComplete(true);
+        } else {
+          setCardNbComplete(false);
+        }
+      });
+
+      elements.getElement(CardExpiryElement).on("change", function (event) {
+        const { complete } = event;
+        if (complete) {
+          setCardExpComplete(true);
+        } else {
+          setCardExpComplete(false);
+        }
+      });
+
+      elements.getElement(CardCvcElement).on("change", function (event) {
+        const { complete } = event;
+        if (complete) {
+          setCardCVCComplete(true);
+        } else {
+          setCardCVCComplete(false);
+        }
+      });
+
+      //setFormCompletion(tempForm);
+      //formComplete(tempForm);
+    }
+  }, [elements]);
+
+  /*useEffect(() => {
+    console.log("formCompletion has changed");
+    if (formCompletion.card && formCompletion.cvc && formCompletion.exp) {
+      setIsFormComplete(true);
+      formComplete(true);
+    }
+  }, [formCompletion.card, formCompletion.cvc, formCompletion.exp]);*/
+
+  console.log("order dans creditCard");
+  console.log(order);
+  useEffect(() => {
+    console.log("form has changed");
+
+    if (cardNbComplete && cardExpComplete && cardCVCComplete) {
+      setIsFormComplete(true);
+      formComplete(true);
+    } else {
+      setIsFormComplete(false);
+      formComplete(false);
+    }
+  }, [cardNbComplete, cardExpComplete, cardCVCComplete]);
+
+  console.log("isFormComplete : " + isFormComplete);
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit,
+  }));
+
   const handleSubmit = async (order) => {
+    console.log("trying to pay");
+    console.log(order);
     // if(AgeRestriction(order).props.children){
     //     console.log("illégal")
     //     return
@@ -125,7 +211,7 @@ const CreditCard = (order, axiosInstance) => {
     <div>
       <div id="stripe">
         <div>
-          <h4 className="text-lg">Numéro de carte</h4>
+          <p className="text-lg font-intermedium">Numéro de carte</p>
           <CardNumberElement
             className={`stripe_card ${focusedElement === 1 ? "focused" : ""}`}
             options={{ style: { base: inputStyle } }}
@@ -134,7 +220,7 @@ const CreditCard = (order, axiosInstance) => {
           {/* options={{style:{base:{'::placeholder': {color: '#FFFFFF'},}}}} */}
         </div>
         <div className="pr-8">
-          <h4 className="text-lg">Date d'expiration</h4>
+          <p className="text-lg font-intermedium">Date d'expiration</p>
           <CardExpiryElement
             className={`stripe_card ${focusedElement === 2 ? "focused" : ""}`}
             options={{ style: { base: inputStyle } }}
@@ -142,7 +228,7 @@ const CreditCard = (order, axiosInstance) => {
           />
         </div>
         <div className="pl-8">
-          <h4 className="text-lg">Cryptogramme</h4>
+          <p className="text-lg font-intermedium">Cryptogramme</p>
           <CardCvcElement
             className={`stripe_card ${focusedElement === 3 ? "focused" : ""}`}
             options={{ style: { base: inputStyle } }}
@@ -152,16 +238,17 @@ const CreditCard = (order, axiosInstance) => {
       </div>
 
       {payBtn ? (
-        <button
+        <></>
+      ) : (
+        /*<button
           className="pikko-btn rounded-full mt-4 py-6 justify-self-end pikko-btn w-full text-center"
           onClick={() => handleSubmit(order)}
         >
           Payer
-        </button>
-      ) : (
+        </button>*/
         <>
-          <div className="flex justify-center">
-            <div class="lds-spinner scale-50">
+          {/* <div className="flex justify-center">
+            <div className="lds-spinner scale-50">
               <div></div>
               <div></div>
               <div></div>
@@ -175,11 +262,11 @@ const CreditCard = (order, axiosInstance) => {
               <div></div>
               <div></div>
             </div>
-          </div>
+          </div> */}
         </>
       )}
     </div>
   );
 };
 
-export default CreditCard;
+export default forwardRef(CreditCard);

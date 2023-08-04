@@ -23,10 +23,14 @@ export const addToCart =
         Code_Barre: product.Code_Barre,
         category: product.category,
         formule: product.formule,
+        TR: product.TR,
         Qty: qty,
       };
 
-      const res = await axiosInstance.put(`orders/${orderId}/add`, toAddProduct);
+      const res = await axiosInstance.put(
+        `orders/${orderId}/add`,
+        toAddProduct
+      );
 
       dispatch({
         type: CART_ADD_ITEM,
@@ -61,9 +65,12 @@ export const removeFromCart =
   async (dispatch, getState) => {
     dispatch({ type: CART_REMOVE_ITEM_REQUEST });
     try {
-      const res =  await axiosInstance.put(`orders/${orderId}/delete`, Products_Qty);
+      const res = await axiosInstance.put(
+        `orders/${orderId}/delete`,
+        Products_Qty
+      );
       // dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: Code_Barres_Qty });
-      dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: res.data});
+      dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: res.data });
     } catch (err) {
       console.log(err);
       // console.log("product not found in order " + orderId)

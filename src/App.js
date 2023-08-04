@@ -9,6 +9,7 @@ import { ToastInternet } from "./components/Toast";
 import { toast } from "react-toastify";
 
 
+
 const CartScreen = React.lazy(() => import('./pages/CartScreen'));
 const ProductScreen = React.lazy(() => import('./pages/ProductScreen'));
 //const Scan = React.lazy(() => import('./components/Scan'));
@@ -21,7 +22,7 @@ const ScanCheck = React.lazy(() => import('./pages/ScanCheck'))
 // const HomeLoader = React.lazy(() => import('./components/HomeLoader'))
 const TestScreen = React.lazy(() => import('./pages/TestScreen'))
 
-
+const PopupPayment = React.lazy(() => import('./payments/PopupPayment'))
 
 function App() {
 
@@ -78,7 +79,8 @@ function App() {
               <Route path = '/order/:orderId' element = {<OrderScreen/>}></Route>
               <Route path = '/ScanCheck' element = {<ScanCheck/>}></Route>
               <Route path = '/account' element = {<AccountScreen/>}></Route>
-              <Route path = '/test' element ={<CartScreen/>}></Route>    
+              <Route path = '/test' element ={<CartScreen/>}></Route>
+              <Route path="/popupPayment" element = {<PopupPayment />} />    
             </Routes> 
             </React.Suspense>
           </main>

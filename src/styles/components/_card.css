@@ -2,18 +2,149 @@
     background-color: #FFFDF1;
 }
 
-.edenred-btn{
-   /* border: solid linear-gradient(140deg, rgba(225, 255, 38, 1) 15%, rgba(255, 207, 38, 1) 100%); */
-   font-family : "intermedium";
-   font-size: 1.875rem;
-   border: none;
-   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12);
+.nav-arrow-r {
+    transition: transform 0.5s ease;
 }
 
-.edenred-btn-active{
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.toggle-btn {
+    display: none;
+
+}
+
+div .toggle-label {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    width: 42px;
+    height: 20px;
+    background: #cccccc;
+    border-radius: 50px;
+    transition: 300ms linear;
+}
+
+div .toggle-label:before {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+    content: "";
+    display: block;
+    width: 17px;
+    height: 17px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: left 300ms linear;
+}
+
+div .toggle-btn:checked+label {
+    background: #000000;
+}
+
+div .toggle-btn:checked+label:before {
+    left: 23px;
+}
+
+.grey-bg {
+    background-color: rgb(248 250 252);
+}
+
+.slide-down-btn {
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    /* background-color: rgb(248 250 252); */
+
+}
+
+.slide-down-transition {
+    transition: height 1.3s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+.slide-down-content {
+    overflow: hidden;
+    /*transition: height 1.3s ease-in-out;
+    transition: all .5s ease-in-out;*/
+    /* Hide the content initially */
+
+    /*height: 0rem;*/
+
+    /* Add smooth transition for height */
+
+    transform-origin: left top;
+    transform: scaleY(0);
+    height: 0;
+    border: none;
+    /* background-color: rgb(248 250 252); */
+}
+
+.slide-down-content.visible {
+    height: auto;
+    padding-bottom: 4rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border: solid 0.5px rgb(203 213 225);
+    border-top: none;
+    transform: scaleY(1);
+    /* Set height to auto to reveal the content */
+}
+
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Créez une case à cocher ronde en utilisant un pseudo-élément ::before */
+.custom-checkbox .checkmark {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* pour créer une forme ronde */
+    border: 1px solid black;
+    /* bordure noire autour de la case à cocher */
+}
+
+/* Style du pseudo-élément ::before lorsque la case est cochée */
+
+.custom-checkbox input[type="checkbox"]:checked+.checkmark {
+    background-color: black;
+}
+
+
+.custom-checkbox input[type="checkbox"]:checked+.checkmark::before {
+    content: "\2713";
+    /* symbole de coche unicode */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.shadow-none {
+    box-shadow: none;
+}
+
+.edenred-btn {
+    /* border: solid linear-gradient(140deg, rgba(225, 255, 38, 1) 15%, rgba(255, 207, 38, 1) 100%); */
+    font-family: "intermedium";
+    font-size: 1.875rem;
+    border: none;
+    /* box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12); */
+}
+
+.edenred-btn-active {
     border: solid 0.5px rgb(226 232 240);
     font-size: 1.65rem;
-   
+
 }
 
 .smallimg {

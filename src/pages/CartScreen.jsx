@@ -19,6 +19,7 @@ import { cartInfoReducer } from "../reducers/cartReducers";
 import CartLength from "../components/CartLength";
 import Edenred from "../payments/Edenred/Edenred";
 import useEdenredInterceptors from "../axios/edenredAxios/useEdenredAxios";
+import Checkout from "../payments/Checkout";
 
 const CartScreen = () => {
   window.scrollTo(0, 0);
@@ -28,7 +29,7 @@ const CartScreen = () => {
 
   // const axiosInstance = Config()
   const axiosInstance = useAxiosInterceptors();
-  const edenredInstance = useEdenredInterceptors()
+  const edenredInstance = useEdenredInterceptors();
   const navigate = useNavigate();
   const toPrice = (num) => parseFloat(num).toFixed(2);
 
@@ -57,30 +58,28 @@ const CartScreen = () => {
   const countItems = CartLength();
 
   useEffect(() => {
-    if(localStorage.getItem('Edenred')){
-   
-      edenredInstance.put('/edenred/balance', {
-        username: JSON.parse(localStorage.getItem('Edenred')).username,
-        access_token: JSON.parse(localStorage.getItem('Edenred')).access_token
-
-      }).then(function(response){
-        const Edenred = JSON.parse(localStorage.getItem('Edenred'))
-        Edenred.balance = response.data.balance
-        localStorage.setItem('Edenred', JSON.stringify(Edenred))
-      })
-
+    if (localStorage.getItem("Edenred")) {
+      edenredInstance
+        .put("/edenred/balance", {
+          username: JSON.parse(localStorage.getItem("Edenred")).username,
+          access_token: JSON.parse(localStorage.getItem("Edenred"))
+            .access_token,
+        })
+        .then(function (response) {
+          const Edenred = JSON.parse(localStorage.getItem("Edenred"));
+          Edenred.balance = response.data.balance;
+          localStorage.setItem("Edenred", JSON.stringify(Edenred));
+        });
     }
-  }, [])
-  
+  }, []);
+
   useEffect(() => {
-   
     if (order) {
-      console.log("order dans cartScreen")
-      console.log(cartItems)
+      console.log("order dans cartScreen");
+      console.log(cartItems);
       dispatch(getCartInfo(order._id, axiosInstance));
       axiosInstance.put("/track/cartscreen", { id: order._id });
     }
-
   }, [orderPay]);
 
   useEffect(() => {
@@ -126,7 +125,7 @@ const CartScreen = () => {
 
   const addToCartHandler = (product) => {
     //loadingCart = true;
-    dispatch(addToCart(order._id, product, 1, axiosInstance))
+    dispatch(addToCart(order._id, product, 1, axiosInstance));
     // .then(() => {
     //   dispatch(getCartInfo(order._id, axiosInstance));
     //   axiosInstance.put("/track/cartscreen", { id: order._id });
@@ -139,9 +138,7 @@ const CartScreen = () => {
       qty: qty,
     }));
 
-    dispatch(
-      removeFromCart(cbarre_qty, order._id, product_qty, axiosInstance)
-    )
+    dispatch(removeFromCart(cbarre_qty, order._id, product_qty, axiosInstance));
     // .then(() => {
     //   dispatch(getCartInfo(order._id, axiosInstance));
     //   axiosInstance.put("/track/cartscreen", { id: order._id });
@@ -171,7 +168,7 @@ const CartScreen = () => {
       //   cart.cartItems = orderDetails.orderItems;
       // }
       // orderDetails.isPaid ? navigate(`/ordersuccess/${orderDetails._id}`) : <></>
-      console.log("cartScreen cartIems is paid ? :"+ cartItems.isPaid)
+      console.log("cartScreen cartIems is paid ? :" + cartItems.isPaid);
       cartItems.isPaid ? navigate(`/ScanCheck`) : <></>;
     }
   }, [orderPay, cart]);
@@ -204,7 +201,6 @@ const CartScreen = () => {
       setCheckedValues(updatedCheckedValues);
     }
   };
-
 
   //console.log("----loadingCart " + loadingCart);
 
@@ -385,7 +381,9 @@ const CartScreen = () => {
                         >
                           <div className="text-black">
                             <div className="pt-4 flex justify-between items-center flex-nowrap">
-                              <div className="text-xl">Total Panier:&nbsp;</div>
+                              <div className="text-2xl">
+                                Total Panier:&nbsp;
+                              </div>
 
                               <div className="font-bold flex text-3xl">
                                 {toPrice(cartItems.itemsPrice).replace(
@@ -397,9 +395,16 @@ const CartScreen = () => {
                             </div>
                           </div>
                         </div>
-                        {loadingCart ? <></>: 
-                        <Stripe />
-                      }
+                        {
+                          loadingCart ? (
+                            <></>
+                          ) : (
+                            <>
+                              <Checkout />
+                            </>
+                          )
+                          /*<Stripe />*/
+                        }
                       </div>
                       <div
                         id="deletePopup"

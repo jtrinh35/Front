@@ -137,41 +137,6 @@ const CheckoutForm = () => {
         <>
           <div>
             <div className="flex flex-col mt-10">
-              {/* 
-                        <div class="flex justify-between text-xl pb-2" style={{fontFamily:'poppinslight'}}>
-                            <div>sous-total</div>
-                            <div>{toPrice(orderDetails.order.itemsPrice).replace('.', ',')}€</div>
-                        </div> */}
-
-              {/* <div class="flex justify-between text-xl pb-6" style={{fontFamily:'poppinslight'}}>
-                            <div>promotions</div>
-
-                                <div>0,00€</div>
-
-                        </div>
-                                            
-                        <hr class="relative border border-solid border-black"/>
-
-                        <div className="recap_cart py-6">
-                                <div className="recap_cart2 pt-4">     
-                                       
-                                <>
-                                <div className="recap_cart2_total">
-                                    Total:&nbsp;
-                                </div>
-                                <div className="recap_cart2_price_">                                 
-                                    {toPrice(order.itemsPrice).replace('.', ',')}€ 
-                                    </div>
-                                </>
-                                
-                                                                                  
-                                </div>
-                        </div>      */}
-              {/* {store.ageRestriction === "password" && restricted ? (
-                <>
-                  <RestrictionPopup />
-                </>
-              ) : ( */}
                 <>
                 
                   <ApplePay order={order} axiosInstance={axiosInstance} />
@@ -180,7 +145,8 @@ const CheckoutForm = () => {
                     onClick={popup}
                   >
                     Payer
-                  </div>
+                  </div> 
+                  
                   <Edenred/>
                 </>
               {/* )} */}
@@ -211,14 +177,6 @@ const CheckoutForm = () => {
 
               <CreditCard order={order} axiosInstance={axiosInstance} />
 
-              {/* ) : (
-                            <>
-                                
-                                <input inputMode="email" placeholder="Votre adresse email" onInput={getData1} name="email"/>
-                                <div>Entrez une adresse mail valide</div>
-                                <button onClick={checkmail}>checkemail</button>
-                            </>
-                        )} */}
             </div>
           </div>
         </>

@@ -21,10 +21,7 @@ on('change', async function(data){
 
 productRouter.post('/', expressAsyncHandler(async(req, res)=>{
   
-  const id = req.body.id
-  const pay = await getData(id)
 
-  res.send(pay)
 
 }));
 

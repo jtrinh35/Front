@@ -7,6 +7,8 @@ import { getBalance } from '../API/Edenred/getBalance.js';
 import { useRefreshToken } from '../API/Edenred/useRefreshToken.js';
 import { revoke_token } from '../API/Edenred/revokeToken.js';
 import { transactionCapture } from '../API/Edenred/transactionCapture.js';
+import { transactionConfirm } from '../API/Edenred/transactionConfirm.js';
+import { transactionCancel } from '../API/Edenred/transactionCancel.js';
 
 
 const edenredRouter = express.Router();
@@ -34,7 +36,7 @@ edenredRouter.put('/info',expressAsyncHandler(async (req, res) => {
         res.send(response)
     }
     catch(error){
-        console.log(error)
+        console.log(error.response.data)
         res.status(error.response.status).send({error: error.response.data})
     }
 
@@ -52,9 +54,9 @@ edenredRouter.put('/balance',expressAsyncHandler(async(req, res) => {
         const amount = balance.data[0].available_amount
         const currency = balance.data[0].currency
         const response = {balance: {amount: amount, currency: currency}}  
-        res.cookie('__session', "testtest", {
-            httpOnly: true, secure: true, sameSite: 'none'
-        })
+        // res.cookie('__session', "testtest", {
+        //     httpOnly: true, secure: true, sameSite: 'none'
+        // })
         res.send(response)  
     }
     catch(error){
@@ -72,11 +74,12 @@ edenredRouter.put('/balance',expressAsyncHandler(async(req, res) => {
 
 edenredRouter.post('/refresh', expressAsyncHandler(async(req, res) => {
     const cookies = req.cookies
-    if(!cookies?.Edenred) res.sendStatus(401)
-    const refreshToken = cookies.Edenred
+    console.log(cookies)
+    if(!cookies?.__session) res.sendStatus(401)
+    const refreshToken = cookies.__session
     try{
         const data = await useRefreshToken(refreshToken)
-        res.cookie('Edenred', data.refresh_token, {
+        res.cookie('__session', data.refresh_token, {
             httpOnly: true,
             sameSite: 'none',
             secure: true
@@ -89,12 +92,40 @@ edenredRouter.post('/refresh', expressAsyncHandler(async(req, res) => {
 }))
 
 edenredRouter.post('/capture', expressAsyncHandler(async(req, res) => {
-
+    console.log(req.body)
     const order = req.body.order
     const amount = req.body.amount
     const edenred = JSON.parse(req.body.edenred)
     try{
-        const {data} = await transactionCapture(order, amount, edenred)
+        const data = await transactionCapture(order, amount, edenred)
+        console.log(data)
+        res.send(data)
+    }
+    catch(error){
+        res.status(error.response.status).send({error: error.response.data})
+    }
+
+}))
+
+edenredRouter.post('/payment', expressAsyncHandler(async(req, res) => {
+    console.log(req.body)
+    const authorized_amount = req.body.authorized_amount
+    const authorization_id = req.body.authorization_id
+    try{
+        const data = await transactionConfirm( authorized_amount, authorization_id)
+        res.send(data)
+    }
+    catch(error){
+        res.status(error.response.status).send({error: error.response.data})
+    }
+
+}))
+
+edenredRouter.post('/cancel', expressAsyncHandler(async(req, res) => {
+    const authorized_amount = req.body.authorized_amount
+    const authorization_id = req.body.authorization_id
+    try{
+        const data = await transactionCancel( authorized_amount, authorization_id)
         res.send(data)
     }
     catch(error){

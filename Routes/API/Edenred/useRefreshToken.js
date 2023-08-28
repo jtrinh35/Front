@@ -5,7 +5,7 @@ const auth_client_id = process.env.EDENRED_AUTH_CLIENT_ID
 const auth_client_secret = process.env.EDENRED_AUTH_CLIENT_SECRET
 
 export const useRefreshToken = async (refreshToken) => {
-
+    console.log(refreshToken)
     var data = qs.stringify({
     'refresh_token': refreshToken,
     'client_id': auth_client_id,

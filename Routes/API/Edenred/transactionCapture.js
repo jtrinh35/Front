@@ -5,11 +5,12 @@ const pay_client_id = process.env.EDENRED_PAY_CLIENT_ID
 const pay_client_secret = process.env.EDENRED_PAY_CLIENT_SECRET
 
 export const transactionCapture = async(order, amount, edenred) => {
+    console.log(typeof(toPrice(parseFloat(amount))))
     const date = new Date(Date.now())
     var data = JSON.stringify({
         "order_ref": order._id,
         "mid": process.env.EDENRED_MID,
-        "amount": toPrice(parseFloat(amount))*100,
+        "amount": toPrice(parseFloat(amount)) /* *100 */,
         "security_level": "standard",
         "capture_mode": "manual",
         "tstamp": date
@@ -29,31 +30,34 @@ export const transactionCapture = async(order, amount, edenred) => {
       };
 
     const result = await axios(config)
+    // console.log(result)
+    console.log(result.data)
     const auth_id = result.data.data.authorization_id
-    console.log(auth_id)
-    var data_ = JSON.stringify({
-        "order_ref": order._id,
-        "mid": process.env.EDENRED_MID,
-        "amount": toPrice(parseFloat(amount))*100,
-        "security_level": "standard",
-        "capture_mode": "manual",
-        "tstamp": date
-      });
+    const auth_amount = result.data.data.authorized_amount
+    // console.log(auth_id)
+    // var data_ = JSON.stringify({
+    //     "order_ref": order._id,
+    //     "mid": process.env.EDENRED_MID,
+    //     "amount": toPrice(parseFloat(amount))*100,
+    //     "security_level": "standard",
+    //     "capture_mode": "manual",
+    //     "tstamp": date
+    //   });
       
-    var config_ = {
-        method: 'post',
-        url: `https://directpayment.stg.eu.edenred.io/v2/transactions/${auth_id}/actions/cancel`,
-        headers: { 
-          'X-Client-Id': pay_client_id, 
-          'X-Client-Secret': pay_client_secret, 
-          'X-Session-Id': edenred.session, 
-          'Authorization': `Bearer ${edenred.access_token}`, 
-          'Content-Type': 'application/json'
-        },
-        data : data_
-      };
-    await axios(config_)
-    return result.data
-      
+    // var config_ = {
+    //     method: 'post',
+    //     url: `https://directpayment.stg.eu.edenred.io/v2/transactions/${auth_id}/actions/cancel`,
+    //     headers: { 
+    //       'X-Client-Id': pay_client_id, 
+    //       'X-Client-Secret': pay_client_secret, 
+    //       'X-Session-Id': edenred.session, 
+    //       'Authorization': `Bearer ${edenred.access_token}`, 
+    //       'Content-Type': 'application/json'
+    //     },
+    //     data : data_
+    //   };
+    // await axios(config_)
+    // return result.data
+    return {authorization_id: auth_id, authorized_amount: auth_amount}
     
 }

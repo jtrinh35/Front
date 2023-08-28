@@ -12,10 +12,11 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderVerifReducer,
-  orderPayMethodReducer,
 } from "./reducers/orderReducers";
 import { idReducer } from "./reducers/idReducers";
 import { storeReducer } from "./reducers/storeReducers";
+import { payMethodReducer } from "./reducers/payMethodReducers";
+import { addUserReducer } from "./reducers/userReducers";
 
 const initialState = {
   cart: {
@@ -45,6 +46,10 @@ const initialState = {
   payMethod: localStorage.getItem("payMethod")
     ? JSON.parse(localStorage.getItem("payMethod"))
     : {},
+
+  user: localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : {},
 };
 // const reducer = (state, action)=>{
 //     // State Redux Browser: on voit la liste des produits car on le return ici
@@ -61,7 +66,8 @@ const reducer = combineReducers({
   orderVerif: orderVerifReducer,
   id: idReducer,
   store: storeReducer,
-  payMethod: orderPayMethodReducer,
+  payMethod: payMethodReducer,
+  user: addUserReducer,
 });
 
 const composeEnhance = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

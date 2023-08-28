@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInterceptors from "../../axios/useAxios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../actions/userActions";
 
 const UserForm = ({ formDone, openStatus }) => {
   const axiosInstance = useAxiosInterceptors();
@@ -9,13 +11,12 @@ const UserForm = ({ formDone, openStatus }) => {
   const [isContentVisible, setIsContentVisible] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const dispatch = useDispatch()
 
   //console.log("ussser")
   //console.log(user)
 
   useEffect(() => {
-    console.log("ussser")
-    console.log(user)
     if(user && user.name && user.email){
       setName(user.name)
       setEmail(user.email)
@@ -41,8 +42,7 @@ const UserForm = ({ formDone, openStatus }) => {
   useEffect(() => {
     formDone(isFormComplete);
     if(isFormComplete){
-
-      localStorage.setItem("user", `{"name":"${name}", "email":"${email}"}`);
+      dispatch(addUser(name, email))
     }
     if (isFormComplete) {
       /*setTimeout(() => {
@@ -82,7 +82,15 @@ const UserForm = ({ formDone, openStatus }) => {
       >
         <span className="text-2xl"> Coordonnées utilisateur </span>
         <div className={`nav-arrow-r ${isContentVisible ? "rotate-90" : ""}`}>
-          <img src="/images/nav-arrow-right.svg" />
+          {isFormComplete  && !isContentVisible ?(
+            <div className="flex justify-end mt-4">
+            <img className="h-8" src="/images/check-circle.svg" />
+            <img src="/images/nav-arrow-right.svg" />
+          </div>
+          ) : (
+            <img src="/images/nav-arrow-right.svg" />
+          )}
+          
         </div>
       </div>
 
@@ -105,7 +113,7 @@ const UserForm = ({ formDone, openStatus }) => {
             id="name"
             name="name"
             //value={name}
-            value={user && user.name ? user.name : name}
+            autoComplete={user && user.name ? user.name : name}
             onChange={(e) => setName(e.target.value)}
             required
           />

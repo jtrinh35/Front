@@ -6,9 +6,6 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_SUCCESS,
-  ORDER_PAY_SELECT_REQUEST,
-  ORDER_PAY_SELECT_SUCCESS,
-  ORDER_PAY_SELECT_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
@@ -92,22 +89,6 @@ export const orderVerifReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case ORDER_VERIF_FAIL:
       return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const orderPayMethodReducer = (state = {}, action) => {
-  switch (action.type) {
-    case ORDER_PAY_SELECT_REQUEST:
-      return { ...state };
-    case ORDER_PAY_SELECT_SUCCESS:
-      console.log(action);
-      const paymentCB = action.payload.paymentCB;
-      const paymentTR = action.payload.paymentTR;
-      return { CB: paymentCB, TR: paymentTR };
-    case ORDER_PAY_SELECT_FAIL:
-      return { ...state };
     default:
       return state;
   }

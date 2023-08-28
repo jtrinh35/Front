@@ -82,7 +82,7 @@ const Edenred = ({ balance, onChange }) => {
       {edenred && edenred.balance && edenred.balance.amount ? (
         <>
           <button
-            className="flex border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-full px-8"
+            className="flex my-8 border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-full px-8"
             onClick={deletePopup}
           >
             <label className="custom-checkbox">
@@ -144,7 +144,7 @@ const Edenred = ({ balance, onChange }) => {
       ) : (
         <>
           <div
-            className="flex border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-auto px-8 "
+            className="flex my-8 border-solid border-[0.5px] border-slate-300 items-center rounded-[10px] bg-white text-black h-20 w-auto px-8 "
             onClick={open}
           >
             <label className="custom-checkbox">

@@ -17,6 +17,7 @@
 @import './components/_homeLoader.css';
 @import './components/_pageLoader.css';
 @import './components/_successAnimation.css';
+@import './components/_paygreen.css';
 
 .slideshow {
   margin: 0 auto;

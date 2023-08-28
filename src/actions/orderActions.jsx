@@ -5,9 +5,6 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
-  ORDER_PAY_SELECT_REQUEST,
-  ORDER_PAY_SELECT_SUCCESS,
-  ORDER_PAY_SELECT_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_FAIL,
   ORDER_PAY_SUCCESS,
@@ -62,16 +59,16 @@ export const detailsOrder =
   };
 
 export const payOrder =
-  (order, email, paymentIntent, axiosInstance, order_amount) =>
+  (order, email, paymentIntent, axiosInstance) =>
   async (dispatch) => {
-    const amount = order_amount;
+    // const amount = order_amount;
     dispatch({ type: ORDER_PAY_REQUEST, payload: { order, email } });
     try {
       const { data } = await axiosInstance.put(`/orders/${order._id}/pay`, {
         order,
         email: email,
         status: paymentIntent.status,
-        amount: amount,
+        // amount: amount,
       });
 
       dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
@@ -116,20 +113,3 @@ export const verifOrder = (orderId, axiosInstance) => async (dispatch) => {
   }
 };
 
-export const selectPayment =
-  (paymentCB, paymentTR) => async (dispatch, getState) => {
-    dispatch({ type: ORDER_PAY_SELECT_REQUEST });
-    try {
-      console.log("payment payment");
-      console.log(paymentCB);
-      dispatch({
-        type: ORDER_PAY_SELECT_SUCCESS,
-        payload: { paymentCB, paymentTR },
-      });
-
-      localStorage.setItem("payMethod", JSON.stringify(getState().payMethod));
-    } catch (error) {
-      console.log(error);
-      dispatch({ type: ORDER_PAY_SELECT_FAIL });
-    }
-  };

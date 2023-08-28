@@ -14,8 +14,9 @@ import React, {
 import { useDispatch } from "react-redux";
 import { payOrder } from "../../actions/orderActions";
 import { Toast } from "../../components/Toast";
+import { addUserId } from "../../actions/userActions";
 
-const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
+const CreditCard = ({ order, axiosInstance, formComplete, card, persistentCard }, ref) => {
   // ({ order, axiosInstance } = order);
 
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
   const [cardNbComplete, setCardNbComplete] = useState();
   const [cardExpComplete, setCardExpComplete] = useState();
   const [cardCVCComplete, setCardCVCComplete] = useState();
-  const [isFormComplete, setIsFormComplete] = useState(false);
+  // const [isFormComplete, setIsFormComplete] = useState(false);
   const [saveCard, setSaveCard] = useState(false);
 
   let paymentIntent, email, promotion, pr;
@@ -47,7 +48,6 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
           if (event.networks && event.networks.length >= 1) {
             setCardType(event.networks);
             card(event.networks);
-            console.log(event.networks);
           }
         });
 
@@ -92,122 +92,146 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
     }
   }, [formCompletion.card, formCompletion.cvc, formCompletion.exp]);*/
 
-  console.log("order dans creditCard");
-  console.log(order);
   useEffect(() => {
-    console.log("form has changed");
 
     if (cardNbComplete && cardExpComplete && cardCVCComplete) {
-      setIsFormComplete(true);
+      // setIsFormComplete(true);
       formComplete(true);
     } else {
-      setIsFormComplete(false);
+      // setIsFormComplete(false);
       formComplete(false);
     }
   }, [cardNbComplete, cardExpComplete, cardCVCComplete]);
 
-  console.log("isFormComplete : " + isFormComplete);
 
   useImperativeHandle(ref, () => ({
     handleSubmit,
   }));
 
-  const handleSubmit = async (order) => {
-    console.log("trying to pay");
-    console.log(order);
+  const handleSubmit = async (order, order_amount, user, pm) => {
     // if(AgeRestriction(order).props.children){
     //     console.log("illégal")
     //     return
     // }
     // else{
     setPayBtn(false);
+    let customerId
 
-    let order_amount = order.itemsPrice;
-
-    if (validemail || email1.length === 0) {
+    // if (validemail || email1.length === 0) {
       try {
         let response;
         setLoadingAxios(true);
-        if (saveCard && localStorage.getItem("user")) {
-          const user = JSON.parse(localStorage.getItem("user"));
-          response = await axiosInstance.post("/stripe/payment", {
-            amount: order_amount,
-            name : user.name,
-            email : user.email,
-            //receipt_email: email1,
-            storeId: order.storeId,
-          });
-          console.log("response payment")
-          console.log(response)
-          localStorage.setItem("customer_id", response.data.customer);
+        if(user) {
+          console.log(user.id)
+          user.id && user.id.length > 0 ? customerId = user.id : customerId = ""
+          if(pm.card && pm.card.id && pm.card.id.length > 0 && saveCard === false){
+            // fonction paiement rapide sans paymentIntent status
+            console.log("hello")
+            response = await axiosInstance.post("/stripe/payment", {
 
-        } else if(localStorage.getItem("customer_id")){
-          const customer = localStorage.getItem("customer_id");
-          const user = JSON.parse(localStorage.getItem("user"));
-          response = await axiosInstance.post("/stripe/payment", {
-            amount: order_amount,
-            email : user.email,
-            customerId : customer,
-            storeId: order.storeId,
-          });
-          console.log("response automatic payment ")
-          console.log(response)
-          order.isPaid = true;
-        } else {
-          response = await axiosInstance.post("/stripe/payment", {
-            amount: order_amount,
-            storeId: order.storeId,
-          });
-        }
+              amount: order_amount,
+              customerId: customerId,
+              storeId: order.storeId,
+              pm: pm.card.id
+  
+            }
+            
+            )
+            if(response.data.message === "Paiement réussi"){
+              const rep = await axiosInstance.post("/stripe/receipt", {
+                id: response.data.paymentIntentId,
+              });
+              localStorage.setItem("receipt_url", rep.data);
+
+              // Toast("success", "Paiement réussi");
+              // order.isPaid = true;
+              // successPaymentHandler(email1, order_amount);
+              // localStorage.removeItem("cartItems");
+              console.log(paymentIntent)
+              paymentIntent = {status: "succeeded"}
+              console.log(paymentIntent)
+              return paymentIntent
+            }
+            else{
+                setLoadingAxios(false);
+                Toast("error", "Paiement échoué");
+            }
+          }
+          else{
+              // paiement lent
+              console.log("-------------" + user + "------------" +saveCard)
+              response = await axiosInstance.post("/stripe/payment", {
+
+                amount: order_amount,
+                name : user.name,
+                email : user.email,
+                customerId: customerId,
+                storeId: order.storeId,
+                saveCard: saveCard
+    
+              });
+
+              if (response.data.customer && response.data.customer.length > 0) {
+                dispatch(addUserId(response.data.customer))
+              }
+              const data = await response.data;
+              
+              const cardElement = elements.getElement(CardNumberElement);
+              const confirmPayment = await stripe.confirmCardPayment(
+                data.clientSecret,
+                {
+                  payment_method: { card: cardElement },
+                }
+              );
+              console.log(confirmPayment)
+              paymentIntent = confirmPayment.paymentIntent;
+              console.log(paymentIntent);
+              if (paymentIntent.status === "succeeded") {
+                const rep = await axiosInstance.post("/stripe/receipt", {
+                  id: paymentIntent.id,
+                });
+      
+                console.log(rep);
+                localStorage.setItem("receipt_url", rep.data);
+                if (validemail && email1.length > 0) {
+                  axiosInstance.post("/mail", {
+                    order_price: order_amount,
+                    email: email1,
+                    order_id: order._id,
+                    order: order.orderItems,
+                  });
+                }
+                return paymentIntent
+                // Toast("success", "Paiement réussi");
+                // order.isPaid = true;
+                // successPaymentHandler(email1, order_amount);
+                // localStorage.removeItem("cartItems");
+              } else {
+                setLoadingAxios(false);
+                Toast("error", "Paiement échoué");
+                // toast.error("Paiement échoué")
+              }
+                    
+
+        } 
+          
 
         
-        const data = await response.data;
-        const cardElement = elements.getElement(CardNumberElement);
-        const confirmPayment = await stripe.confirmCardPayment(
-          data.clientSecret,
-          {
-            payment_method: { card: cardElement },
-          }
-        );
-        console.log(confirmPayment)
-        paymentIntent = confirmPayment.paymentIntent;
-        console.log(paymentIntent);
-        if (paymentIntent.status === "succeeded") {
-          const rep = await axiosInstance.post("/products", {
-            id: paymentIntent.id,
-          });
-          console.log(rep.data);
-          localStorage.setItem("receipt_url", rep.data);
-          if (validemail && email1.length > 0) {
-            axiosInstance.post("/mail", {
-              order_price: order_amount,
-              email: email1,
-              order_id: order._id,
-              order: order.orderItems,
-            });
-          }
-          setLoadingAxios(false);
-          Toast("success", "Paiement réussi");
-          // toast.success("Paiement réussi")
-          order.isPaid = true;
-          successPaymentHandler(email1, order_amount);
-          localStorage.removeItem("cartItems");
-        } else {
-          setLoadingAxios(false);
-          Toast("error", "Paiement échoué");
-          // toast.error("Paiement échoué")
+
         }
+        
+        
       } catch (error) {
         setLoadingAxios(false);
         console.log("Error! ", error);
         Toast("error", "Paiement échoué");
         // toast.error("Paiement échoué")
       }
-    } else {
-      setLoadingAxios(false);
-      Toast("error", "Email invalide");
-      // toast.error("email invalide")
-    }
+    // } else {
+    //   setLoadingAxios(false);
+    //   Toast("error", "Email invalide");
+    //   // toast.error("email invalide")
+    // }
     setPayBtn(true);
   };
 
@@ -219,7 +243,6 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
     setSaveCard(!saveCard);
   };
 
-
   const inputStyle = {
     color: "rgba(0, 0, 0, 1)",
 
@@ -228,9 +251,9 @@ const CreditCard = ({ order, axiosInstance, formComplete, card }, ref) => {
       fontSize: "12px",
     },
   };
-  const successPaymentHandler = (email1, order_amount) => {
+  const successPaymentHandler = (email1) => {
     dispatch(
-      payOrder(order, email1, paymentIntent, axiosInstance, order_amount)
+      payOrder(order, email1, paymentIntent, axiosInstance)
     );
   };
 

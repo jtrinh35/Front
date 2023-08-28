@@ -1,14 +1,15 @@
-import React, { useEffect, useState, forwardRef } from "react";
+import React, { useEffect, useState, forwardRef, useRef } from "react";
 import Edenred from "./Edenred/Edenred";
 import CreditCard from "./Stripe/CreditCard";
 import UserForm from "./Stripe/UserForm";
-import { selectPayment } from "../actions/orderActions";
+import { selectPaymentCB, selectPaymentTR } from "../actions/payMethodActions";
 import { useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import PaygreenConecs from "./Paygreen/PaygreenConecs";
 
 const PopupPayment = (
-  { open, openStatus, order, axiosInstance, edBalance, cb },
+  { open, openStatus, order, axiosInstance, edBalance, conecsBalance, cb },
   ref
 ) => {
   const stripe = loadStripe(
@@ -17,101 +18,119 @@ const PopupPayment = (
   const dispatch = useDispatch();
   const [checkedCB, setCheckedCB] = useState("");
   const [checkedTR, setCheckedTR] = useState("");
-  const [isContentVisible, setIsContentVisible] = useState(false);
+  const [isCBContentVisible, setIsCBContentVisible] = useState(false);
+  const [isTRContentVisible, setIsTRContentVisible] = useState(false);
   const [isPayOptionsVisible, setIsPayOptionsVisible] = useState(false);
   const [cardType, setCardType] = useState("");
+  const [saveCard, setSaveCard] = useState(false);
   const [cbForm, setCbForm] = useState();
   const [validBtn, setValidBtn] = useState(true);
   const [userForm, setUserForm] = useState();
   const [popupOpen, setPopupOpen] = useState(openStatus);
+  const paygreenref = useRef();
+  // if(paygreenref){
+  //   console.log(paygreenref)
+  //   paygreenref.current.hello()
 
-  console.log("POPUP OPEN " + openStatus);
-
+  // }
   useEffect(() => {
     if (checkedCB.includes("cb")) {
-      setIsContentVisible(true);
+      setIsCBContentVisible(true);
       setValidBtn(cbForm ? true : false);
-    } else {
+    } 
+    else if (checkedCB.includes("conecs")) {
+      setIsTRContentVisible(true);
+      setValidBtn(cbForm ? true : false);
+    } 
+    else {
       setValidBtn(true);
-      setIsContentVisible(false);
+      setIsCBContentVisible(false);
+      setIsTRContentVisible(false)
     }
     cb(checkedCB);
+    console.log(validBtn)
   }, [checkedCB]);
-
+  useEffect(()=> {
+    if(localStorage.getItem('paygreen') === true) setValidBtn(true)
+    
+  }, [localStorage.getItem('paygreen')])
   useEffect(() => {
     if (checkedCB.includes("cb")) {
       setValidBtn(cbForm ? true : false);
     } else {
-      setIsContentVisible(false);
+      setIsCBContentVisible(false);
     }
   }, [cbForm]);
 
-  /*useEffect(() => {
-    if (userForm) {
-      setIsPayOptionsVisible(true);
-    } else {
-      setIsPayOptionsVisible(false);
-    }
-  }, [userForm]);*/
-
-  const handleCBChange = (id) => {
-    console.log("id = " + id);
+  const handleChange = (id) => {
     setCheckedCB((prevCheckedId) => (prevCheckedId === id ? "" : id));
   };
-
-  const handleTRChange = (id) => {
-    setCheckedTR((prevCheckedId) => (prevCheckedId === id ? "" : id));
-  };
-
   function selectedPayment() {
+    console.log("---------------------hello")
+    console.log(checkedCB)
     if (checkedCB.includes("cb")) {
-      dispatch(selectPayment(checkedCB + " " + cardType, checkedTR));
-      cb("cb " + cardType);
-    } else {
-      dispatch(selectPayment(checkedCB, checkedTR));
+      // dispatch(selectPaymentTR(checkedTR));
+      dispatch(selectPaymentCB(cardType))
+      // cb("cb " + cardType);
     }
-    popup();
-    setIsContentVisible(false);
-    console.log("selected payment CB is :");
-    console.log(checkedCB);
-    console.log("selected payment TR is :");
-    console.log(checkedTR);
+    else if(checkedCB === 'applepay'){
+      dispatch(selectPaymentCB(checkedCB))
+    } 
+    else {
+
+      if(window.paygreenjs){
+        window.paygreenjs.submitPayment()
+      }
+    }
+    // popup();
+    setIsCBContentVisible(false);
   }
 
   const handleToggleSlide = (id) => {
-    handleCBChange(id);
+    handleChange(id);
   };
 
   const handleCardChange = (cardChangeEvent) => {
     setCardType(cardChangeEvent[0]);
   };
 
+  const handleSaveCard = (saveCardEvent) => {
+    console.log(saveCardEvent)
+    setSaveCard(saveCardEvent);
+  };
+
   const handleFormComplete = (formChangeEvent) => {
-    console.log("form channnge");
-    console.log(formChangeEvent);
+
     if (formChangeEvent === false) {
       setCbForm(false);
-      //setValidBtn(false);
+      setValidBtn(false);
     } else {
       setCbForm(true);
-      //setValidBtn(true);
+      setValidBtn(true);
     }
   };
 
+  const handleInstrument = (instrument) => {
+    if(instrument === true){
+      dispatch(selectPaymentTR("conecs"));
+    }else{
+      // handle error instrument
+      setCbForm(false);
+      setValidBtn(false);
+    }
+
+  }
+
   const handleUserForm = (userFormEvent) => {
-    console.log("user form !!!");
-    console.log(userFormEvent);
     setUserForm(userFormEvent);
   };
 
   const handleBalance = (balanceEvent) => {
     edBalance(balanceEvent);
-    //console.log(balanceEvent);
   };
 
   const handlePayOptions = () => {
     setIsPayOptionsVisible(!isPayOptionsVisible);
-    //console.log(balanceEvent);
   };
 
   const popup = () => {
@@ -130,7 +149,7 @@ const PopupPayment = (
       open(false);
       setIsPayOptionsVisible(false);
 
-      setIsContentVisible(false);
+      setIsCBContentVisible(false);
       //element.style.visibility = "hidden";
     }
   };
@@ -143,7 +162,7 @@ const PopupPayment = (
         className="fixed bottom-0 left-0 z-50 h-[85%] bg-white w-screen rounded-t-[16px] py-16 pt-8 px-8 shadow-[0_-7px_24px_-13px_rgba(0,0,0,0.14)] flex flex-col overflow-auto "
         style={{ visibility: "hidden" }}
       >
-        <div className="h-full overflox-auto ">
+        <div className="h-full">
           <button className="border-none self-start">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fpopup_cross.png?alt=media&token=85ef2558-f156-4bb2-ae74-00d3493ada5c"
@@ -203,6 +222,7 @@ const PopupPayment = (
                 : "slide-down-content"
             } ${openStatus ? "slide-down-transition" : ""}`}
           >
+            {/* ApplePay */}
             <div
               className="flex items-center rounded-[10px] bg-white text-black py-5 w-auto h-20 border-solid border-[0.5px] border-slate-300 px-8 pr-14 w-full my-8"
               onClick={() => handleToggleSlide("applepay")}
@@ -212,7 +232,7 @@ const PopupPayment = (
                   className="w-8 "
                   type="checkbox"
                   checked={checkedCB === "applepay"}
-                  onChange={() => handleCBChange("applepay")}
+                  onChange={() => handleChange("applepay")}
                 />
                 <span className="checkmark"></span>
               </label>
@@ -223,19 +243,22 @@ const PopupPayment = (
                 />
               </div>
             </div>
+            
+            {/* CB */}
 
             <div
               className={`flex items-center rounded-[10px] bg-white text-black py-5 w-auto h-20 border-solid border-[0.5px] border-slate-300 px-8 pr-14 w-full flex-wrap ${
-                isContentVisible ? "slide-down-btn bg-slate-100" : ""
+                isCBContentVisible ? "slide-down-btn bg-slate-100" : ""
               }`}
-              onClick={() => handleToggleSlide("cb")}
+              onClick={() => {handleToggleSlide("cb")
+              setIsTRContentVisible(false)}}
             >
               <label className="custom-checkbox">
                 <input
                   className="w-8 "
                   type="checkbox"
                   checked={checkedCB.includes("cb")}
-                  onChange={() => handleCBChange("cb")}
+                  onChange={() => handleChange("cb")}
                 />
                 <span className="checkmark"></span>
               </label>
@@ -256,7 +279,7 @@ const PopupPayment = (
             <div
               id="cbpopup"
               className={`flex items-center rounded-[10px] bg-white text-black h-0 w-auto h-full border-solid border-[0.5px] border-slate-300 px-8  bg-slate-50 w-full flex-wrap slide-down-transition ${
-                isContentVisible
+                isCBContentVisible
                   ? "slide-down-content  visible grey-bg"
                   : "slide-down-content"
               }`}
@@ -276,14 +299,74 @@ const PopupPayment = (
 
             <h3 className="text-3xl text-left my-8 mt-16">Titres Restaurant</h3>
 
-            <Edenred balance={handleBalance} onChange={handleTRChange} />
+            {/* Edenred */}
+              
+            <Edenred balance={handleBalance} onChange={handleChange} />
+
+            {/* Conecs */}
+            <div
+              className={`flex items-center rounded-[10px] bg-white text-black py-5 w-auto h-20 border-solid border-[0.5px] border-slate-300 px-8 pr-14 w-full flex-wrap ${
+                isTRContentVisible ? "slide-down-btn bg-slate-100" : ""
+              }`}
+              onClick={() => {handleToggleSlide("conecs")
+              setIsCBContentVisible(false)}}
+            >
+              <label className="custom-checkbox">
+                <input
+                  className="w-8 "
+                  type="checkbox"
+                  checked={checkedCB.includes("conecs")}
+                  onChange={() => handleChange("conecs")}
+                />
+                <span className="checkmark"></span>
+              </label>
+              <div className="px-8 ">
+                <img
+                  className="h-6 rounded-[5px]"
+                  src="https://d2csxpduxe849s.cloudfront.net/media/F44207E3-1DDE-4798-B0FCC94F6227FCB7/FD889B2B-B4FE-445C-97A356E3955CC1CC/webimage-ED81074F-347A-430E-AC7CC0A3429D9570.jpg"
+                />
+
+                <img
+                  className="h-6"
+                  src="https://logos-marques.com/wp-content/uploads/2021/07/Mastercard-logo.png"
+                />
+              </div>
+              <span className="text-xl"> Sodexo / Up / Bimpli (ex Apetiz)</span>
+            </div>
+
+            <div
+              id="conecspopup"
+              className={`flex items-center rounded-[10px] bg-white text-black h-0 w-auto h-full border-solid border-[0.5px] border-slate-300 px-8  bg-slate-50 w-full flex-wrap slide-down-transition ${
+                isTRContentVisible
+                  ? "slide-down-content  visible grey-bg"
+                  : "slide-down-content"
+              }`}
+            >
+              <div className="w-full mt-16 ">
+                <PaygreenConecs 
+                /* formComplete={handleFormComplete}*/
+                formComplete={handleFormComplete}
+                instrumentComplete={handleInstrument}
+                />
+              </div>
+            </div>
+            
           </div>
           {validBtn ? (
             <>
               <div className="flex flex-col">
                 <button
+                  
                   className="my-16 pikko-btn shadow-none text-2xl h-16 rounded-full"
-                  onClick={selectedPayment}
+                  // onClick={selectedPayment}
+                  
+                  onClick={
+                    () => {
+                      selectedPayment()
+                      // if conecs fonction qui va get l'instrument, if good alors selectedPayment et setCheckedTR(sodexo ou else) else error
+                      // else 
+                    }
+                  }
                 >
                   Valider
                 </button>

@@ -22,14 +22,10 @@ export const cartReducer = (state = { cartItems: {} }, action) => {
       const existItem = state.cartItems.orderItems.filter(
         (x) => x.Code_Barre === res.orderItems[0].Code_Barre
       );
-      console.log("addd")
-        console.log(action.payload)
+
       // console.log(item.Qty + existItem[0].Qty)
       if (existItem[0]) {
-        console.log("exiiiistItemQty")
-        console.log(existItem[0].Qty)
-        console.log("resItemQty")
-        console.log(res.orderItems[0].Qty)
+
         return {
 
             ...state,

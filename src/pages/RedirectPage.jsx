@@ -14,6 +14,7 @@ import { getStore } from "../actions/storeActions";
 import { STORE_RESET } from "../constants/storeConstants";
 import useAxiosInterceptors from "../axios/useAxios";
 import HomeLoader from "../components/HomeLoader";
+import { getPM } from "../actions/payMethodActions";
 
 const RedirectPage = () => {
   // if get store success alors GO
@@ -21,6 +22,7 @@ const RedirectPage = () => {
   const [reset, setReset] = useState(false);
   const id = useSelector((state) => state.id);
   const { store } = useSelector((state) => state.store);
+  const user = useSelector((state) => state.user)
   const { success, loading, order } = useSelector((state) => state.orderCreate);
   const [isLoading, setIsLoading] = useState(true);
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -61,7 +63,6 @@ const RedirectPage = () => {
     //     dispatch(getClient(order.order.clientId, axiosInstance))
     //     dispatch(listMenus(axiosInstance))
     // }
-    console.log("location useEffect");
     dispatch(getStore(location, axiosInstance));
     axiosInstance.post("/track/visit", { storeId: location });
   }, [location]);
@@ -69,6 +70,10 @@ const RedirectPage = () => {
   useEffect(() => {
     console.log("order useEffect");
     if (store && reset) {
+      if(user && user.id){
+        console.log(user)
+        dispatch(getPM(user.id, axiosInstance))
+      }
       const orderCreate = { storeId: store.id, clientId: "" };
       console.log("new order stooore");
       try {
@@ -79,8 +84,6 @@ const RedirectPage = () => {
     }
   }, [store]);
 
-  console.log("--------order-------");
-  console.log(order);
   return (
     /*<>
       {isLoading ? (

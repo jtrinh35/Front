@@ -43,6 +43,7 @@ const CartScreen = () => {
   //const loading = false;
 
   const { loadingCart } = useSelector((state) => state.cart);
+  const payMethod = useSelector((state) => state.payMethod)
   const { success } = useSelector((state) => state.orderDetails);
   const orderDetails = useSelector((state) => state.orderDetails.order);
   const orderPay = useSelector((state) => state.orderPay);
@@ -57,8 +58,10 @@ const CartScreen = () => {
   const [localTotal, setLocalTotal] = useState();
   const countItems = CartLength();
 
+  console.log(cart.cartItems.orderItems)
   useEffect(() => {
     if (localStorage.getItem("Edenred")) {
+      // getEdenredBalance
       edenredInstance
         .put("/edenred/balance", {
           username: JSON.parse(localStorage.getItem("Edenred")).username,
@@ -70,6 +73,16 @@ const CartScreen = () => {
           Edenred.balance = response.data.balance;
           localStorage.setItem("Edenred", JSON.stringify(Edenred));
         });
+    }
+    if(localStorage.getItem("Conecs")){
+      // getConecsBalance
+      axiosInstance.put("/paygreen/instrument", {
+        instrumentId: JSON.parse(localStorage.getItem('Conecs')).instrument
+      }).then(function(response){
+        const Conecs = JSON.parse(localStorage.getItem('Conecs'))
+        Conecs.balance = response.data.data.daily_balance
+        localStorage.setItem('Conecs', JSON.stringify(Conecs))
+      })
     }
   }, []);
 
@@ -219,11 +232,6 @@ const CartScreen = () => {
               {cartItems.orderItems.length === 0 ? (
                 <>
                   <div className="w-full h-full flex flex-col p-16 items-center gap-5">
-                    {/* <img
-                      className="w-40 h-auto "
-                      src="https://firebasestorage.googleapis.com/v0/b/pikkopay.appspot.com/o/Webapp%2Fcart%2Fcart_empty.png?alt=media&token=89a08347-edfa-4994-b01b-c45b65836427"
-                      alt="empty_cart"
-                    /> */}
                     <h1>Panier vide</h1>
                     <Link
                       className="cart_empty text-2xl text-center px-12 "
@@ -380,18 +388,29 @@ const CartScreen = () => {
                           disabled={cartItems.orderItems.length === 0}
                         >
                           <div className="text-black">
-                            <div className="pt-4 flex justify-between items-center flex-nowrap">
-                              <div className="text-2xl">
-                                Total Panier:&nbsp;
-                              </div>
+                               <div className="pt-4 ">
+                                <div className="justify-between items-center flex">
+                                  <div className="text-3xl">Total &nbsp;</div>
 
-                              <div className="font-bold flex text-3xl">
-                                {toPrice(cartItems.itemsPrice).replace(
-                                  ".",
-                                  ","
+                                  <div className="flex text-2xl">
+                                    {toPrice(cart.cartItems.itemsPrice).replace(".", ",")} €
+                                  </div>
+                                </div>
+
+                                {payMethod && payMethod.TR && payMethod.TR.length > 0 ? (
+                                  <div className="justify-between items-center flex">
+                                  <div className="opacity-60 text-xl">Titre Restaurant &nbsp;</div>
+
+                                  <div className="opacity-60 flex text-2xl">
+                                    {toPrice(cart.cartItems.itemsPrice_TR) >= 25 ? 
+                                    "25" : 
+                                    toPrice(cart.cartItems.itemsPrice_TR).replace(".", ",")} € 
+                                  </div>
+                                </div>
+                                ) : (
+                                  <></>
                                 )}
-                                {/*toPrice(localTotal).replace(".", ",")*/}€
-                              </div>
+                                
                             </div>
                           </div>
                         </div>
@@ -451,11 +470,11 @@ const CartScreen = () => {
                     </>
                   ) : (
                     <>
-                      {/* <div
+                      <div
                         id="loader"
                         class="loader loader-default is-active"
-                        data-text="Chargement des donnÃ©es"
-                      ></div> */}
+                        data-text="Chargement des données"
+                      ></div>
                     </>
                   )}
                 </>
